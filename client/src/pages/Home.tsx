@@ -20,18 +20,19 @@ export default function Home() {
     return universities.filter((uni) => {
       const matchesSearch = 
         uni.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        uni.major.toLowerCase().includes(searchTerm.toLowerCase());
+        uni.majors.some(m => m.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        uni.department.toLowerCase().includes(searchTerm.toLowerCase());
       
-      const matchesLevel = selectedLevel ? uni.level.includes(selectedLevel) : true;
+      const matchesLevel = selectedLevel ? uni.level === selectedLevel : true;
       
       return matchesSearch && matchesLevel;
     });
   }, [searchTerm, selectedLevel, universities]);
 
-  const levels = Array.from(new Set(universities.map(u => u.level.split('/')[0]))).sort();
+  const levels = Array.from(new Set(universities.map(u => u.level))).sort();
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-serif bg-cloud-pattern selection:bg-primary/20">
+    <div className="min-h-screen bg-background text-foreground font-serif selection:bg-primary/20">
       {/* 侧边导航栏 - 模拟书签 */}
       <aside className="fixed left-0 top-0 h-full w-16 md:w-20 bg-sidebar border-r border-sidebar-border z-50 hidden lg:flex flex-col items-center py-8 shadow-sm">
         <div className="mb-8">
@@ -156,11 +157,12 @@ export default function Home() {
                               {uni.name}
                             </CardTitle>
                             <CardDescription className="font-sans text-xs flex flex-wrap gap-1 mt-2">
-                              {uni.level.split('/').map((tag, i) => (
-                                <Badge key={i} variant="secondary" className="bg-secondary/50 text-secondary-foreground border-0 text-[10px] px-1.5 py-0.5">
-                                  {tag}
-                                </Badge>
-                              ))}
+                              <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground border-0 text-[10px] px-1.5 py-0.5">
+                                {uni.level}
+                              </Badge>
+                              <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground border-0 text-[10px] px-1.5 py-0.5">
+                                {uni.tier}
+                              </Badge>
                             </CardDescription>
                           </div>
                           <div className="w-8 h-8 rounded-full bg-primary/5 flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-opacity">
@@ -172,17 +174,17 @@ export default function Home() {
                         <div className="space-y-3">
                           <div className="flex items-start gap-2 text-sm text-muted-foreground">
                             <GraduationCap className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
-                            <span className="line-clamp-2 font-sans">{uni.major}</span>
+                            <span className="line-clamp-2 font-sans">{uni.majors.slice(0, 2).join("、")}</span>
                           </div>
                           <div className="flex items-start gap-2 text-sm text-muted-foreground">
                             <Calendar className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
-                            <span className="line-clamp-1 font-sans">{uni.timeline.split('；')[0]}</span>
+                            <span className="line-clamp-1 font-sans">{uni.deadline}</span>
                           </div>
                         </div>
                       </CardContent>
                       <CardFooter className="pt-0 pb-4">
                         <div className="w-full pt-3 border-t border-border/30 flex justify-between items-center text-xs text-muted-foreground font-sans">
-                          <span>{uni.degree}</span>
+                          <span>{uni.degree_type}</span>
                           <span className="group-hover:text-primary transition-colors">查看详情</span>
                         </div>
                       </CardFooter>
@@ -226,98 +228,84 @@ export default function Home() {
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               className="relative w-full max-w-3xl max-h-[90vh] bg-card border border-border shadow-2xl rounded-xl overflow-hidden flex flex-col"
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/50 via-primary to-primary/50"></div>
-              
-              <div className="p-6 md:p-8 overflow-y-auto custom-scrollbar">
-                <div className="flex justify-between items-start mb-6">
+              <div className="flex justify-between items-start p-6 border-b border-border/40">
+                <div>
+                  <h2 className="text-3xl font-bold mb-2">{selectedUniversity.name}</h2>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge className="bg-primary/20 text-primary border-0">{selectedUniversity.level}</Badge>
+                    <Badge className="bg-primary/20 text-primary border-0">{selectedUniversity.tier}</Badge>
+                    <Badge className="bg-primary/20 text-primary border-0">{selectedUniversity.degree_type}</Badge>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => setSelectedUniversity(null)}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <ScrollArea className="flex-1 overflow-y-auto">
+                <div className="p-6 space-y-6">
                   <div>
-                    <h2 className="text-3xl font-bold text-foreground mb-2">{selectedUniversity.name}</h2>
+                    <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                      <BookOpen className="w-5 h-5 text-primary" />
+                      专业方向
+                    </h3>
                     <div className="flex flex-wrap gap-2">
-                      {selectedUniversity.level.split('/').map((tag, i) => (
-                        <Badge key={i} variant="outline" className="border-primary/30 text-primary bg-primary/5">
-                          {tag}
+                      {selectedUniversity.majors.map((major, i) => (
+                        <Badge key={i} variant="secondary" className="bg-secondary/50">
+                          {major}
                         </Badge>
                       ))}
-                      <Badge variant="outline" className="border-muted-foreground/30 text-muted-foreground">
-                        {selectedUniversity.duration}
-                      </Badge>
                     </div>
                   </div>
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    onClick={() => setSelectedUniversity(null)}
-                    className="rounded-full hover:bg-muted"
-                  >
-                    <span className="text-xl">×</span>
-                  </Button>
-                </div>
 
-                <div className="space-y-8 font-sans">
-                  <section>
-                    <h3 className="text-lg font-bold font-serif mb-3 flex items-center gap-2 text-primary">
-                      <BookOpen className="w-5 h-5" />
-                      开设专业
-                    </h3>
-                    <p className="text-foreground/80 leading-relaxed bg-muted/30 p-4 rounded-lg border border-border/50">
-                      {selectedUniversity.major}
-                    </p>
-                  </section>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <section>
-                      <h3 className="text-lg font-bold font-serif mb-3 flex items-center gap-2 text-primary">
-                        <GraduationCap className="w-5 h-5" />
-                        考核形式
-                      </h3>
-                      <p className="text-foreground/80 leading-relaxed">
-                        {selectedUniversity.assessment}
-                      </p>
-                    </section>
-
-                    <section>
-                      <h3 className="text-lg font-bold font-serif mb-3 flex items-center gap-2 text-primary">
-                        <span className="text-sm border border-current rounded px-1 font-sans">EN</span>
-                        英语要求
-                      </h3>
-                      <p className="text-foreground/80 leading-relaxed">
-                        {selectedUniversity.english}
-                      </p>
-                    </section>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <h3 className="font-semibold text-sm text-muted-foreground mb-2">学制</h3>
+                      <p className="text-base">{selectedUniversity.duration}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-sm text-muted-foreground mb-2">考核形式</h3>
+                      <p className="text-base">{selectedUniversity.exam_form}</p>
+                    </div>
                   </div>
 
-                  <section>
-                    <h3 className="text-lg font-bold font-serif mb-3 flex items-center gap-2 text-primary">
-                      <Calendar className="w-5 h-5" />
-                      时间安排
-                    </h3>
-                    <div className="bg-accent/10 p-4 rounded-lg border border-accent/20 text-accent-foreground">
-                      {selectedUniversity.timeline}
+                  <div>
+                    <h3 className="font-semibold text-sm text-muted-foreground mb-2">英语要求</h3>
+                    <p className="text-base">{selectedUniversity.english_requirement}</p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <h3 className="font-semibold text-sm text-muted-foreground mb-2">申请期间</h3>
+                      <p className="text-base">{selectedUniversity.application_period}</p>
                     </div>
-                  </section>
+                    <div>
+                      <h3 className="font-semibold text-sm text-muted-foreground mb-2">截止时间</h3>
+                      <p className="text-base text-primary font-semibold">{selectedUniversity.deadline}</p>
+                    </div>
+                  </div>
 
-                  <section>
-                    <h3 className="text-lg font-bold font-serif mb-3 flex items-center gap-2 text-primary">
-                      <span className="text-lg">📝</span>
-                      考核要求总结
-                    </h3>
-                    <p className="text-foreground/80 leading-relaxed text-justify">
-                      {selectedUniversity.summary}
-                    </p>
-                  </section>
+                  <div>
+                    <h3 className="font-semibold text-sm text-muted-foreground mb-2">推荐免试要求总结</h3>
+                    <p className="text-base leading-relaxed text-muted-foreground">{selectedUniversity.summary}</p>
+                  </div>
+
+                  <div>
+                    <a 
+                      href={selectedUniversity.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      查看官方通知
+                    </a>
+                  </div>
                 </div>
-              </div>
-
-              <div className="p-4 md:p-6 border-t border-border bg-muted/10 flex justify-end gap-4">
-                <Button variant="outline" onClick={() => setSelectedUniversity(null)}>
-                  关闭
-                </Button>
-                <Button className="gap-2" asChild>
-                  <a href={selectedUniversity.link} target="_blank" rel="noopener noreferrer">
-                    访问官方通知 <ExternalLink className="w-4 h-4" />
-                  </a>
-                </Button>
-              </div>
+              </ScrollArea>
             </motion.div>
           </div>
         )}

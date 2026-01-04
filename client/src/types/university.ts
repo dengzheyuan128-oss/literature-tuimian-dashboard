@@ -1,13 +1,16 @@
 export interface University {
   id: number;
   name: string;
-  major: string;
+  tier: string;
   level: string;
+  department: string;
+  majors: string[];
+  degree_type: string;
   duration: string;
-  degree: string;
-  assessment: string;
-  english: string;
+  exam_form: string;
+  english_requirement: string;
+  application_period: string;
+  deadline: string;
+  url: string;
   summary: string;
-  timeline: string;
-  link: string;
 }
