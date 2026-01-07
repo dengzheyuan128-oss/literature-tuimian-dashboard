@@ -20,16 +20,15 @@ export default function Home() {
     return universities.filter((uni) => {
       const matchesSearch = 
         uni.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        uni.majors.some(m => m.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        uni.department.toLowerCase().includes(searchTerm.toLowerCase());
+        uni.specialty.toLowerCase().includes(searchTerm.toLowerCase());
       
-      const matchesLevel = selectedLevel ? uni.level === selectedLevel : true;
+      const matchesLevel = selectedLevel ? uni.tier === selectedLevel : true;
       
       return matchesSearch && matchesLevel;
     });
   }, [searchTerm, selectedLevel, universities]);
 
-  const levels = Array.from(new Set(universities.map(u => u.level))).sort();
+  const levels = Array.from(new Set(universities.map(u => u.tier))).sort();
 
   return (
     <div className="min-h-screen bg-background text-foreground font-serif selection:bg-primary/20">
@@ -158,10 +157,10 @@ export default function Home() {
                             </CardTitle>
                             <CardDescription className="font-sans text-xs flex flex-wrap gap-1 mt-2">
                               <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground border-0 text-[10px] px-1.5 py-0.5">
-                                {uni.level}
+                                {uni.tier}
                               </Badge>
                               <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground border-0 text-[10px] px-1.5 py-0.5">
-                                {uni.tier}
+                                {uni.degreeType}
                               </Badge>
                             </CardDescription>
                           </div>
@@ -174,7 +173,7 @@ export default function Home() {
                         <div className="space-y-3">
                           <div className="flex items-start gap-2 text-sm text-muted-foreground">
                             <GraduationCap className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
-                            <span className="line-clamp-2 font-sans">{uni.majors.slice(0, 2).join("、")}</span>
+                            <span className="line-clamp-2 font-sans">{uni.specialty}</span>
                           </div>
                           <div className="flex items-start gap-2 text-sm text-muted-foreground">
                             <Calendar className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
@@ -184,7 +183,7 @@ export default function Home() {
                       </CardContent>
                       <CardFooter className="pt-0 pb-4">
                         <div className="w-full pt-3 border-t border-border/30 flex justify-between items-center text-xs text-muted-foreground font-sans">
-                          <span>{uni.degree_type}</span>
+                          <span>{uni.degreeType}</span>
                           <span className="group-hover:text-primary transition-colors">查看详情</span>
                         </div>
                       </CardFooter>
@@ -232,9 +231,8 @@ export default function Home() {
                 <div>
                   <h2 className="text-3xl font-bold mb-2">{selectedUniversity.name}</h2>
                   <div className="flex flex-wrap gap-2">
-                    <Badge className="bg-primary/20 text-primary border-0">{selectedUniversity.level}</Badge>
                     <Badge className="bg-primary/20 text-primary border-0">{selectedUniversity.tier}</Badge>
-                    <Badge className="bg-primary/20 text-primary border-0">{selectedUniversity.degree_type}</Badge>
+                    <Badge className="bg-primary/20 text-primary border-0">{selectedUniversity.degreeType}</Badge>
                   </div>
                 </div>
                 <button 
@@ -252,13 +250,7 @@ export default function Home() {
                       <BookOpen className="w-5 h-5 text-primary" />
                       专业方向
                     </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedUniversity.majors.map((major, i) => (
-                        <Badge key={i} variant="secondary" className="bg-secondary/50">
-                          {major}
-                        </Badge>
-                      ))}
-                    </div>
+                    <p className="text-base text-muted-foreground">{selectedUniversity.specialty}</p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
@@ -268,19 +260,19 @@ export default function Home() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-sm text-muted-foreground mb-2">考核形式</h3>
-                      <p className="text-base">{selectedUniversity.exam_form}</p>
+                      <p className="text-base">{selectedUniversity.examForm}</p>
                     </div>
                   </div>
 
                   <div>
                     <h3 className="font-semibold text-sm text-muted-foreground mb-2">英语要求</h3>
-                    <p className="text-base">{selectedUniversity.english_requirement}</p>
+                    <p className="text-base">{selectedUniversity.englishRequirement}</p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <h3 className="font-semibold text-sm text-muted-foreground mb-2">申请期间</h3>
-                      <p className="text-base">{selectedUniversity.application_period}</p>
+                      <p className="text-base">{selectedUniversity.applicationPeriod}</p>
                     </div>
                     <div>
                       <h3 className="font-semibold text-sm text-muted-foreground mb-2">截止时间</h3>
@@ -289,16 +281,11 @@ export default function Home() {
                   </div>
 
                   <div>
-                    <h3 className="font-semibold text-sm text-muted-foreground mb-2">推荐免试要求总结</h3>
-                    <p className="text-base leading-relaxed text-muted-foreground">{selectedUniversity.summary}</p>
-                  </div>
-
-                  <div>
                     <a 
                       href={selectedUniversity.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-sans text-sm font-medium"
                     >
                       <ExternalLink className="w-4 h-4" />
                       查看官方通知
