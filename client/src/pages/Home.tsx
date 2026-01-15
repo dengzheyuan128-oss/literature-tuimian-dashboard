@@ -6,10 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Search, BookOpen, GraduationCap, Calendar, ExternalLink, Filter, ChevronRight } from "lucide-react";
+import { Search, BookOpen, GraduationCap, Calendar, ExternalLink, Filter, ChevronRight, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocation } from "wouter";
 
 export default function Home() {
+  const [, setLocation] = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [selectedUniversity, setSelectedUniversity] = useState<University | null>(null);
@@ -80,6 +82,22 @@ export default function Home() {
                 <br className="hidden md:block" />
                 助您在学术之路上，寻得理想归处。
               </p>
+              
+              {/* 匹配功能入口 */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="mb-8 inline-block"
+              >
+                <Button
+                  onClick={() => setLocation("/matcher")}
+                  className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground hover:shadow-lg transition-all font-sans px-6 py-2 rounded-lg flex items-center gap-2"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  院校匹配评估
+                </Button>
+              </motion.div>
               
               {/* 搜索栏 */}
               <div className="flex flex-col md:flex-row gap-4 max-w-2xl">
