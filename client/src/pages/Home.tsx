@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { University } from "@/types/university";
-import universitiesData from "@/data/universities.json";
+import { universities as universitiesData } from "@/lib/dataLoader";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";

@@ -14,7 +14,8 @@ const __dirname = path.dirname(__filename);
 
 // 读取数据文件
 const dataPath = path.join(__dirname, '../client/src/data/universities.json');
-const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+const rawData = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+const data = rawData.universities || rawData; // 支持v1结构和旧结构
 
 // 检查结果统计
 const issues = {
@@ -99,6 +100,10 @@ function isValidTier(tier) {
 const requiredFields = ['id', 'name', 'tier', 'degreeType', 'specialty', 'deadline', 'url'];
 
 console.log('🔍 开始检查数据质量...\n');
+if (rawData.schemaVersion) {
+  console.log(`Schema版本: ${rawData.schemaVersion}`);
+  console.log(`最后更新: ${rawData.lastUpdated}\n`);
+}
 console.log('=' .repeat(80));
 
 // 用于检测重复ID

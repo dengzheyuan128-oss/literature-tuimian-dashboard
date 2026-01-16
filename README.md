@@ -101,6 +101,46 @@ pnpm build
 pnpm preview
 ```
 
+## 📊 数据结构说明
+
+### Schema版本：v1
+
+当前数据文件采用结构化格式，包含版本信息和院校列表：
+
+```json
+{
+  "schemaVersion": "v1",
+  "lastUpdated": "2026-01-16",
+  "universities": [...]
+}
+```
+
+📝 **详细的Schema文档请参考** [SCHEMA.md](./SCHEMA.md)
+
+### University对象字段（v1）
+
+| 字段 | 类型 | 说明 | 必填 |
+|------|------|------|------|
+| `id` | number | 院校唯一标识 | ✅ |
+| `name` | string | 院校名称 | ✅ |
+| `tier` | string | 梯队分类 | ✅ |
+| `specialty` | string | 专业方向 | ✅ |
+| `degreeType` | string | 学位类型 | ✅ |
+| `url` | string | 推免通知链接 | ✅ |
+| `applicationPeriod` | string | 申请时间段 | ✅ |
+| `deadline` | string | 截止日期 | ✅ |
+| `englishRequirement` | string | 英语要求 | ✅ |
+| `examForm` | string | 考核形式 | ✅ |
+| `disciplineGrade` | string | 学科评估等级 | ❌ |
+| `location` | string | 所在地区 | ❌ |
+| `is985` | boolean | 是否985 | ❌ |
+| `is211` | boolean | 是否211 | ❌ |
+
+⚠️ **重要提示**：
+- 请使用上述字段名称（如 `specialty`、`degreeType`、`url`）
+- **已废弃字段**：`majors`、`types`、`noticeUrl`、`noticeTime`
+- Schema版本化管理确保数据结构的一致性
+
 ## 🔍 数据质量检查
 
 为确保数据的完整性和准确性，我们提供了自动化的数据质量检查系统。
@@ -114,7 +154,7 @@ node scripts/check-data-quality.js
 ### 检查项目
 
 ✅ **必填字段完整性**
-- id, name, tier, types, majors, noticeTime, noticeUrl
+- id, name, tier, specialty, degreeType, url, applicationPeriod, deadline, englishRequirement, examForm
 
 ✅ **推免通知链接准确性**
 - 必须是具体的推免招生通知页面
