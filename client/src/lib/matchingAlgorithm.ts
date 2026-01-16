@@ -1,5 +1,5 @@
 import { UserProfile, MatchResult, MatchReport } from "@/types/userProfile";
-import universitiesData from "@/data/universities.json";
+import { universities as universitiesData } from "@/lib/dataLoader";
 import { University } from "@/types/university";
 
 // 院校层级定义（基于学术实力标准）
@@ -328,7 +328,7 @@ export const matchingAlgorithm = {
     const breakdown = matchingAlgorithm.calculateScores(profile);
     const overallScore = matchingAlgorithm.calculateOverallScore(breakdown);
 
-    const universities = universitiesData as University[];
+    const universities = universitiesData;
 
     // 计算所有院校的匹配度
     const matchScores = universities.map((uni) => ({

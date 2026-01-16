@@ -1,1169 +1,2345 @@
 {
-  "schemaVersion": "v1",
+  "schemaVersion": "v1.1",
   "lastUpdated": "2026-01-16",
+  "description": "三层嵌套结构：School / Program / Notice",
   "universities": [
     {
       "id": 1,
       "name": "北京大学",
       "tier": "第一梯队",
-      "specialty": "汉语言文学、语言学及应用语言学等",
-      "degreeType": "学硕、直博",
-      "duration": "3年（学硕）",
-      "examForm": "面试、笔试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月中旬",
-      "deadline": "2024年10月中旬",
-      "url": "https://chinese.pku.edu.cn/jyjx/zsxx/5e733db8e74e4391b4b8fd430540dea3.htm",
       "disciplineGrade": "A+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "北京大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "1-1",
+          "schoolId": 1,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学及应用语言学等",
+          "degreeTypes": [
+            "学硕",
+            "直博"
+          ],
+          "notices": [
+            {
+              "id": "1-1-1",
+              "programId": "1-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://chinese.pku.edu.cn/jyjx/zsxx/5e733db8e74e4391b4b8fd430540dea3.htm",
+              "sourceType": "list_page",
+              "publisher": "北京大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月中旬",
+              "deadline": "2024年10月中旬",
+              "examForm": "面试、笔试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "3年（学硕）",
+              "publishedAt": "2024年10月中旬",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 2,
       "name": "华东师范大学",
       "tier": "第二梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://zhwx.ecnu.edu.cn/ec/c9/c28583a715977/page.htm",
       "disciplineGrade": "A",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "华东师范大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "2-1",
+          "schoolId": 2,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "2-1-1",
+              "programId": "2-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://zhwx.ecnu.edu.cn/ec/c9/c28583a715977/page.htm",
+              "sourceType": "list_page",
+              "publisher": "华东师范大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 3,
       "name": "武汉大学",
       "tier": "第二梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕、直博",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "http://www.lianpp.com/whu/smu_gs/info/1062/11240.htm",
       "disciplineGrade": "A-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "third_party",
-      "publisher": "第三方平台",
-      "linkGrade": "D"
+      "programs": [
+        {
+          "id": "3-1",
+          "schoolId": 3,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕",
+            "直博"
+          ],
+          "notices": [
+            {
+              "id": "3-1-1",
+              "programId": "3-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "http://www.lianpp.com/whu/smu_gs/info/1062/11240.htm",
+              "sourceType": "third_party",
+              "publisher": "第三方平台",
+              "linkGrade": "D",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 4,
       "name": "清华大学",
       "tier": "第二梯队",
-      "specialty": "中国语言文学、汉语国际教育",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://www.rwxy.tsinghua.edu.cn/info/1158/9967.htm",
       "disciplineGrade": "B+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "清华大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "4-1",
+          "schoolId": 4,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学、汉语国际教育",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "4-1-1",
+              "programId": "4-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://www.rwxy.tsinghua.edu.cn/info/1158/9967.htm",
+              "sourceType": "list_page",
+              "publisher": "清华大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 5,
       "name": "中国人民大学",
       "tier": "第一梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "http://wenxueyuan.ruc.edu.cn/xwgg/gg/6718689b21c5475fb527ab018929432f.htm",
       "disciplineGrade": "A-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "中国人民大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "5-1",
+          "schoolId": 5,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "5-1-1",
+              "programId": "5-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "http://wenxueyuan.ruc.edu.cn/xwgg/gg/6718689b21c5475fb527ab018929432f.htm",
+              "sourceType": "list_page",
+              "publisher": "中国人民大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 6,
       "name": "复旦大学",
       "tier": "第一梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://www.lingboyan.com/academicinfo-2-2303",
       "disciplineGrade": "A",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "复旦大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "6-1",
+          "schoolId": 6,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "6-1-1",
+              "programId": "6-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://www.lingboyan.com/academicinfo-2-2303",
+              "sourceType": "list_page",
+              "publisher": "复旦大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 7,
       "name": "南京大学",
       "tier": "第一梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yzb.nju.edu.cn/ed/ad/c47865a716205/pagem.htm",
       "disciplineGrade": "A",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "南京大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "7-1",
+          "schoolId": 7,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "7-1-1",
+              "programId": "7-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yzb.nju.edu.cn/ed/ad/c47865a716205/pagem.htm",
+              "sourceType": "list_page",
+              "publisher": "南京大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 8,
       "name": "浙江大学",
       "tier": "第二梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "http://www.lit.zju.edu.cn/2024/0808/c64557a2952301/page.htm",
       "disciplineGrade": "A",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "浙江大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "8-1",
+          "schoolId": 8,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "8-1-1",
+              "programId": "8-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "http://www.lit.zju.edu.cn/2024/0808/c64557a2952301/page.htm",
+              "sourceType": "list_page",
+              "publisher": "浙江大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 9,
       "name": "四川大学",
       "tier": "第一梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://lj.scu.edu.cn/info/1035/7639.htm",
       "disciplineGrade": "A",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "四川大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "9-1",
+          "schoolId": 9,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "9-1-1",
+              "programId": "9-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://lj.scu.edu.cn/info/1035/7639.htm",
+              "sourceType": "list_page",
+              "publisher": "四川大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 10,
       "name": "中山大学",
       "tier": "第二梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://chinese.sysu.edu.cn/article/2387",
       "disciplineGrade": "A-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "中山大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "10-1",
+          "schoolId": 10,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "10-1-1",
+              "programId": "10-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://chinese.sysu.edu.cn/article/2387",
+              "sourceType": "list_page",
+              "publisher": "中山大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 11,
       "name": "北京师范大学",
       "tier": "第一梯队",
-      "specialty": "汉语言文学、学科语文等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://wxy.bnu.edu.cn/sytzgg/d8188ced089644e3a8e18bc8464a9e7f.htm",
       "disciplineGrade": "A+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "北京师范大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "11-1",
+          "schoolId": 11,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、学科语文等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "11-1-1",
+              "programId": "11-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://wxy.bnu.edu.cn/sytzgg/d8188ced089644e3a8e18bc8464a9e7f.htm",
+              "sourceType": "list_page",
+              "publisher": "北京师范大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 12,
       "name": "西南大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、学科语文等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://chinese.swu.edu.cn/info/1087/5434.htm",
       "disciplineGrade": "B+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "西南大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "12-1",
+          "schoolId": 12,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、学科语文等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "12-1-1",
+              "programId": "12-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://chinese.swu.edu.cn/info/1087/5434.htm",
+              "sourceType": "list_page",
+              "publisher": "西南大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 13,
       "name": "兰州大学",
       "tier": "第三梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://chinese.lzu.edu.cn/tongzhigonggao/2025/0910/318484.html",
       "disciplineGrade": "B-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "兰州大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "13-1",
+          "schoolId": 13,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "13-1-1",
+              "programId": "13-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://chinese.lzu.edu.cn/tongzhigonggao/2025/0910/318484.html",
+              "sourceType": "list_page",
+              "publisher": "兰州大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 14,
       "name": "湖南师范大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、学科语文等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://sdwxy.hunnu.edu.cn/info/1051/6462.htm",
       "disciplineGrade": "B",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "湖南师范大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "14-1",
+          "schoolId": 14,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、学科语文等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "14-1-1",
+              "programId": "14-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://sdwxy.hunnu.edu.cn/info/1051/6462.htm",
+              "sourceType": "list_page",
+              "publisher": "湖南师范大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 15,
       "name": "厦门大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、汉语国际教育等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "http://www.lianpp.com/xmu/smu_chinese/info/1731/36832.htm",
       "disciplineGrade": "B",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "third_party",
-      "publisher": "第三方平台",
-      "linkGrade": "D"
+      "programs": [
+        {
+          "id": "15-1",
+          "schoolId": 15,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、汉语国际教育等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "15-1-1",
+              "programId": "15-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "http://www.lianpp.com/xmu/smu_chinese/info/1731/36832.htm",
+              "sourceType": "third_party",
+              "publisher": "第三方平台",
+              "linkGrade": "D",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 16,
       "name": "南开大学",
       "tier": "第二梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://wxy.nankai.edu.cn/2025/0905/c15920a576831/page.htm",
       "disciplineGrade": "A-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "南开大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "16-1",
+          "schoolId": 16,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "16-1-1",
+              "programId": "16-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://wxy.nankai.edu.cn/2025/0905/c15920a576831/page.htm",
+              "sourceType": "list_page",
+              "publisher": "南开大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 17,
       "name": "山东大学",
       "tier": "第二梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://www.lit.sdu.edu.cn/info/1013/22784.htm",
       "disciplineGrade": "A",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "山东大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "17-1",
+          "schoolId": 17,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "17-1-1",
+              "programId": "17-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://www.lit.sdu.edu.cn/info/1013/22784.htm",
+              "sourceType": "list_page",
+              "publisher": "山东大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 18,
       "name": "上海交通大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学、汉语国际教育",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://shss.sjtu.edu.cn/Web/Show/11126",
       "disciplineGrade": "B-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "上海交通大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "18-1",
+          "schoolId": 18,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学、汉语国际教育",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "18-1-1",
+              "programId": "18-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://shss.sjtu.edu.cn/Web/Show/11126",
+              "sourceType": "list_page",
+              "publisher": "上海交通大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 19,
       "name": "华中科技大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学、汉语国际教育",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://www.educity.cn/kbyy/5340817.html",
       "disciplineGrade": "B-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "华中科技大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "19-1",
+          "schoolId": 19,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学、汉语国际教育",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "19-1-1",
+              "programId": "19-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://www.educity.cn/kbyy/5340817.html",
+              "sourceType": "list_page",
+              "publisher": "华中科技大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 20,
       "name": "重庆大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学",
-      "degreeType": "学硕、直博",
-      "duration": "3年（学硕）",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬",
-      "deadline": "2024年9月15日",
-      "url": "https://lac.cqu.edu.cn/info/1162/9430.htm",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "重庆大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "20-1",
+          "schoolId": 20,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学",
+          "degreeTypes": [
+            "学硕",
+            "直博"
+          ],
+          "notices": [
+            {
+              "id": "20-1-1",
+              "programId": "20-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://lac.cqu.edu.cn/info/1162/9430.htm",
+              "sourceType": "list_page",
+              "publisher": "重庆大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬",
+              "deadline": "2024年9月15日",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "3年（学硕）",
+              "publishedAt": "2024年9月15日",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 21,
       "name": "中南大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学、汉语国际教育等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://clj.csu.edu.cn/info/1027/7250.htm",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "中南大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "21-1",
+          "schoolId": 21,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学、汉语国际教育等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "21-1-1",
+              "programId": "21-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://clj.csu.edu.cn/info/1027/7250.htm",
+              "sourceType": "list_page",
+              "publisher": "中南大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 22,
       "name": "同济大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学、汉语国际教育",
-      "degreeType": "学硕、专硕、直博",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://sal.tongji.edu.cn/info/1023/3935.htm",
       "disciplineGrade": "C-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "同济大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "22-1",
+          "schoolId": 22,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学、汉语国际教育",
+          "degreeTypes": [
+            "学硕",
+            "专硕",
+            "直博"
+          ],
+          "notices": [
+            {
+              "id": "22-1-1",
+              "programId": "22-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://sal.tongji.edu.cn/info/1023/3935.htm",
+              "sourceType": "list_page",
+              "publisher": "同济大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 23,
       "name": "中国海洋大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学、汉语国际教育",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yz.ouc.edu.cn/2023/0825/c31752a482489/page.htm",
       "disciplineGrade": "C",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "中国海洋大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "23-1",
+          "schoolId": 23,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学、汉语国际教育",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "23-1-1",
+              "programId": "23-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yz.ouc.edu.cn/2023/0825/c31752a482489/page.htm",
+              "sourceType": "list_page",
+              "publisher": "中国海洋大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 24,
       "name": "华中师范大学",
       "tier": "第三梯队",
-      "specialty": "汉语言文学、学科语文等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://chinese.ccnu.edu.cn/info/1035/15267.htm",
       "disciplineGrade": "B+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "华中师范大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "24-1",
+          "schoolId": 24,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、学科语文等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "24-1-1",
+              "programId": "24-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://chinese.ccnu.edu.cn/info/1035/15267.htm",
+              "sourceType": "list_page",
+              "publisher": "华中师范大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 25,
       "name": "吉林大学",
       "tier": "第二梯队",
-      "specialty": "汉语言文字学、中国古代文学等",
-      "degreeType": "学硕、专硕",
-      "duration": "3年",
-      "examForm": "资格审核、面试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月22日-23日",
-      "deadline": "2024年9月23日",
-      "url": "https://wxy.jlu.edu.cn/info/1344/19852.htm",
       "disciplineGrade": "B+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "吉林大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "25-1",
+          "schoolId": 25,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文字学、中国古代文学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "25-1-1",
+              "programId": "25-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://wxy.jlu.edu.cn/info/1344/19852.htm",
+              "sourceType": "list_page",
+              "publisher": "吉林大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月22日-23日",
+              "deadline": "2024年9月23日",
+              "examForm": "资格审核、面试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "3年",
+              "publishedAt": "2024年9月23日",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 26,
       "name": "湖南大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学、汉语国际教育等",
-      "degreeType": "学硕、专硕、直博",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://wxy.hnu.edu.cn/info/1041/5351.htm",
       "disciplineGrade": "C",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "湖南大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "26-1",
+          "schoolId": 26,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学、汉语国际教育等",
+          "degreeTypes": [
+            "学硕",
+            "专硕",
+            "直博"
+          ],
+          "notices": [
+            {
+              "id": "26-1-1",
+              "programId": "26-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://wxy.hnu.edu.cn/info/1041/5351.htm",
+              "sourceType": "list_page",
+              "publisher": "湖南大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 27,
       "name": "中国传媒大学",
       "tier": "第四梯队",
-      "specialty": "文艺学、语言学及应用语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、网络面试",
-      "englishRequirement": "CET-6达425分",
-      "applicationPeriod": "9月19日-21日",
-      "deadline": "2024年9月21日",
-      "url": "https://yz.cuc.edu.cn/2024/0918/c8678a243112/page.htm",
       "disciplineGrade": "B-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "中国传媒大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "27-1",
+          "schoolId": 27,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "文艺学、语言学及应用语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "27-1-1",
+              "programId": "27-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yz.cuc.edu.cn/2024/0918/c8678a243112/page.htm",
+              "sourceType": "list_page",
+              "publisher": "中国传媒大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月19日-21日",
+              "deadline": "2024年9月21日",
+              "examForm": "材料审核、网络面试",
+              "englishRequirement": "CET-6达425分",
+              "duration": "2-3年",
+              "publishedAt": "2024年9月21日",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 28,
       "name": "中央民族大学",
       "tier": "第三梯队",
-      "specialty": "文艺学、汉语言文字学等",
-      "degreeType": "学硕、直博",
-      "duration": "3年（学硕）",
-      "examForm": "笔试、面试",
-      "englishRequirement": "CET-6",
-      "applicationPeriod": "9月17日-21日",
-      "deadline": "2024年9月21日",
-      "url": "https://sla.muc.edu.cn/info/1073/3187.htm",
       "disciplineGrade": "B+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "中央民族大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "28-1",
+          "schoolId": 28,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "文艺学、汉语言文字学等",
+          "degreeTypes": [
+            "学硕",
+            "直博"
+          ],
+          "notices": [
+            {
+              "id": "28-1-1",
+              "programId": "28-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://sla.muc.edu.cn/info/1073/3187.htm",
+              "sourceType": "list_page",
+              "publisher": "中央民族大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月17日-21日",
+              "deadline": "2024年9月21日",
+              "examForm": "笔试、面试",
+              "englishRequirement": "CET-6",
+              "duration": "3年（学硕）",
+              "publishedAt": "2024年9月21日",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 29,
       "name": "华南师范大学",
       "tier": "第四梯队",
-      "specialty": "文艺学、语言学及应用语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "网络远程复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-9月25日",
-      "deadline": "2024年9月25日",
-      "url": "http://wxy.scnu.edu.cn/tongzhigonggao/yanjiushengjiaoyutz/2024/0920/3555.html",
       "disciplineGrade": "B",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "华南师范大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "29-1",
+          "schoolId": 29,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "文艺学、语言学及应用语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "29-1-1",
+              "programId": "29-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "http://wxy.scnu.edu.cn/tongzhigonggao/yanjiushengjiaoyutz/2024/0920/3555.html",
+              "sourceType": "list_page",
+              "publisher": "华南师范大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-9月25日",
+              "deadline": "2024年9月25日",
+              "examForm": "网络远程复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "2-3年",
+              "publishedAt": "2024年9月25日",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 30,
       "name": "暨南大学",
       "tier": "第三梯队",
-      "specialty": "文艺学、语言学及应用语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "心理测试、笔试、面试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月初-9月中旬",
-      "deadline": "2024年9月中旬",
-      "url": "https://yz.jnu.edu.cn/2024/0905/c33059a820105/page.htm",
       "disciplineGrade": "B+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "暨南大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "30-1",
+          "schoolId": 30,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "文艺学、语言学及应用语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "30-1-1",
+              "programId": "30-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yz.jnu.edu.cn/2024/0905/c33059a820105/page.htm",
+              "sourceType": "list_page",
+              "publisher": "暨南大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月初-9月中旬",
+              "deadline": "2024年9月中旬",
+              "examForm": "心理测试、笔试、面试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年9月中旬",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 31,
       "name": "安徽大学",
       "tier": "第三梯队",
-      "specialty": "文艺学、语言学及应用语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "线下面试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-9月23日",
-      "deadline": "2024年9月23日",
-      "url": "https://wxy.ahu.edu.cn/2024/0922/c10909a347962/page.htm",
       "disciplineGrade": "B-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "安徽大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "31-1",
+          "schoolId": 31,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "文艺学、语言学及应用语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "31-1-1",
+              "programId": "31-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://wxy.ahu.edu.cn/2024/0922/c10909a347962/page.htm",
+              "sourceType": "list_page",
+              "publisher": "安徽大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-9月23日",
+              "deadline": "2024年9月23日",
+              "examForm": "线下面试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "2-3年",
+              "publishedAt": "2024年9月23日",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 32,
       "name": "云南大学",
       "tier": "第三梯队",
-      "specialty": "文艺学、语言学及应用语言学等",
-      "degreeType": "学硕、专硕、直博",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "推免系统开通后",
-      "deadline": "另行通知",
-      "url": "http://www.wxy.ynu.edu.cn/info/1058/2437.htm",
       "disciplineGrade": "B-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "云南大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "32-1",
+          "schoolId": 32,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "文艺学、语言学及应用语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕",
+            "直博"
+          ],
+          "notices": [
+            {
+              "id": "32-1-1",
+              "programId": "32-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "http://www.wxy.ynu.edu.cn/info/1058/2437.htm",
+              "sourceType": "list_page",
+              "publisher": "云南大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "推免系统开通后",
+              "deadline": "另行通知",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "2-3年",
+              "publishedAt": "另行通知",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 33,
       "name": "西安交通大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yz.xjtu.edu.cn/2025tmzc.pdf",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "西安交通大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "33-1",
+          "schoolId": 33,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "33-1-1",
+              "programId": "33-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yz.xjtu.edu.cn/2025tmzc.pdf",
+              "sourceType": "list_page",
+              "publisher": "西安交通大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 34,
       "name": "天津大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学",
-      "degreeType": "学硕",
-      "duration": "3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://rwys.tju.edu.cn/info/1015/2301.htm",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "天津大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "34-1",
+          "schoolId": 34,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学",
+          "degreeTypes": [
+            "学硕"
+          ],
+          "notices": [
+            {
+              "id": "34-1-1",
+              "programId": "34-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://rwys.tju.edu.cn/info/1015/2301.htm",
+              "sourceType": "list_page",
+              "publisher": "天津大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 35,
       "name": "东南大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yzb.seu.edu.cn/2024/0927/c6676a504431/page.htm",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "东南大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "35-1",
+          "schoolId": 35,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "35-1-1",
+              "programId": "35-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yzb.seu.edu.cn/2024/0927/c6676a504431/page.htm",
+              "sourceType": "list_page",
+              "publisher": "东南大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 36,
       "name": "东北师范大学",
       "tier": "第三梯队",
-      "specialty": "汉语言文学、学科语文等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yjsy.nenu.edu.cn/info/1123/6058.htm",
       "disciplineGrade": "B+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "东北师范大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "36-1",
+          "schoolId": 36,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、学科语文等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "36-1-1",
+              "programId": "36-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yjsy.nenu.edu.cn/info/1123/6058.htm",
+              "sourceType": "list_page",
+              "publisher": "东北师范大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 37,
       "name": "陕西师范大学",
       "tier": "第三梯队",
-      "specialty": "汉语言文学、学科语文等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://wxy.snnu.edu.cn/",
       "disciplineGrade": "B+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "homepage",
-      "publisher": "陕西师范大学文学院",
-      "linkGrade": "C"
+      "programs": [
+        {
+          "id": "37-1",
+          "schoolId": 37,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、学科语文等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "37-1-1",
+              "programId": "37-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://wxy.snnu.edu.cn/",
+              "sourceType": "homepage",
+              "publisher": "陕西师范大学文学院",
+              "linkGrade": "C",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 38,
       "name": "南京师范大学",
       "tier": "第三梯队",
-      "specialty": "汉语言文学、学科语文等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yjszs.njnu.edu.cn/info/1013/14122.htm",
       "disciplineGrade": "A-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "南京师范大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "38-1",
+          "schoolId": 38,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、学科语文等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "38-1-1",
+              "programId": "38-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yjszs.njnu.edu.cn/info/1013/14122.htm",
+              "sourceType": "list_page",
+              "publisher": "南京师范大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 39,
       "name": "苏州大学",
       "tier": "第三梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yz.chsi.com.cn/kyzx/yxzc/202308/20230801/2293106352.html",
       "disciplineGrade": "B+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "苏州大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "39-1",
+          "schoolId": 39,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "39-1-1",
+              "programId": "39-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yz.chsi.com.cn/kyzx/yxzc/202308/20230801/2293106352.html",
+              "sourceType": "list_page",
+              "publisher": "苏州大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 40,
       "name": "郑州大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yz.zzu.edu.cn/info/1072/2061.htm",
       "disciplineGrade": "C+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "郑州大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "40-1",
+          "schoolId": 40,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "40-1-1",
+              "programId": "40-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yz.zzu.edu.cn/info/1072/2061.htm",
+              "sourceType": "list_page",
+              "publisher": "郑州大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 41,
       "name": "上海大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yjszs.shu.edu.cn/info/1004/7434.htm",
       "disciplineGrade": "B",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "上海大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "41-1",
+          "schoolId": 41,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "41-1-1",
+              "programId": "41-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yjszs.shu.edu.cn/info/1004/7434.htm",
+              "sourceType": "list_page",
+              "publisher": "上海大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 42,
       "name": "西北大学",
       "tier": "第三梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yjs.nwu.edu.cn/info/1013/4693.htm",
       "disciplineGrade": "B",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "西北大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "42-1",
+          "schoolId": 42,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "42-1-1",
+              "programId": "42-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yjs.nwu.edu.cn/info/1013/4693.htm",
+              "sourceType": "list_page",
+              "publisher": "西北大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 43,
       "name": "辽宁大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yz.chsi.com.cn/kyzx/zsjz/tmjz/202309/20230914/2293121237.html",
       "disciplineGrade": "B-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "辽宁大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "43-1",
+          "schoolId": 43,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "43-1-1",
+              "programId": "43-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yz.chsi.com.cn/kyzx/zsjz/tmjz/202309/20230914/2293121237.html",
+              "sourceType": "list_page",
+              "publisher": "辽宁大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 44,
       "name": "内蒙古大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://gs.imu.edu.cn/info/1020/2123.htm",
       "disciplineGrade": "B",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "内蒙古大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "44-1",
+          "schoolId": 44,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "44-1-1",
+              "programId": "44-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://gs.imu.edu.cn/info/1020/2123.htm",
+              "sourceType": "list_page",
+              "publisher": "内蒙古大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 45,
       "name": "延边大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://grad.ybu.edu.cn/info/1188/5982.htm",
       "disciplineGrade": "C-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "延边大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "45-1",
+          "schoolId": 45,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "45-1-1",
+              "programId": "45-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://grad.ybu.edu.cn/info/1188/5982.htm",
+              "sourceType": "list_page",
+              "publisher": "延边大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 46,
       "name": "海南大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://gs.hainanu.edu.cn/info/1024/6582.htm",
       "disciplineGrade": "C-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "海南大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "46-1",
+          "schoolId": 46,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "46-1-1",
+              "programId": "46-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://gs.hainanu.edu.cn/info/1024/6582.htm",
+              "sourceType": "list_page",
+              "publisher": "海南大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 47,
       "name": "贵州大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "http://rwxy.gzu.edu.cn/",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "homepage",
-      "publisher": "贵州大学文学院",
-      "linkGrade": "C"
+      "programs": [
+        {
+          "id": "47-1",
+          "schoolId": 47,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "47-1-1",
+              "programId": "47-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "http://rwxy.gzu.edu.cn/",
+              "sourceType": "homepage",
+              "publisher": "贵州大学文学院",
+              "linkGrade": "C",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 48,
       "name": "广西大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://wxy.gxu.edu.cn/",
       "disciplineGrade": "C",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "homepage",
-      "publisher": "广西大学文学院",
-      "linkGrade": "C"
+      "programs": [
+        {
+          "id": "48-1",
+          "schoolId": 48,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "48-1-1",
+              "programId": "48-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://wxy.gxu.edu.cn/",
+              "sourceType": "homepage",
+              "publisher": "广西大学文学院",
+              "linkGrade": "C",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 49,
       "name": "新疆大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://gs.xju.edu.cn/info/1102/4475.htm",
       "disciplineGrade": "B-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "新疆大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "49-1",
+          "schoolId": 49,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "49-1-1",
+              "programId": "49-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://gs.xju.edu.cn/info/1102/4475.htm",
+              "sourceType": "list_page",
+              "publisher": "新疆大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 50,
       "name": "宁夏大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://graduate.nxu.edu.cn/info/1054/8354.htm",
       "disciplineGrade": "C-",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "宁夏大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "50-1",
+          "schoolId": 50,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "50-1-1",
+              "programId": "50-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://graduate.nxu.edu.cn/info/1054/8354.htm",
+              "sourceType": "list_page",
+              "publisher": "宁夏大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 51,
       "name": "西藏大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yjszs.utibet.edu.cn/info/1006/1484.htm",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "西藏大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "51-1",
+          "schoolId": 51,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "51-1-1",
+              "programId": "51-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yjszs.utibet.edu.cn/info/1006/1484.htm",
+              "sourceType": "list_page",
+              "publisher": "西藏大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 52,
       "name": "石河子大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yaoxy.shzu.edu.cn/2024/0913/c5966a209484/page.htm",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "石河子大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "52-1",
+          "schoolId": 52,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "52-1-1",
+              "programId": "52-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yaoxy.shzu.edu.cn/2024/0913/c5966a209484/page.htm",
+              "sourceType": "list_page",
+              "publisher": "石河子大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 53,
       "name": "北京外国语大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学、汉语国际教育",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://graduate.bfsu.edu.cn/info/1048/3056.htm",
       "disciplineGrade": "C+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "北京外国语大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "53-1",
+          "schoolId": 53,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学、汉语国际教育",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "53-1-1",
+              "programId": "53-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://graduate.bfsu.edu.cn/info/1048/3056.htm",
+              "sourceType": "list_page",
+              "publisher": "北京外国语大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 54,
       "name": "上海外国语大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学、汉语国际教育",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://info.shisu.edu.cn/a1/4c/c11a41292/page.htm",
       "disciplineGrade": "C+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "上海外国语大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "54-1",
+          "schoolId": 54,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学、汉语国际教育",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "54-1-1",
+              "programId": "54-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://info.shisu.edu.cn/a1/4c/c11a41292/page.htm",
+              "sourceType": "list_page",
+              "publisher": "上海外国语大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 55,
       "name": "中央财经大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学",
-      "degreeType": "学硕",
-      "duration": "3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "http://cmc.cufe.edu.cn/",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "homepage",
-      "publisher": "中央财经大学文学院",
-      "linkGrade": "C"
+      "programs": [
+        {
+          "id": "55-1",
+          "schoolId": 55,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学",
+          "degreeTypes": [
+            "学硕"
+          ],
+          "notices": [
+            {
+              "id": "55-1-1",
+              "programId": "55-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "http://cmc.cufe.edu.cn/",
+              "sourceType": "homepage",
+              "publisher": "中央财经大学文学院",
+              "linkGrade": "C",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 56,
       "name": "对外经济贸易大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yjsy.uibe.edu.cn/cms/infoSingleArticle.do?articleId=7405",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "对外经济贸易大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "56-1",
+          "schoolId": 56,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "56-1-1",
+              "programId": "56-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yjsy.uibe.edu.cn/cms/infoSingleArticle.do?articleId=7405",
+              "sourceType": "list_page",
+              "publisher": "对外经济贸易大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 57,
       "name": "中国政法大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学",
-      "degreeType": "学硕",
-      "duration": "3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-6或同等",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "http://rwxy.cupl.edu.cn/",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "homepage",
-      "publisher": "中国政法大学文学院",
-      "linkGrade": "C"
+      "programs": [
+        {
+          "id": "57-1",
+          "schoolId": 57,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学",
+          "degreeTypes": [
+            "学硕"
+          ],
+          "notices": [
+            {
+              "id": "57-1-1",
+              "programId": "57-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "http://rwxy.cupl.edu.cn/",
+              "sourceType": "homepage",
+              "publisher": "中国政法大学文学院",
+              "linkGrade": "C",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-6或同等",
+              "duration": "3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 58,
       "name": "福州大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学",
-      "degreeType": "学硕",
-      "duration": "3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yjsy.fzu.edu.cn/info/1071/5557.htm",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "福州大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "58-1",
+          "schoolId": 58,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学",
+          "degreeTypes": [
+            "学硕"
+          ],
+          "notices": [
+            {
+              "id": "58-1-1",
+              "programId": "58-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yjsy.fzu.edu.cn/info/1071/5557.htm",
+              "sourceType": "list_page",
+              "publisher": "福州大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 59,
       "name": "南昌大学",
       "tier": "第四梯队",
-      "specialty": "汉语言文学、语言学等",
-      "degreeType": "学硕、专硕",
-      "duration": "2-3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yjsy.ncu.edu.cn/info/1012/24916.htm",
       "disciplineGrade": "C+",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "南昌大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "59-1",
+          "schoolId": 59,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "汉语言文学、语言学等",
+          "degreeTypes": [
+            "学硕",
+            "专硕"
+          ],
+          "notices": [
+            {
+              "id": "59-1-1",
+              "programId": "59-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yjsy.ncu.edu.cn/info/1012/24916.htm",
+              "sourceType": "list_page",
+              "publisher": "南昌大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "2-3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 60,
       "name": "江南大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学",
-      "degreeType": "学硕",
-      "duration": "3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yz.jiangnan.edu.cn/info/1012/3515.htm",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "江南大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "60-1",
+          "schoolId": 60,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学",
+          "degreeTypes": [
+            "学硕"
+          ],
+          "notices": [
+            {
+              "id": "60-1-1",
+              "programId": "60-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yz.jiangnan.edu.cn/info/1012/3515.htm",
+              "sourceType": "list_page",
+              "publisher": "江南大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 61,
       "name": "合肥工业大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学",
-      "degreeType": "学硕",
-      "duration": "3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "https://yjszs.hfut.edu.cn/2023/0919/c13524a296206/pagem.htm",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "合肥工业大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "61-1",
+          "schoolId": 61,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学",
+          "degreeTypes": [
+            "学硕"
+          ],
+          "notices": [
+            {
+              "id": "61-1-1",
+              "programId": "61-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "https://yjszs.hfut.edu.cn/2023/0919/c13524a296206/pagem.htm",
+              "sourceType": "list_page",
+              "publisher": "合肥工业大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 62,
       "name": "太原理工大学",
       "tier": "第五梯队",
-      "specialty": "中国语言文学",
-      "degreeType": "学硕",
-      "duration": "3年",
-      "examForm": "材料审核、复试",
-      "englishRequirement": "CET-4或CET-6",
-      "applicationPeriod": "9月中旬-10月初",
-      "deadline": "2024年10月初",
-      "url": "http://www.gs.tyut.edu.cn/info/1261/11099.htm",
-      "year": 2026,
-      "lastVerifiedAt": "2026-01-16",
-      "sourceType": "list_page",
-      "publisher": "太原理工大学研究生院",
-      "linkGrade": "B"
+      "programs": [
+        {
+          "id": "62-1",
+          "schoolId": 62,
+          "programName": "中国语言文学",
+          "department": "文学院/中文系",
+          "specialty": "中国语言文学",
+          "degreeTypes": [
+            "学硕"
+          ],
+          "notices": [
+            {
+              "id": "62-1-1",
+              "programId": "62-1",
+              "year": 2026,
+              "title": "2026年推免硕士研究生招生通知",
+              "url": "http://www.gs.tyut.edu.cn/info/1261/11099.htm",
+              "sourceType": "list_page",
+              "publisher": "太原理工大学研究生院",
+              "linkGrade": "B",
+              "applicationPeriod": "9月中旬-10月初",
+              "deadline": "2024年10月初",
+              "examForm": "材料审核、复试",
+              "englishRequirement": "CET-4或CET-6",
+              "duration": "3年",
+              "publishedAt": "2024年10月初",
+              "lastVerifiedAt": "2026-01-16"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

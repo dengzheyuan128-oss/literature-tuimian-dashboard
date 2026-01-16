@@ -217,3 +217,77 @@
 - D级数量 = 0
 - 第一、二梯队A级占比 = 100%
 
+
+---
+
+## 九、v1.1结构说明（2026-01-16新增）
+
+### 结构升级
+
+v1.1采用三层嵌套结构，支持一校多项目、一项目多通知：
+
+```
+School (院校)
+  └── Program[] (项目)
+        └── Notice[] (通知)
+```
+
+### School（院校层）
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `id` | number | 院校ID |
+| `name` | string | 院校名称 |
+| `tier` | string | 梯队分类 |
+| `location` | string | 地理位置 |
+| `is985` | boolean | 是否985 |
+| `is211` | boolean | 是否211 |
+| `disciplineGrade` | string | 学科评估等级 |
+| `programs` | Program[] | 项目列表 |
+
+### Program（项目层）
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `id` | string | 项目ID（格式：`{schoolId}-{序号}`） |
+| `schoolId` | number | 所属院校ID |
+| `programName` | string | 项目名称 |
+| `department` | string | 所属院系 |
+| `specialty` | string | 专业方向 |
+| `degreeTypes` | string[] | 学位类型数组 |
+| `notices` | Notice[] | 通知列表 |
+
+### Notice（通知层）
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `id` | string | 通知ID（格式：`{programId}-{序号}`） |
+| `programId` | string | 所属项目ID |
+| `year` | number | 推免年份 |
+| `title` | string | 通知标题 |
+| `url` | string | 通知链接 |
+| `sourceType` | string | 来源类型 |
+| `publisher` | string | 发布单位 |
+| `linkGrade` | string | 链接质量等级 |
+| `applicationPeriod` | string | 申请时间段 |
+| `deadline` | string | 截止时间 |
+| `examForm` | string | 考核形式 |
+| `englishRequirement` | string | 英语要求 |
+| `duration` | string | 学制 |
+| `publishedAt` | string | 发布时间 |
+| `lastVerifiedAt` | string | 最后核验时间 |
+
+### 向后兼容
+
+dataLoader.ts提供自动展平功能：
+- v1.1数据自动展平为v1兼容格式
+- 前端代码无需修改即可使用
+- 取每个学校的第一个项目的第一条通知作为展平数据
+
+### 迁移工具
+
+使用`scripts/migrate-to-v1.1.js`进行数据迁移：
+```bash
+node scripts/migrate-to-v1.1.js
+```
+
