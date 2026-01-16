@@ -2,37 +2,47 @@ import { UserProfile, MatchResult, MatchReport } from "@/types/userProfile";
 import universitiesData from "@/data/universities.json";
 import { University } from "@/types/university";
 
-// 院校层级定义
+// 院校层级定义（基于学术实力标准）
 const UNIVERSITY_TIERS = {
   "第一梯队": {
-    minGPA: 3.2,
-    minRankingPercentile: 30,
-    minCET6: 480,
-    researchWeight: 0.3,
+    // 全国核心型：北大、北师大、复旦、南大、川大、人大
+    minGPA: 3.5,
+    minRankingPercentile: 10,
+    minCET6: 500,
+    researchWeight: 0.4,
+    description: "你不申请，会后悔的那种"
   },
   "第二梯队": {
-    minGPA: 3.0,
-    minRankingPercentile: 40,
-    minCET6: 450,
-    researchWeight: 0.25,
+    // 强势研究型：华东师大、浙大、山大、武大、中山、吉大、南开、清华
+    minGPA: 3.3,
+    minRankingPercentile: 20,
+    minCET6: 480,
+    researchWeight: 0.35,
+    description: "非常值得冲，但需要方向匹配"
   },
   "第三梯队": {
-    minGPA: 2.8,
-    minRankingPercentile: 50,
-    minCET6: 420,
-    researchWeight: 0.2,
+    // 稳健学术型：南师大、陕师大、东北师大、华中师大、苏大、兰大等
+    minGPA: 3.0,
+    minRankingPercentile: 30,
+    minCET6: 450,
+    researchWeight: 0.3,
+    description: "性价比高、风险可控"
   },
   "第四梯队": {
+    // 校内优势型：厦大、湖南师大、华南师大、西南大学等
+    minGPA: 2.8,
+    minRankingPercentile: 50,
+    minCET6: 425,
+    researchWeight: 0.25,
+    description: "要看清内部结构再决定"
+  },
+  "第五梯队": {
+    // 学校光环型：上交、华科、同济、天大、东大等理工科985
     minGPA: 2.7,
     minRankingPercentile: 60,
     minCET6: 400,
-    researchWeight: 0.15,
-  },
-  "第五梯队": {
-    minGPA: 2.5,
-    minRankingPercentile: 70,
-    minCET6: 380,
-    researchWeight: 0.1,
+    researchWeight: 0.2,
+    description: "别被985/211标签骗了"
   },
 };
 
