@@ -9,23 +9,19 @@
 ## PR-0: Schema锁定和统一（P0.1）
 
 **预计时间**: 1-2小时  
-**状态**: ⏳ 待开始
+**状态**: ✅ 已完成  
+**实际耗时**: 1.5小时
 
-### 任务清单
-
-- [ ] 在universities.json中添加schemaVersion字段
-- [ ] 在universities.json中添加lastUpdated字段
-- [ ] 确认并文档化所有v1字段名称
-- [ ] 更新README.md中的字段说明
-- [ ] 更新README.md中的数据示例
-- [ ] 更新check-data-quality.js中的字段校验规则
-- [ ] 删除所有对majors/types/noticeUrl的引用
-- [ ] 运行检查脚本验证
-- [ ] 提交PR-0到GitHub
-
----
-
-## PR-1: 补齐年度与来源元数据（P0.2）
+### 任务清- \[x\] 在universities.json中添加schemaVersion字段
+- \[x\] 在universities.json中添加lastUpdated字段
+- \[x\] 确认并文档化所有v1字段名称
+- \[x\] 更新README.md中的字段说明
+- \[x\] 更新README.md中的数据示例
+- \[x\] 更新check-data-quality.js中的字段校验规则
+- \[x\] 创建 dataLoader.ts 统一数据加载
+- \[x\] 更新Home.tsx使用dataLoader
+- \[x\] 运行检查脚本验证
+- \[x\] 提交PR-0到GitHub 补齐年度与来源元数据（P0.2）
 
 **预计时间**: 2-3小时  
 **状态**: ⏳ 待开始
@@ -170,14 +166,12 @@
 
 | PR | 状态 | 开始时间 | 完成时间 | 实际耗时 |
 |----|------|---------|---------|---------|
-| PR-0 | ⏳ 待开始 | - | - | - |
+| PR-0 | ✅ 已完成 | 2026-01-16 | 2026-01-16 | 1.5h |
 | PR-1 | ⏳ 待开始 | - | - | - |
 | PR-2 | ⏳ 待开始 | - | - | - |
 | PR-3 | ⏳ 待开始 | - | - | - |
 | PR-4 | ⏳ 待开始 | - | - | - |
-
-**总体进度**: 0% (0/5 PR完成)
-
+**总体进度**: 20% \(1/5 PR完成\)
 ---
 
 ## 注意事项
