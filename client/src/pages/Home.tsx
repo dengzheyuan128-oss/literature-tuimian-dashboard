@@ -38,7 +38,7 @@ export default function Home() {
       <aside className="fixed left-0 top-0 h-full w-16 md:w-20 bg-sidebar border-r border-sidebar-border z-50 hidden lg:flex flex-col items-center py-8 shadow-sm">
         <div className="mb-8">
           <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-md">
-            <span className="font-bold text-lg">文</span>
+            <span className="font-bold text-lg">钝</span>
           </div>
         </div>
         <div className="flex-1 flex flex-col items-center gap-8">
@@ -75,7 +75,7 @@ export default function Home() {
                 2025年最新收录 · 985/211高校
               </div>
               <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-foreground leading-tight">
-                文苑<span className="text-primary">推免</span>指南
+                钝学<span className="text-primary">推免</span>指南
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed font-sans font-light">
                 汇集全国顶尖高校文学院/中文系推免硕士考核通知，
