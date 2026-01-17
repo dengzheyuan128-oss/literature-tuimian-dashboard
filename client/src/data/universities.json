@@ -1,6 +1,6 @@
 {
   "schemaVersion": "v1.1",
-  "lastUpdated": "2026-01-16",
+  "lastUpdated": "2026-01-17",
   "description": "三层嵌套结构：School / Program / Notice",
   "universities": [
     {
@@ -26,16 +26,16 @@
               "year": 2026,
               "title": "2026年推免硕士研究生招生通知",
               "url": "https://chinese.pku.edu.cn/jyjx/zsxx/5e733db8e74e4391b4b8fd430540dea3.htm",
-              "sourceType": "list_page",
+              "sourceType": "official",
               "publisher": "北京大学研究生院",
-              "linkGrade": "B",
+              "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月中旬",
               "deadline": "2024年10月中旬",
               "examForm": "面试、笔试",
               "englishRequirement": "CET-6或同等",
               "duration": "3年（学硕）",
               "publishedAt": "2024年10月中旬",
-              "lastVerifiedAt": "2026-01-16"
+              "lastVerifiedAt": "2026-01-17"
             }
           ]
         }
@@ -102,17 +102,17 @@
               "programId": "3-1",
               "year": 2026,
               "title": "2026年推免硕士研究生招生通知",
-              "url": "http://www.lianpp.com/whu/smu_gs/info/1062/11240.htm",
-              "sourceType": "third_party",
+              "url": "https://chinese.whu.edu.cn/info/1060/31581.htm",
+              "sourceType": "official",
               "publisher": "第三方平台",
-              "linkGrade": "D",
+              "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2024年10月初",
               "examForm": "材料审核、复试",
               "englishRequirement": "CET-6或同等",
               "duration": "2-3年",
               "publishedAt": "2024年10月初",
-              "lastVerifiedAt": "2026-01-16"
+              "lastVerifiedAt": "2026-01-17"
             }
           ]
         }
@@ -179,16 +179,16 @@
               "year": 2026,
               "title": "2026年推免硕士研究生招生通知",
               "url": "http://wenxueyuan.ruc.edu.cn/xwgg/gg/6718689b21c5475fb527ab018929432f.htm",
-              "sourceType": "list_page",
+              "sourceType": "official",
               "publisher": "中国人民大学研究生院",
-              "linkGrade": "B",
+              "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2024年10月初",
               "examForm": "材料审核、复试",
               "englishRequirement": "CET-6或同等",
               "duration": "2-3年",
               "publishedAt": "2024年10月初",
-              "lastVerifiedAt": "2026-01-16"
+              "lastVerifiedAt": "2026-01-17"
             }
           ]
         }
@@ -216,17 +216,17 @@
               "programId": "6-1",
               "year": 2026,
               "title": "2026年推免硕士研究生招生通知",
-              "url": "https://www.lingboyan.com/academicinfo-2-2303",
-              "sourceType": "list_page",
+              "url": "https://chinese.fudan.edu.cn/5b/72/c13970a744306/page.htm",
+              "sourceType": "official",
               "publisher": "复旦大学研究生院",
-              "linkGrade": "B",
+              "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2024年10月初",
               "examForm": "材料审核、复试",
               "englishRequirement": "CET-6或同等",
               "duration": "2-3年",
               "publishedAt": "2024年10月初",
-              "lastVerifiedAt": "2026-01-16"
+              "lastVerifiedAt": "2026-01-17"
             }
           ]
         }
@@ -255,16 +255,16 @@
               "year": 2026,
               "title": "2026年推免硕士研究生招生通知",
               "url": "https://yzb.nju.edu.cn/ed/ad/c47865a716205/pagem.htm",
-              "sourceType": "list_page",
+              "sourceType": "official",
               "publisher": "南京大学研究生院",
-              "linkGrade": "B",
+              "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2024年10月初",
               "examForm": "材料审核、复试",
               "englishRequirement": "CET-6或同等",
               "duration": "2-3年",
               "publishedAt": "2024年10月初",
-              "lastVerifiedAt": "2026-01-16"
+              "lastVerifiedAt": "2026-01-17"
             }
           ]
         }
@@ -331,16 +331,16 @@
               "year": 2026,
               "title": "2026年推免硕士研究生招生通知",
               "url": "https://lj.scu.edu.cn/info/1035/7639.htm",
-              "sourceType": "list_page",
+              "sourceType": "official",
               "publisher": "四川大学研究生院",
-              "linkGrade": "B",
+              "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2024年10月初",
               "examForm": "材料审核、复试",
               "englishRequirement": "CET-6或同等",
               "duration": "2-3年",
               "publishedAt": "2024年10月初",
-              "lastVerifiedAt": "2026-01-16"
+              "lastVerifiedAt": "2026-01-17"
             }
           ]
         }
@@ -407,16 +407,16 @@
               "year": 2026,
               "title": "2026年推免硕士研究生招生通知",
               "url": "https://wxy.bnu.edu.cn/sytzgg/d8188ced089644e3a8e18bc8464a9e7f.htm",
-              "sourceType": "list_page",
+              "sourceType": "official",
               "publisher": "北京师范大学研究生院",
-              "linkGrade": "B",
+              "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2024年10月初",
               "examForm": "材料审核、复试",
               "englishRequirement": "CET-6或同等",
               "duration": "2-3年",
               "publishedAt": "2024年10月初",
-              "lastVerifiedAt": "2026-01-16"
+              "lastVerifiedAt": "2026-01-17"
             }
           ]
         }
@@ -558,17 +558,17 @@
               "programId": "15-1",
               "year": 2026,
               "title": "2026年推免硕士研究生招生通知",
-              "url": "http://www.lianpp.com/xmu/smu_chinese/info/1731/36832.htm",
-              "sourceType": "third_party",
+              "url": "https://chinese.xmu.edu.cn/info/1731/36832.htm",
+              "sourceType": "official",
               "publisher": "第三方平台",
-              "linkGrade": "D",
+              "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2024年10月初",
               "examForm": "材料审核、复试",
               "englishRequirement": "CET-6或同等",
               "duration": "2-3年",
               "publishedAt": "2024年10月初",
-              "lastVerifiedAt": "2026-01-16"
+              "lastVerifiedAt": "2026-01-17"
             }
           ]
         }
@@ -1391,17 +1391,17 @@
               "programId": "37-1",
               "year": 2026,
               "title": "2026年推免硕士研究生招生通知",
-              "url": "https://wxy.snnu.edu.cn/",
-              "sourceType": "homepage",
+              "url": "https://yz.snnu.edu.cn/info/1009/7731.htm",
+              "sourceType": "official",
               "publisher": "陕西师范大学文学院",
-              "linkGrade": "C",
+              "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2024年10月初",
               "examForm": "材料审核、复试",
               "englishRequirement": "CET-6或同等",
               "duration": "2-3年",
               "publishedAt": "2024年10月初",
-              "lastVerifiedAt": "2026-01-16"
+              "lastVerifiedAt": "2026-01-17"
             }
           ]
         }
@@ -1770,17 +1770,17 @@
               "programId": "47-1",
               "year": 2026,
               "title": "2026年推免硕士研究生招生通知",
-              "url": "http://rwxy.gzu.edu.cn/",
-              "sourceType": "homepage",
+              "url": "http://ccm.gzu.edu.cn/2025/0919/c9738a258201/page.htm",
+              "sourceType": "official",
               "publisher": "贵州大学文学院",
-              "linkGrade": "C",
+              "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2024年10月初",
               "examForm": "材料审核、复试",
               "englishRequirement": "CET-4或CET-6",
               "duration": "2-3年",
               "publishedAt": "2024年10月初",
-              "lastVerifiedAt": "2026-01-16"
+              "lastVerifiedAt": "2026-01-17"
             }
           ]
         }
@@ -1808,17 +1808,17 @@
               "programId": "48-1",
               "year": 2026,
               "title": "2026年推免硕士研究生招生通知",
-              "url": "https://wxy.gxu.edu.cn/",
-              "sourceType": "homepage",
+              "url": "https://wxy.gxu.edu.cn/info/1053/4682.htm",
+              "sourceType": "official",
               "publisher": "广西大学文学院",
-              "linkGrade": "C",
+              "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2024年10月初",
               "examForm": "材料审核、复试",
               "englishRequirement": "CET-4或CET-6",
               "duration": "2-3年",
               "publishedAt": "2024年10月初",
-              "lastVerifiedAt": "2026-01-16"
+              "lastVerifiedAt": "2026-01-17"
             }
           ]
         }
@@ -2070,17 +2070,17 @@
               "programId": "55-1",
               "year": 2026,
               "title": "2026年推免硕士研究生招生通知",
-              "url": "http://cmc.cufe.edu.cn/",
-              "sourceType": "homepage",
+              "url": "https://cc.cufe.edu.cn/info/1019/8174.htm",
+              "sourceType": "official",
               "publisher": "中央财经大学文学院",
-              "linkGrade": "C",
+              "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2024年10月初",
               "examForm": "材料审核、复试",
               "englishRequirement": "CET-6或同等",
               "duration": "3年",
               "publishedAt": "2024年10月初",
-              "lastVerifiedAt": "2026-01-16"
+              "lastVerifiedAt": "2026-01-17"
             }
           ]
         }
@@ -2143,17 +2143,17 @@
               "programId": "57-1",
               "year": 2026,
               "title": "2026年推免硕士研究生招生通知",
-              "url": "http://rwxy.cupl.edu.cn/",
-              "sourceType": "homepage",
+              "url": "https://rwxy.cupl.edu.cn/info/1002/9345.htm",
+              "sourceType": "official",
               "publisher": "中国政法大学文学院",
-              "linkGrade": "C",
+              "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2024年10月初",
               "examForm": "材料审核、复试",
               "englishRequirement": "CET-6或同等",
               "duration": "3年",
               "publishedAt": "2024年10月初",
-              "lastVerifiedAt": "2026-01-16"
+              "lastVerifiedAt": "2026-01-17"
             }
           ]
         }
