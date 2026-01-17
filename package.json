@@ -10,7 +10,7 @@
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
-    "check:data": "node scripts/check-data-quality.js"
+    "check:data": "node scripts/check-data-quality.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
