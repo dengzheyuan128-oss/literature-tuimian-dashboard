@@ -2655,6 +2655,867 @@
           ]
         }
       ]
+    },
+    {
+      "name": "西北师范大学",
+      "tier": null,
+      "disciplineGrade": "B",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "西北师范大学研究生院",
+              "url": "https://yjsy.nwnu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "扬州大学",
+      "tier": null,
+      "disciplineGrade": "B",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "扬州大学研究生院",
+              "url": "https://yjszs.yzu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "山西大学",
+      "tier": null,
+      "disciplineGrade": "B-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "山西大学研究生院",
+              "url": "https://yjszsw.sxu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "安徽师范大学",
+      "tier": null,
+      "disciplineGrade": "B-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "安徽师范大学研究生院",
+              "url": "https://yjsc.ahnu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "江西师范大学",
+      "tier": null,
+      "disciplineGrade": "B-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "江西师范大学研究生院",
+              "url": "https://yjsy.jxnu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "曲阜师范大学",
+      "tier": null,
+      "disciplineGrade": "B-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "曲阜师范大学研究生院",
+              "url": "https://yjs.qfnu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "湖北大学",
+      "tier": null,
+      "disciplineGrade": "B-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "湖北大学研究生院",
+              "url": "https://gs.hubu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "广西民族大学",
+      "tier": null,
+      "disciplineGrade": "B-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "广西民族大学研究生院",
+              "url": "https://yjs.gxmzu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "内蒙古师范大学",
+      "tier": null,
+      "disciplineGrade": "C+",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "内蒙古师范大学研究生院",
+              "url": "https://yjsc.imnu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "辽宁师范大学",
+      "tier": null,
+      "disciplineGrade": "C+",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "辽宁师范大学研究生院",
+              "url": "https://gra.lnnu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "沈阳师范大学",
+      "tier": null,
+      "disciplineGrade": "C+",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "沈阳师范大学研究生院",
+              "url": "https://graduate.synu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "杭州师范大学",
+      "tier": null,
+      "disciplineGrade": "C+",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "杭州师范大学研究生院",
+              "url": "https://yjs.hznu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "湘潭大学",
+      "tier": null,
+      "disciplineGrade": "C+",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "湘潭大学研究生院",
+              "url": "https://yjsy.xtu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "重庆师范大学",
+      "tier": null,
+      "disciplineGrade": "C+",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "重庆师范大学研究生院",
+              "url": "https://yjsc.cqnu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "西南民族大学",
+      "tier": null,
+      "disciplineGrade": "C+",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "西南民族大学研究生院",
+              "url": "https://yjsy.swun.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "贵州师范大学",
+      "tier": null,
+      "disciplineGrade": "C+",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "贵州师范大学研究生院",
+              "url": "https://yjsc.gznu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "西北民族大学",
+      "tier": null,
+      "disciplineGrade": "C+",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "西北民族大学研究生院",
+              "url": "https://yjsc.xbmu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "新疆师范大学",
+      "tier": null,
+      "disciplineGrade": "C+",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "新疆师范大学研究生院",
+              "url": "https://gs.xjnu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "海南师范大学",
+      "tier": null,
+      "disciplineGrade": "C+",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "海南师范大学研究生院",
+              "url": "https://yjsc.hainnu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "北京第二外国语学院",
+      "tier": null,
+      "disciplineGrade": "C",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "北京第二外国语学院研究生院",
+              "url": "https://yzb.bisu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "吉林师范大学",
+      "tier": null,
+      "disciplineGrade": "C",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "吉林师范大学研究生院",
+              "url": "https://yjsy.jlnu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "浙江工业大学",
+      "tier": null,
+      "disciplineGrade": "C",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "浙江工业大学研究生院",
+              "url": "https://grs.zjut.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "温州大学",
+      "tier": null,
+      "disciplineGrade": "C",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "温州大学研究生院",
+              "url": "https://yjsy.wzu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "华侨大学",
+      "tier": null,
+      "disciplineGrade": "C",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "华侨大学研究生院",
+              "url": "https://yjsc.hqu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "济南大学",
+      "tier": null,
+      "disciplineGrade": "C",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "济南大学研究生院",
+              "url": "https://yjszs.ujn.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "中南民族大学",
+      "tier": null,
+      "disciplineGrade": "C",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "中南民族大学研究生院",
+              "url": "https://yjs.scuec.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "西南交通大学",
+      "tier": null,
+      "disciplineGrade": "C",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "西南交通大学研究生院",
+              "url": "https://gs.swjtu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "西华师范大学",
+      "tier": null,
+      "disciplineGrade": "C",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "西华师范大学研究生院",
+              "url": "https://yjsc.cwnu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "云南师范大学",
+      "tier": null,
+      "disciplineGrade": "C",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "云南师范大学研究生院",
+              "url": "https://yjsy.ynnu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "青岛大学",
+      "tier": null,
+      "disciplineGrade": "C",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "青岛大学研究生院",
+              "url": "https://grad.qdu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "三峡大学",
+      "tier": null,
+      "disciplineGrade": "C",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "三峡大学研究生院",
+              "url": "https://sxdxyjsy.ctgu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "天津外国语大学",
+      "tier": null,
+      "disciplineGrade": "C-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "天津外国语大学研究生院",
+              "url": "https://gs.tjfsu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "渤海大学",
+      "tier": null,
+      "disciplineGrade": "C-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "渤海大学研究生院",
+              "url": "https://yjsy.bhu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "南通大学",
+      "tier": null,
+      "disciplineGrade": "C-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "南通大学研究生院",
+              "url": "https://yjs.ntu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "鲁东大学",
+      "tier": null,
+      "disciplineGrade": "C-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "鲁东大学研究生院",
+              "url": "https://www.grad.ldu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "河南师范大学",
+      "tier": null,
+      "disciplineGrade": "C-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "河南师范大学研究生院",
+              "url": "https://www.htu.edu.cn/yjsxy",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "深圳大学",
+      "tier": null,
+      "disciplineGrade": "C-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "深圳大学研究生院",
+              "url": "https://yz.szu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "贵州民族大学",
+      "tier": null,
+      "disciplineGrade": "C-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "贵州民族大学研究生院",
+              "url": "https://yjs.gzmu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "云南民族大学",
+      "tier": null,
+      "disciplineGrade": "C-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "云南民族大学研究生院",
+              "url": "https://grs.ynni.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "广州大学",
+      "tier": null,
+      "disciplineGrade": "C-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "广州大学研究生院",
+              "url": "https://yjsy.gzhu.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "广东外语外贸大学",
+      "tier": null,
+      "disciplineGrade": "C-",
+      "programs": [
+        {
+          "programName": "中国语言文学",
+          "notices": [
+            {
+              "year": 2026,
+              "title": "广东外语外贸大学研究生院",
+              "url": "https://yz.gdufs.edu.cn",
+              "linkGrade": "B",
+              "sourceType": "homepage",
+              "yearStatus": "unverified",
+              "lastVerifiedAt": "2026-01-17"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
