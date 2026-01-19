@@ -7,6 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Matcher from "./pages/Matcher";
 import MatchResult from "./pages/MatchResult";
+import { BuildInfo } from "./components/BuildInfo";
 
 
 function Router() {
@@ -36,7 +37,12 @@ function App() {
       >
         <TooltipProvider>
           <Toaster />
-          <Router />
+          <div className="relative">
+            <Router />
+            <div className="fixed bottom-4 right-4 z-40 bg-card/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg">
+              <BuildInfo />
+            </div>
+          </div>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
