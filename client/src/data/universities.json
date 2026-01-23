@@ -1,6 +1,6 @@
 {
   "schemaVersion": "v1.1",
-  "lastUpdated": "2026-01-17",
+  "lastUpdated": "2026-01-23",
   "description": "三层嵌套结构：School / Program / Notice",
   "universities": [
     {
@@ -2666,12 +2666,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "西北师范大学研究生院",
-              "url": "https://yjsy.nwnu.edu.cn",
-              "linkGrade": "B",
+              "title": "关于做好2025年接收优秀应届本科毕业生免试攻读研究生工作的通知",
+              "url": "https://yjsy.nwnu.edu.cn/2024/0913/c2701a239495/page.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -2708,12 +2708,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "山西大学研究生院",
-              "url": "https://yjszsw.sxu.edu.cn",
-              "linkGrade": "B",
+              "title": "山西大学2025年接收推荐免试研究生（含直博生）工作章程",
+              "url": "https://yjszsw.sxu.edu.cn/sszs/39f30bc5bbfe4ce08e6e6cfc303563b6.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -2729,12 +2729,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "安徽师范大学研究生院",
-              "url": "https://yjsc.ahnu.edu.cn",
-              "linkGrade": "B",
+              "title": "2025年安徽师范大学招收推荐免试攻读硕士研究生 and 直接攻读博士研究生工作的通知",
+              "url": "https://yz.ahnu.edu.cn/info/1006/6096.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -2750,12 +2750,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "江西师范大学研究生院",
-              "url": "https://yjsy.jxnu.edu.cn",
-              "linkGrade": "B",
+              "title": "江西师范大学2025年接收推荐免试攻读研究生章程",
+              "url": "https://yjsy.jxnu.edu.cn/info/1031/3384.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -2792,12 +2792,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "湖北大学研究生院",
-              "url": "https://gs.hubu.edu.cn",
-              "linkGrade": "B",
+              "title": "湖北大学2025年接收具有推荐免试资格的考生攻读研究生公告",
+              "url": "https://yz.hubu.edu.cn/info/1011/3031.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -2813,12 +2813,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "广西民族大学研究生院",
-              "url": "https://yjs.gxmzu.edu.cn",
-              "linkGrade": "B",
+              "title": "广西民族大学2025年接收推荐免试硕士研究生简章",
+              "url": "https://yjs.gxmzu.edu.cn/info/1081/21564.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -2834,12 +2834,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "内蒙古师范大学研究生院",
-              "url": "https://yjsc.imnu.edu.cn",
-              "linkGrade": "B",
+              "title": "关于接收2025年优秀应届本科毕业生免试攻读硕士学位研究生工作的通知",
+              "url": "https://yjsc.imnu.edu.cn/info/1004/3750.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -2855,12 +2855,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "辽宁师范大学研究生院",
-              "url": "https://gra.lnnu.edu.cn",
-              "linkGrade": "B",
+              "title": "辽宁师范大学2025年接收推荐免试攻读硕士（含直博生）学位研究生章程",
+              "url": "https://master.lnnu.edu.cn/info/1024/5145.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -2876,12 +2876,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "沈阳师范大学研究生院",
-              "url": "https://graduate.synu.edu.cn",
-              "linkGrade": "B",
+              "title": "沈阳师范大学关于做好2025年推荐优秀应届本科毕业生免试攻读研究生工作通知",
+              "url": "https://yjs.synu.edu.cn/2024/0828/c3649a94985/page.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -2897,12 +2897,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "杭州师范大学研究生院",
-              "url": "https://yjs.hznu.edu.cn",
-              "linkGrade": "B",
+              "title": "杭州师范大学2025年接收推荐免试硕士研究生章程",
+              "url": "https://yjs.hznu.edu.cn/c/2024-09-28/3004481.shtml",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -2918,12 +2918,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "湘潭大学研究生院",
-              "url": "https://yjsy.xtu.edu.cn",
-              "linkGrade": "B",
+              "title": "湘潭大学2025年招收推荐免试攻读研究生（含硕士生、直博生）简章",
+              "url": "https://yjsc.xtu.edu.cn/info/1010/8993.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -2939,12 +2939,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "重庆师范大学研究生院",
-              "url": "https://yjsc.cqnu.edu.cn",
-              "linkGrade": "B",
+              "title": "重庆师范大学2025年接收优秀应届本科毕业生免试攻读硕士学位研究生章程",
+              "url": "https://graduate.cqnu.edu.cn/info/10542/97609.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -2960,12 +2960,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "西南民族大学研究生院",
-              "url": "https://yjsy.swun.edu.cn",
-              "linkGrade": "B",
+              "title": "关于做好2025年接收推荐免试研究生工作的通知",
+              "url": "https://yjsglxt.swun.edu.cn/zsgz/sszs/16.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -2981,12 +2981,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "贵州师范大学研究生院",
-              "url": "https://yjsc.gznu.edu.cn",
-              "linkGrade": "B",
+              "title": "贵州师范大学2025年接收推荐免试攻读硕士研究生章程",
+              "url": "https://yjsc.gznu.edu.cn/info/1623/95556.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3023,12 +3023,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "新疆师范大学研究生院",
-              "url": "https://gs.xjnu.edu.cn",
-              "linkGrade": "B",
+              "title": "新疆师范大学2025年接收优秀应届本科毕业生免试攻读硕士学位研究生章程",
+              "url": "https://www.xjnu.edu.cn/info/1022/20311.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3044,12 +3044,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "海南师范大学研究生院",
-              "url": "https://yjsc.hainnu.edu.cn",
-              "linkGrade": "B",
+              "title": "海南师范大学2025年接收推荐免试攻读硕士学位研究生简章",
+              "url": "https://f.hainnu.edu.cn/2024/0927/20240927113314971.pdf",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3065,12 +3065,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "北京第二外国语学院研究生院",
-              "url": "https://yzb.bisu.edu.cn",
-              "linkGrade": "B",
+              "title": "北京第二外国语学院2025年接收推荐免试攻读硕士学位研究生招生简章",
+              "url": "https://yanzhao.bisu.edu.cn/mixmedia/a/202409/27/WS676b80adcf1e66a18c75f51c.html",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3128,12 +3128,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "温州大学研究生院",
-              "url": "https://yjsy.wzu.edu.cn",
-              "linkGrade": "B",
+              "title": "温州大学2025年接收优秀应届本科毕业生免试攻读硕士学位研究生章程",
+              "url": "https://shxy.wzu.edu.cn/info/1086/1191.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3149,12 +3149,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "华侨大学研究生院",
-              "url": "https://yjsc.hqu.edu.cn",
-              "linkGrade": "B",
+              "title": "华侨大学2025年推免生（硕士生和直博生）招生公告",
+              "url": "https://yjszs.hqu.edu.cn/info/1013/3736.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3170,12 +3170,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "济南大学研究生院",
-              "url": "https://yjszs.ujn.edu.cn",
-              "linkGrade": "B",
+              "title": "济南大学2025年接收推免生工作章程",
+              "url": "https://yz.ujn.edu.cn/info/1032/3114.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3191,12 +3191,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "中南民族大学研究生院",
-              "url": "https://yjs.scuec.edu.cn",
-              "linkGrade": "B",
+              "title": "中南民族大学2025年接收推荐免试研究生（含直博生）办法",
+              "url": "https://www.scuec.edu.cn/__local/A/4E/17/E85E353AF9ED2E6205D91ACB9AA_B41D7FD5_1AE90.pdf",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3212,12 +3212,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "西南交通大学研究生院",
-              "url": "https://gs.swjtu.edu.cn",
-              "linkGrade": "B",
+              "title": "西南交通大学2025年接收推荐免试攻读研究生（含直博生）章程",
+              "url": "https://gsnews.swjtu.edu.cn/__local/A/B4/5D/E1C356CBD058E2686A5B0496D3F_7D2D2318_48C6A.pdf",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3254,12 +3254,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "云南师范大学研究生院",
-              "url": "https://yjsy.ynnu.edu.cn",
-              "linkGrade": "B",
+              "title": "云南师范大学2025年接收推免生办法",
+              "url": "https://grs.ynnu.edu.cn/info/1035/1271.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3275,12 +3275,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "青岛大学研究生院",
-              "url": "https://grad.qdu.edu.cn",
-              "linkGrade": "B",
+              "title": "青岛大学2025年接收推荐免试硕士研究生和博士研究生的通知",
+              "url": "http://grad.qdu.edu.cn/info/1118/3838.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3296,12 +3296,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "三峡大学研究生院",
-              "url": "https://sxdxyjsy.ctgu.edu.cn",
-              "linkGrade": "B",
+              "title": "三峡大学接收2025级推免生（含直博生）复试录取工作方案",
+              "url": "https://sxdxyjsy.ctgu.edu.cn/info/1009/6193.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3317,12 +3317,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "天津外国语大学研究生院",
-              "url": "https://gs.tjfsu.edu.cn",
-              "linkGrade": "B",
+              "title": "天津外国语大学2025年硕士研究生招生简章",
+              "url": "https://grad.tjfsu.edu.cn/info/1075/3384.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3338,12 +3338,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "渤海大学研究生院",
-              "url": "https://yjsy.bhu.edu.cn",
-              "linkGrade": "B",
+              "title": "渤海大学2025年接收校内外优秀应届本科生免试攻读硕士研究生工作办法",
+              "url": "https://yjszsxxw.bhu.edu.cn/engine2/general/4171457/detail?engineInstanceId=656398&typeId=2984618&pageId=85721&websiteId=63018",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3359,12 +3359,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "南通大学研究生院",
-              "url": "https://yjs.ntu.edu.cn",
-              "linkGrade": "B",
+              "title": "南通大学2025年接收推荐免试攻读研究生（含直博生）工作办法",
+              "url": "https://yjszs.ntu.edu.cn/2024/0913/c7623a248196/page.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3401,12 +3401,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "河南师范大学研究生院",
-              "url": "https://www.htu.edu.cn/yjsxy",
-              "linkGrade": "B",
+              "title": "2025年河南师范大学接收推荐免试研究生（含直博生）招生简章",
+              "url": "https://www.htu.edu.cn/yjsxy/2024/0927/c7964a321514/page.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3422,12 +3422,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "深圳大学研究生院",
-              "url": "https://yz.szu.edu.cn",
-              "linkGrade": "B",
+              "title": "深圳大学2025年接收推荐免试攻读研究生章程（含直博生）",
+              "url": "https://yz.szu.edu.cn/info/1006/12988.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3485,12 +3485,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "广州大学研究生院",
-              "url": "https://yjsy.gzhu.edu.cn",
-              "linkGrade": "B",
+              "title": "广州大学2025年接收推荐免试攻读硕士学位研究生章程",
+              "url": "https://yjsy.gzhu.edu.cn/info/1006/1030.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
@@ -3506,12 +3506,12 @@
           "notices": [
             {
               "year": 2026,
-              "title": "广东外语外贸大学研究生院",
-              "url": "https://yz.gdufs.edu.cn",
-              "linkGrade": "B",
+              "title": "广东外语外贸大学2025年接收应届本科毕业生推荐免试攻读研究生工作办法",
+              "url": "https://yz.gdufs.edu.cn/info/1017/2465.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-01-23"
             }
           ]
         }
