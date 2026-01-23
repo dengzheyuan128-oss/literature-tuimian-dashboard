@@ -30,7 +30,7 @@ export default function Home() {
     });
   }, [searchTerm, selectedLevel, universities]);
 
-  const levels = Array.from(new Set(universities.map(u => u.tier))).sort();
+  const levels = Array.from(new Set(universities.map(u => u.tier).filter(Boolean))).sort() as string[];
 
   return (
     <div className="min-h-screen bg-background text-foreground font-serif selection:bg-primary/20">
