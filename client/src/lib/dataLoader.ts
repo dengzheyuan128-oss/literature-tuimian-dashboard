@@ -85,7 +85,7 @@ function flattenSchool(school: School): University {
     is211: school.is211,
     disciplineGrade: school.disciplineGrade,
     specialty: firstProgram?.specialty || '',
-    degreeType: firstProgram?.degreeTypes.join('、') || '',
+    degreeType: firstProgram?.degreeTypes?.join('、') || '',
     duration: firstNotice?.duration,
     examForm: firstNotice?.examForm || '',
     englishRequirement: firstNotice?.englishRequirement || '',
