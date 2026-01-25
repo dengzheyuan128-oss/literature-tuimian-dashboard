@@ -115,7 +115,7 @@ pnpm preview
 }
 ```
 
-📝 **详细的Schema文档请参考** [SCHEMA.md](./SCHEMA.md)
+📝 **详细的Schema文档请参考** [SCHEMA.md](./docs/data/SCHEMA.md)
 
 ### University对象字段（v1）
 
@@ -301,7 +301,7 @@ chore: 构建/工具链相关
 4. 确认配置（Vercel会自动检测）
 5. 点击Deploy
 
-详细部署指南请查看：[VERCEL_DEPLOYMENT_GUIDE.md](./VERCEL_DEPLOYMENT_GUIDE.md)
+详细部署指南请查看：[VERCEL_DEPLOYMENT_GUIDE.md](./docs/deployment/VERCEL_DEPLOYMENT_GUIDE.md)
 
 ### 其他部署方式
 

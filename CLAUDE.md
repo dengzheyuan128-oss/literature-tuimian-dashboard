@@ -177,7 +177,7 @@ Available via `vite.config.ts` build info system.
 
 ## Key Technical Decisions
 
-Reference: `DECISIONS.md` for full decision log.
+Reference: `docs/02_DECISIONS.md` for full decision log.
 
 ### D-001: Three-Layer Nested Structure (v1.1)
 School → Program → Notice hierarchy supports multiple programs per school and historical notices. **Backward compatible** via `dataLoader.ts` flattening.
@@ -205,7 +205,7 @@ Changes >3 files or >300 lines require written plan → review → execution.
 ### Adding/Updating Universities
 
 1. **Edit data file**: `client/src/data/universities.json`
-2. **Follow schema**: Use v1 or v1.1 structure (see `SCHEMA.md`)
+2. **Follow schema**: Use v1 or v1.1 structure (see `docs/data/SCHEMA.md`)
 3. **Critical**: Ensure `url` points to specific notice page, not homepage
 4. **Run validation**: `pnpm check:data`
 5. **Fix issues** until all checks pass
@@ -214,13 +214,13 @@ Changes >3 files or >300 lines require written plan → review → execution.
 
 ### Data Quality Standards
 
-- **Required fields**: All fields marked ✅ in `SCHEMA.md`
+- **Required fields**: All fields marked ✅ in `docs/data/SCHEMA.md`
 - **URL format**: Must be `https://` official notice pages
 - **Date format**: `YYYY年MM月DD日` or `MM月DD日`
 - **Tier values**: Must be one of 第一梯队 through 第五梯队
 - **Link grade**: A/B/C/D based on URL quality
 
-See `NOTICE_GRADE_RULES.md` for detailed link grading rules.
+See `docs/data/NOTICE_GRADE_RULES.md` for detailed link grading rules.
 
 ## Development Workflow
 
@@ -322,16 +322,32 @@ pnpm preview  # Preview production build
 - Auto-deploys from main branch
 - Build command: `pnpm build`
 - Output directory: `dist/public`
-- See `VERCEL_DEPLOYMENT_GUIDE.md` for details
+- See `docs/deployment/VERCEL_DEPLOYMENT_GUIDE.md` for details
 
 ## Documentation References
 
-- **SCHEMA.md**: Data schema specifications (v1 and v1.1)
-- **DECISIONS.md**: Critical architectural decisions
-- **NOTICE_GRADE_RULES.md**: Link quality grading rules
-- **DATA_QUALITY_ISSUES.md**: Known data quality issues
-- **DEVELOPMENT_ROADMAP.md**: Feature roadmap
-- **VERCEL_DEPLOYMENT_GUIDE.md**: Deployment instructions
+**Start Here**: `docs/00_START_HERE.md` - Complete documentation navigation
+
+**Core Documentation**:
+- `docs/01_STATE.md` - Project status and progress
+- `docs/02_DECISIONS.md` - Critical architectural decisions
+- `docs/03_CHECKLIST.md` - Data validation checklist
+
+**Data Documentation**:
+- `docs/data/SCHEMA.md` - Data schema specifications (v1 and v1.1)
+- `docs/data/NOTICE_GRADE_RULES.md` - Link quality grading rules
+- `docs/data/DATA_QUALITY_ISSUES.md` - Known data quality issues
+
+**Planning & Roadmap**:
+- `docs/plans/TODO.md` - Current TODO list
+- `docs/roadmap/DEVELOPMENT_ROADMAP.md` - Feature roadmap
+
+**Deployment & Operations**:
+- `docs/deployment/VERCEL_DEPLOYMENT_GUIDE.md` - Deployment instructions
+
+**Refactoring**:
+- `docs/refactor/REFACTORING_PLAN.md` - Refactoring plans
+- `docs/refactor/REFACTORING_ASSESSMENT_REPORT.md` - Assessment reports
 
 ## Critical Constraints
 
