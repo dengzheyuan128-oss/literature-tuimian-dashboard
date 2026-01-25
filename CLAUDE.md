@@ -349,6 +349,14 @@ pnpm preview  # Preview production build
 - `docs/refactor/REFACTORING_PLAN.md` - Refactoring plans
 - `docs/refactor/REFACTORING_ASSESSMENT_REPORT.md` - Assessment reports
 
+**Additional docs (recently added)**:
+- `docs/workflow/ClaudeCode_本地开发低门槛高质量工作流.md` - Claude Code workflow guide
+- `docs/handbook/零基础协作手册.md` - Beginner collaboration handbook
+- `docs/analysis/项目分析报告.md` - Project analysis report
+- `docs/feedback/给Manus的反馈_院校名录空壳问题根因与修复方案.md` - Feedback on data issues
+- `docs/plans/修正版实施方案-PR1-PR3.md` - Implementation plan (PR1-PR3)
+- `docs/plans/终极修正版-PR1-PR3.md` - Final implementation plan
+
 ## Critical Constraints
 
 1. **Always use pnpm** - Project uses pnpm-specific features (patches, overrides)
