@@ -322,40 +322,23 @@ pnpm preview  # Preview production build
 - Auto-deploys from main branch
 - Build command: `pnpm build`
 - Output directory: `dist/public`
-- See `docs/deployment/VERCEL_DEPLOYMENT_GUIDE.md` for details
+- See `docs/03-Plans/VERCEL_DEPLOYMENT_GUIDE.md` for details
 
 ## Documentation References
 
-**Start Here**: `docs/00_START_HERE.md` - Complete documentation navigation
+**Start Here**: `docs/00-INDEX.md` - Complete documentation navigation
 
-**Core Documentation**:
-- `docs/01_STATE.md` - Project status and progress
-- `docs/02_DECISIONS.md` - Critical architectural decisions
-- `docs/03_CHECKLIST.md` - Data validation checklist
+**Essential Documentation** (always load these):
+- `docs/01-Project/PROJECT_STATUS.md` - Project status and progress
+- `docs/01-Project/DECISIONS.md` - Critical architectural decisions
+- `docs/03-Plans/TODO.md` - Current TODO list
 
-**Data Documentation**:
-- `docs/data/SCHEMA.md` - Data schema specifications (v1 and v1.1)
-- `docs/data/NOTICE_GRADE_RULES.md` - Link quality grading rules
-- `docs/data/DATA_QUALITY_ISSUES.md` - Known data quality issues
+**Data Documentation** (load when working with data):
+- `docs/02-Data/SCHEMA.md` - Data schema specifications (v1 and v1.1)
+- `docs/02-Data/NOTICE_GRADE_RULES.md` - Link quality grading rules
 
-**Planning & Roadmap**:
-- `docs/plans/TODO.md` - Current TODO list
-- `docs/roadmap/DEVELOPMENT_ROADMAP.md` - Feature roadmap
-
-**Deployment & Operations**:
-- `docs/deployment/VERCEL_DEPLOYMENT_GUIDE.md` - Deployment instructions
-
-**Refactoring**:
-- `docs/refactor/REFACTORING_PLAN.md` - Refactoring plans
-- `docs/refactor/REFACTORING_ASSESSMENT_REPORT.md` - Assessment reports
-
-**Additional docs (recently added)**:
-- `docs/workflow/ClaudeCode_本地开发低门槛高质量工作流.md` - Claude Code workflow guide
-- `docs/handbook/零基础协作手册.md` - Beginner collaboration handbook
-- `docs/analysis/项目分析报告.md` - Project analysis report
-- `docs/feedback/给Manus的反馈_院校名录空壳问题根因与修复方案.md` - Feedback on data issues
-- `docs/plans/修正版实施方案-PR1-PR3.md` - Implementation plan (PR1-PR3)
-- `docs/plans/终极修正版-PR1-PR3.md` - Final implementation plan
+**Archive** (do NOT auto-load, only when explicitly needed):
+- `docs/99-Archive/` - Historical documents, implementation plans, reports
 
 ## Critical Constraints
 

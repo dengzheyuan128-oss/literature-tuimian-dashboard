@@ -5,6 +5,18 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/dengzheyuan128-oss/literature-tuimian-dashboard)
 
+## 📚 文档导航
+
+**文档入口**: 从 [`docs/00-INDEX.md`](./docs/00-INDEX.md) 开始阅读
+
+| 快速链接 | 说明 |
+|----------|------|
+| [项目状态](./docs/01-Project/PROJECT_STATUS.md) | 当前进度与状态 |
+| [数据结构](./docs/02-Data/SCHEMA.md) | v1.1 Schema 定义 |
+| [待办事项](./docs/03-Plans/TODO.md) | 开发计划 |
+
+---
+
 ## 📖 项目简介
 
 **钝学推免指南**是一个专注于985/211高校文学类专业推免硕士研究生信息的综合平台。我们收录了全国62所顶尖高校的推免招生信息，并基于教育部学科评估结果进行科学分类，为推免学生提供全面、准确的信息参考。
@@ -115,7 +127,7 @@ pnpm preview
 }
 ```
 
-📝 **详细的Schema文档请参考** [SCHEMA.md](./SCHEMA.md)
+📝 **详细的Schema文档请参考** [docs/02-Data/SCHEMA.md](./docs/02-Data/SCHEMA.md)
 
 ### University对象字段（v1）
 
@@ -301,7 +313,7 @@ chore: 构建/工具链相关
 4. 确认配置（Vercel会自动检测）
 5. 点击Deploy
 
-详细部署指南请查看：[VERCEL_DEPLOYMENT_GUIDE.md](./VERCEL_DEPLOYMENT_GUIDE.md)
+详细部署指南请查看：[docs/03-Plans/VERCEL_DEPLOYMENT_GUIDE.md](./docs/03-Plans/VERCEL_DEPLOYMENT_GUIDE.md)
 
 ### 其他部署方式
 
