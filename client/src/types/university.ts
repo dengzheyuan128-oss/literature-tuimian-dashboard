@@ -1,3 +1,6 @@
+// 数据完整性状态
+export type DataStatus = 'COMPLETE' | 'PARTIAL' | 'PENDING_MANUAL';
+
 export interface University {
   id: number;
   name: string;
@@ -14,4 +17,5 @@ export interface University {
   applicationPeriod: string;
   deadline: string;
   url: string;
+  dataStatus: DataStatus;
 }
