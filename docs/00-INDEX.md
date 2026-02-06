@@ -1,7 +1,18 @@
 # 文档索引
 
 > 钝学推免指南 - 文档中心
-> 最后更新: 2026-01-27
+> 最后更新: 2026-02-06
+
+---
+
+## ⚡ 会话快速恢复（Claude启动必读）
+
+| 我想要... | 去哪里 | 阅读时间 |
+|-----------|--------|---------|
+| **快速上手** | [QUICK_START.md](QUICK_START.md) | 2-3分钟 |
+| **恢复上次工作** | [SESSION_CONTEXT.md](SESSION_CONTEXT.md) | 1分钟 |
+| **查看关键指标** | [METRICS_DASHBOARD.md](METRICS_DASHBOARD.md) | 30秒 |
+| **检查阻塞问题** | [BLOCKERS.md](BLOCKERS.md) | 按需 |
 
 ---
 
@@ -22,6 +33,10 @@
 ```
 docs/
 ├── 00-INDEX.md              # 本文件 - 文档入口
+├── QUICK_START.md           # ⚡ 快速上手指南（Claude启动必读）
+├── SESSION_CONTEXT.md       # 🔄 会话上下文追踪
+├── METRICS_DASHBOARD.md     # 📊 关键指标看板
+├── BLOCKERS.md              # 🚧 阻塞问题与技术债
 ├── 01-Project/              # 项目管理
 │   ├── PROJECT_STATUS.md    # 项目状态
 │   ├── DECISIONS.md         # 架构决策记录
@@ -40,6 +55,17 @@ docs/
     ├── 修正版实施方案-*.md   # 实施方案历史版本
     └── ...                  # 其他历史文档
 ```
+
+---
+
+## 00-会话记忆系统（Session Continuity）
+
+| 文档 | 说明 | 更新频率 |
+|------|------|---------|
+| [QUICK_START.md](QUICK_START.md) | Claude启动必读：5分钟快速恢复项目上下文 | 项目状态变化时 |
+| [SESSION_CONTEXT.md](SESSION_CONTEXT.md) | 会话追踪：上次做了什么、下次做什么 | 每次会话结束 |
+| [METRICS_DASHBOARD.md](METRICS_DASHBOARD.md) | 关键指标看板：数据健康度、PR进度 | 完成PR或数据修复后 |
+| [BLOCKERS.md](BLOCKERS.md) | 阻塞问题、技术债、待决策事项追踪 | 遇到问题时 |
 
 ---
 
