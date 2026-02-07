@@ -204,12 +204,63 @@ export function getMissingFields(school: School): string[] {
 // ============ 数据转换 ============
 
 /**
+ * 计算program的数据完整度得分
+ * 用于选择最完整的program展示
+ */
+function getProgramCompleteness(program: Program | null): number {
+  if (!program) return 0;
+  let score = 0;
+
+  // Program级别字段
+  if (!isEmpty(program.specialty)) score += 3;
+  if (!isEmpty(program.department)) score += 1;
+  if (Array.isArray(program.degreeTypes) && program.degreeTypes.length > 0) score += 1;
+
+  // Notice级别字段
+  const notice = Array.isArray(program.notices) && program.notices.length > 0 ? program.notices[0] : null;
+  if (notice) {
+    if (!isEmpty(notice.url)) score += 2;
+    if (!isEmpty(notice.applicationPeriod) && notice.applicationPeriod !== '待确认') score += 2;
+    if (!isEmpty(notice.deadline) && notice.deadline !== '待确认') score += 2;
+    if (!isEmpty(notice.examForm) && notice.examForm !== '待确认') score += 1;
+    if (!isEmpty(notice.englishRequirement) && notice.englishRequirement !== '待确认') score += 1;
+  }
+
+  return score;
+}
+
+/**
+ * 选择最完整的program
+ * 如果有多个program，返回数据最完整的那个
+ */
+function selectBestProgram(programs: Program[]): Program | null {
+  if (!Array.isArray(programs) || programs.length === 0) return null;
+  if (programs.length === 1) return programs[0];
+
+  // 计算每个program的完整度得分，选择最高的
+  let bestProgram = programs[0];
+  let bestScore = getProgramCompleteness(programs[0]);
+
+  for (let i = 1; i < programs.length; i++) {
+    const score = getProgramCompleteness(programs[i]);
+    if (score > bestScore) {
+      bestScore = score;
+      bestProgram = programs[i];
+    }
+  }
+
+  return bestProgram;
+}
+
+/**
  * 将v1.1结构展平为v1兼容格式，带兜底处理
+ * 优先选择数据最完整的program
  */
 function flattenSchool(school: School): University {
   const programs = school.programs;
-  const firstProgram = Array.isArray(programs) && programs.length > 0 ? programs[0] : null;
-  const notices = firstProgram?.notices;
+  // 选择最完整的program而非第一个
+  const bestProgram = selectBestProgram(programs as Program[]);
+  const notices = bestProgram?.notices;
   const firstNotice = Array.isArray(notices) && notices.length > 0 ? notices[0] : null;
 
   const dataStatus = computeDataStatus(school);
@@ -222,8 +273,8 @@ function flattenSchool(school: School): University {
     is985: school.is985,
     is211: school.is211,
     disciplineGrade: school.disciplineGrade, // 可选字段，不做兜底
-    specialty: safeString(firstProgram?.specialty),
-    degreeType: safeArrayJoin(firstProgram?.degreeTypes),
+    specialty: safeString(bestProgram?.specialty),
+    degreeType: safeArrayJoin(bestProgram?.degreeTypes),
     duration: firstNotice?.duration,
     examForm: safeString(firstNotice?.examForm),
     englishRequirement: safeString(firstNotice?.englishRequirement),
