@@ -25,6 +25,7 @@
 | 查看待办事项 | [03-Plans/TODO.md](03-Plans/TODO.md) |
 | 理解数据结构 | [02-Data/SCHEMA.md](02-Data/SCHEMA.md) |
 | 链接质量规则 | [02-Data/NOTICE_GRADE_RULES.md](02-Data/NOTICE_GRADE_RULES.md) |
+| **链接检验SOP** | [02-Data/LINK_VERIFICATION_SOP.md](02-Data/LINK_VERIFICATION_SOP.md) |
 
 ---
 
@@ -44,6 +45,7 @@ docs/
 ├── 02-Data/                 # 数据相关
 │   ├── SCHEMA.md            # 数据结构定义
 │   ├── NOTICE_GRADE_RULES.md # 链接质量分级规则
+│   ├── LINK_VERIFICATION_SOP.md # 链接质量检验SOP（标准操作流程）
 │   ├── DATA_QUALITY_ISSUES.md # 数据质量问题
 │   └── LINK_UPDATE_WORKORDER.md # 链接更新工单
 ├── 03-Plans/                # 计划与待办
@@ -85,6 +87,7 @@ docs/
 |------|------|
 | [SCHEMA.md](02-Data/SCHEMA.md) | universities.json 数据结构定义 (v1.1) |
 | [NOTICE_GRADE_RULES.md](02-Data/NOTICE_GRADE_RULES.md) | 链接质量 A/B/C/D 分级规则 |
+| [LINK_VERIFICATION_SOP.md](02-Data/LINK_VERIFICATION_SOP.md) | **链接质量检验标准操作流程（基于Kimi SOP 4.0适配）** |
 | [DATA_QUALITY_ISSUES.md](02-Data/DATA_QUALITY_ISSUES.md) | 已知数据质量问题及处理状态 |
 | [LINK_UPDATE_WORKORDER.md](02-Data/LINK_UPDATE_WORKORDER.md) | 链接批量更新工单记录 |
 

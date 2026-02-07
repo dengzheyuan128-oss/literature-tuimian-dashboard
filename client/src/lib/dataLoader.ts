@@ -217,7 +217,7 @@ function flattenSchool(school: School): University {
   return {
     id: school.id,
     name: school.name,
-    tier: safeString(school.tier),
+    tier: school.tier || '未分类', // tier为空时显示"未分类"，不影响数据展示
     location: school.location,
     is985: school.is985,
     is211: school.is211,
