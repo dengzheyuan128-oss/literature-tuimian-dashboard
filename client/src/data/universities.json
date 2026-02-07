@@ -1,6 +1,6 @@
 {
   "schemaVersion": "v1.1",
-  "lastUpdated": "2026-01-27",
+  "lastUpdated": "2026-02-07",
   "description": "三层嵌套结构：School / Program / Notice",
   "universities": [
     {
@@ -3445,7 +3445,7 @@
     },
     {
       "name": "首都师范大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "A-",
       "programs": [
         {
@@ -3528,7 +3528,7 @@
     },
     {
       "name": "北京语言大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B+",
       "programs": [
         {
@@ -3582,7 +3582,7 @@
     },
     {
       "name": "上海师范大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B+",
       "programs": [
         {
@@ -3607,7 +3607,7 @@
     },
     {
       "name": "浙江师范大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B+",
       "programs": [
         {
@@ -3632,7 +3632,7 @@
     },
     {
       "name": "福建师范大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B+",
       "programs": [
         {
@@ -3657,7 +3657,7 @@
     },
     {
       "name": "山东师范大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B+",
       "programs": [
         {
@@ -3682,7 +3682,7 @@
     },
     {
       "name": "河南大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B+",
       "programs": [
         {
@@ -3765,7 +3765,7 @@
     },
     {
       "name": "天津师范大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B",
       "programs": [
         {
@@ -3790,7 +3790,7 @@
     },
     {
       "name": "河北大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B",
       "programs": [
         {
@@ -3815,7 +3815,7 @@
     },
     {
       "name": "河北师范大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B",
       "programs": [
         {
@@ -3840,7 +3840,7 @@
     },
     {
       "name": "黑龙江大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B",
       "programs": [
         {
@@ -3865,7 +3865,7 @@
     },
     {
       "name": "哈尔滨师范大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B",
       "programs": [
         {
@@ -3890,7 +3890,7 @@
     },
     {
       "name": "江苏师范大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B",
       "programs": [
         {
@@ -3915,7 +3915,7 @@
     },
     {
       "name": "广西师范大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B",
       "programs": [
         {
@@ -3940,7 +3940,7 @@
     },
     {
       "name": "四川师范大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B",
       "programs": [
         {
@@ -3965,7 +3965,7 @@
     },
     {
       "name": "西北师范大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B",
       "programs": [
         {
@@ -3990,7 +3990,7 @@
     },
     {
       "name": "扬州大学",
-      "tier": null,
+      "tier": "第三梯队",
       "disciplineGrade": "B",
       "programs": [
         {
@@ -4015,7 +4015,7 @@
     },
     {
       "name": "山西大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "B-",
       "programs": [
         {
@@ -4069,7 +4069,7 @@
     },
     {
       "name": "安徽师范大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "B-",
       "programs": [
         {
@@ -4094,7 +4094,7 @@
     },
     {
       "name": "江西师范大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "B-",
       "programs": [
         {
@@ -4119,7 +4119,7 @@
     },
     {
       "name": "曲阜师范大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "B-",
       "programs": [
         {
@@ -4144,7 +4144,7 @@
     },
     {
       "name": "湖北大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "B-",
       "programs": [
         {
@@ -4169,7 +4169,7 @@
     },
     {
       "name": "广西民族大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "B-",
       "programs": [
         {
@@ -4194,7 +4194,7 @@
     },
     {
       "name": "内蒙古师范大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "C+",
       "programs": [
         {
@@ -4219,7 +4219,7 @@
     },
     {
       "name": "辽宁师范大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "C+",
       "programs": [
         {
@@ -4244,7 +4244,7 @@
     },
     {
       "name": "沈阳师范大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "C+",
       "programs": [
         {
@@ -4269,7 +4269,7 @@
     },
     {
       "name": "杭州师范大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "C+",
       "programs": [
         {
@@ -4294,7 +4294,7 @@
     },
     {
       "name": "湘潭大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "C+",
       "programs": [
         {
@@ -4348,7 +4348,7 @@
     },
     {
       "name": "重庆师范大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "C+",
       "programs": [
         {
@@ -4373,7 +4373,7 @@
     },
     {
       "name": "西南民族大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "C+",
       "programs": [
         {
@@ -4398,7 +4398,7 @@
     },
     {
       "name": "贵州师范大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "C+",
       "programs": [
         {
@@ -4423,7 +4423,7 @@
     },
     {
       "name": "西北民族大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "C+",
       "programs": [
         {
@@ -4448,7 +4448,7 @@
     },
     {
       "name": "新疆师范大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "C+",
       "programs": [
         {
@@ -4473,7 +4473,7 @@
     },
     {
       "name": "海南师范大学",
-      "tier": null,
+      "tier": "第四梯队",
       "disciplineGrade": "C+",
       "programs": [
         {
@@ -4498,7 +4498,7 @@
     },
     {
       "name": "北京第二外国语学院",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C",
       "programs": [
         {
@@ -4523,7 +4523,7 @@
     },
     {
       "name": "吉林师范大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C",
       "programs": [
         {
@@ -4548,7 +4548,7 @@
     },
     {
       "name": "浙江工业大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C",
       "programs": [
         {
@@ -4573,7 +4573,7 @@
     },
     {
       "name": "温州大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C",
       "programs": [
         {
@@ -4598,7 +4598,7 @@
     },
     {
       "name": "华侨大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C",
       "programs": [
         {
@@ -4623,7 +4623,7 @@
     },
     {
       "name": "济南大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C",
       "programs": [
         {
@@ -4648,7 +4648,7 @@
     },
     {
       "name": "中南民族大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C",
       "programs": [
         {
@@ -4673,7 +4673,7 @@
     },
     {
       "name": "西南交通大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C",
       "programs": [
         {
@@ -4727,7 +4727,7 @@
     },
     {
       "name": "西华师范大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C",
       "programs": [
         {
@@ -4752,7 +4752,7 @@
     },
     {
       "name": "云南师范大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C",
       "programs": [
         {
@@ -4777,7 +4777,7 @@
     },
     {
       "name": "青岛大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C",
       "programs": [
         {
@@ -4802,7 +4802,7 @@
     },
     {
       "name": "三峡大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C",
       "programs": [
         {
@@ -4827,7 +4827,7 @@
     },
     {
       "name": "天津外国语大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C-",
       "programs": [
         {
@@ -4852,7 +4852,7 @@
     },
     {
       "name": "渤海大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C-",
       "programs": [
         {
@@ -4877,7 +4877,7 @@
     },
     {
       "name": "南通大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C-",
       "programs": [
         {
@@ -4931,7 +4931,7 @@
     },
     {
       "name": "鲁东大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C-",
       "programs": [
         {
@@ -4956,7 +4956,7 @@
     },
     {
       "name": "河南师范大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C-",
       "programs": [
         {
@@ -4981,7 +4981,7 @@
     },
     {
       "name": "深圳大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C-",
       "programs": [
         {
@@ -5035,7 +5035,7 @@
     },
     {
       "name": "贵州民族大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C-",
       "programs": [
         {
@@ -5060,7 +5060,7 @@
     },
     {
       "name": "云南民族大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C-",
       "programs": [
         {
@@ -5085,7 +5085,7 @@
     },
     {
       "name": "广州大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C-",
       "programs": [
         {
@@ -5110,7 +5110,7 @@
     },
     {
       "name": "广东外语外贸大学",
-      "tier": null,
+      "tier": "第五梯队",
       "disciplineGrade": "C-",
       "programs": [
         {
