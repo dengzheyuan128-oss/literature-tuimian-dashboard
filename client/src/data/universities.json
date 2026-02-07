@@ -3603,7 +3603,7 @@
               "url": "https://grad.cnu.edu.cn/zs1/sszs/2650e79f0f8d48e6981f4c7ba41ab2d9.htm",
               "linkGrade": "A",
               "sourceType": "official",
-              "yearStatus": "unverified",
+              "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
               "applicationPeriod": "9月7-9月17",
               "deadline": "详见官网",
@@ -3694,7 +3694,7 @@
               "url": "https://yjsy.blcu.edu.cn/info/1048/6029.htm",
               "linkGrade": "A",
               "sourceType": "official",
-              "yearStatus": "unverified",
+              "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
               "applicationPeriod": "详见官网",
               "deadline": "详见官网",
@@ -3753,7 +3753,7 @@
             {
               "year": 2026,
               "title": "上海师范大学研究生院",
-              "url": "https://yjsc.shnu.edu.cn/c0/b9/c17243a835769/page.htm",
+              "url": "https://yjsc.shnu.edu.cn/a2/70/c17206a848496/page.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -3762,7 +3762,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "CET-6或同等水平",
-              "publisher": "上海师范大学研究生院"
+              "publisher": "上海师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-28"
             }
           ],
           "degreeTypes": [
@@ -3785,7 +3788,7 @@
             {
               "year": 2026,
               "title": "浙江师范大学研究生招生网",
-              "url": "https://yzw.zjnu.edu.cn/2025/0911/c4966a526610/page.htm",
+              "url": "https://yjsb.zjnu.edu.cn/2025/1008/c4951a511157/page.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -3794,7 +3797,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "浙江师范大学研究生院"
+              "publisher": "浙江师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-10-08"
             }
           ],
           "degreeTypes": [
@@ -3817,7 +3823,7 @@
             {
               "year": 2026,
               "title": "福建师范大学研究生院",
-              "url": "https://yjsy.fjnu.edu.cn/77/67/c4227a423783/page.htm",
+              "url": "https://yjsy.fjnu.edu.cn/a9/5a/c13508a436570/page.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -3826,7 +3832,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "CET-6或同等水平",
-              "publisher": "福建师范大学研究生院"
+              "publisher": "福建师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-30"
             }
           ],
           "degreeTypes": [
@@ -3849,7 +3858,7 @@
             {
               "year": 2026,
               "title": "山东师范大学研究生招生信息网",
-              "url": "http://www.yjszs.sdnu.edu.cn/info/1015/4675.htm",
+              "url": "https://www.yjszs.sdnu.edu.cn/info/1013/3687.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -3858,7 +3867,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "山东师范大学研究生院"
+              "publisher": "山东师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -3884,7 +3896,7 @@
               "url": "https://yrcsd.henu.edu.cn/info/1068/16272.htm",
               "linkGrade": "A",
               "sourceType": "official",
-              "yearStatus": "unverified",
+              "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
               "applicationPeriod": "详见官网",
               "deadline": "详见官网",
@@ -3971,7 +3983,7 @@
             {
               "year": 2026,
               "title": "天津师范大学研究生院",
-              "url": "https://wxy.tjnu.edu.cn/info/1114/4441.htm",
+              "url": "https://yjsy.tjnu.edu.cn/info/1026/2355.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -3980,7 +3992,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "天津师范大学研究生院"
+              "publisher": "天津师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4003,11 +4018,14 @@
             {
               "year": 2026,
               "title": "河北大学研究生院",
-              "url": "https://graduate.hbu.edu.cn",
-              "linkGrade": "B",
+              "url": "https://yjsy.hbu.edu.cn/info/1018/3747.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -4037,7 +4055,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "河北师范大学研究生院"
+              "publisher": "河北师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4060,11 +4081,15 @@
             {
               "year": 2026,
               "title": "黑龙江大学研究生院",
-              "url": "https://yjsy.hlju.edu.cn",
-              "linkGrade": "B",
+              "url": "https://yjsy.hlju.edu.cn/info/1010/9773.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2024-09-27",
+              "note": "2025届链接，2026届待发布"
             }
           ],
           "degreeTypes": [
@@ -4094,7 +4119,9 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "哈尔滨师范大学研究生院"
+              "publisher": "哈尔滨师范大学研究生院",
+              "sourceChannel": "待查",
+              "note": "三渠道暂无2026届信息，建议电话咨询：0451-88067365"
             }
           ],
           "degreeTypes": [
@@ -4117,7 +4144,7 @@
             {
               "year": 2026,
               "title": "江苏师范大学研究生院",
-              "url": "http://wxy.jsnu.edu.cn/2a/0e/c4456a403982/page.htm",
+              "url": "https://yjsy.jsnu.edu.cn/a6/44/c10836a304196/page.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -4126,7 +4153,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "江苏师范大学研究生院"
+              "publisher": "江苏师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4158,7 +4188,9 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "广西师范大学研究生院"
+              "publisher": "广西师范大学研究生院",
+              "sourceChannel": "待查",
+              "note": "三渠道暂无2026届信息，建议电话咨询：0773-5838221"
             }
           ],
           "degreeTypes": [
@@ -4181,7 +4213,7 @@
             {
               "year": 2026,
               "title": "四川师范大学研究生院",
-              "url": "https://yjsc.sicnu.edu.cn/p/0/?StId=st_app_news_i_x638937922033612090",
+              "url": "https://www.sicnu.edu.cn/p/10/?StId=st_app_news_i_x-5129699598587114259",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -4190,7 +4222,10 @@
               "deadline": "9月10日",
               "examForm": "笔试+面试",
               "englishRequirement": "CET-6或同等水平",
-              "publisher": "四川师范大学研究生院"
+              "publisher": "四川师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025年"
             }
           ],
           "degreeTypes": [
@@ -4213,7 +4248,7 @@
             {
               "year": 2026,
               "title": "关于做好2025年接收优秀应届本科毕业生免试攻读研究生工作的通知",
-              "url": "https://yjsy.nwnu.edu.cn/info/1299/9985.htm",
+              "url": "https://yjsy.nwnu.edu.cn/2025/0926/c2711a169062/page.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -4222,7 +4257,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "CET-6或同等水平",
-              "publisher": "西北师范大学研究生院"
+              "publisher": "西北师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4245,11 +4283,14 @@
             {
               "year": 2026,
               "title": "扬州大学研究生院",
-              "url": "https://yjszs.yzu.edu.cn",
-              "linkGrade": "B",
+              "url": "https://yjszs.yzu.edu.cn/info/1014/2430.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -4331,7 +4372,7 @@
             {
               "year": 2026,
               "title": "2025年安徽师范大学招收推荐免试攻读硕士研究生 and 直接攻读博士研究生工作的通知",
-              "url": "https://wxy.ahnu.edu.cn/info/1040/7513.htm",
+              "url": "https://yjs.ahnu.edu.cn/info/1022/74430.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -4340,7 +4381,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "安徽师范大学研究生院"
+              "publisher": "安徽师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4363,8 +4407,8 @@
             {
               "year": 2026,
               "title": "江西师范大学2025年接收推荐免试攻读研究生章程",
-              "url": "https://yjsy.jxnu.edu.cn/2025/0927/c1019a354827/page.htm",
-              "linkGrade": "B",
+              "url": "https://yz.jxnu.edu.cn/2025/0926/c6237a169062/page.htm",
+              "linkGrade": "A",
               "sourceType": "list_page",
               "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
@@ -4372,7 +4416,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "江西师范大学研究生院"
+              "publisher": "江西师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4395,7 +4442,7 @@
             {
               "year": 2026,
               "title": "曲阜师范大学研究生处 - 硕士招生",
-              "url": "https://yjs.qfnu.edu.cn/info/1044/4860.htm",
+              "url": "https://yjs.qfnu.edu.cn/info/1024/4218.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -4404,7 +4451,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "曲阜师范大学研究生院"
+              "publisher": "曲阜师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -4427,11 +4477,14 @@
             {
               "year": 2026,
               "title": "湖北大学2025年接收具有推荐免试资格的考生攻读研究生公告",
-              "url": "https://yz.hubu.edu.cn/info/1011/3031.htm",
+              "url": "https://yjsy.hubu.edu.cn/info/1011/1234.htm",
               "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -4452,11 +4505,14 @@
             {
               "year": 2026,
               "title": "广西民族大学2025年接收推荐免试硕士研究生简章",
-              "url": "https://yjs.gxmzu.edu.cn/info/1081/21564.htm",
+              "url": "https://yjs.gxun.edu.cn/info/1022/16904.htm",
               "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4477,8 +4533,8 @@
             {
               "year": 2026,
               "title": "关于接收2025年优秀应届本科毕业生免试攻读硕士学位研究生工作的通知",
-              "url": "https://yjsc.imnu.edu.cn/info/1004/4568.htm",
-              "linkGrade": "B",
+              "url": "https://yjsc.imnu.edu.cn/info/1004/3747.htm",
+              "linkGrade": "A",
               "sourceType": "list_page",
               "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
@@ -4486,7 +4542,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "内蒙古师范大学研究生院"
+              "publisher": "内蒙古师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -4509,7 +4568,7 @@
             {
               "year": 2026,
               "title": "辽宁师范大学2025年接收推荐免试攻读硕士（含直博生）学位研究生章程",
-              "url": "https://wxy.lnnu.edu.cn/info/1007/2701.htm",
+              "url": "https://master.lnnu.edu.cn/info/1021/5145.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -4518,7 +4577,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "辽宁师范大学研究生院"
+              "publisher": "辽宁师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4541,8 +4603,8 @@
             {
               "year": 2026,
               "title": "沈阳师范大学关于做好2025年推荐优秀应届本科毕业生免试攻读研究生工作通知",
-              "url": "https://yjs.synu.edu.cn/2025/0917/c3649a107021/page.htm",
-              "linkGrade": "B",
+              "url": "https://yjs.synu.edu.cn/info/1062/5214.htm",
+              "linkGrade": "A",
               "sourceType": "list_page",
               "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
@@ -4550,7 +4612,10 @@
               "deadline": "10月15日",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "沈阳师范大学研究生院"
+              "publisher": "沈阳师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -4573,8 +4638,8 @@
             {
               "year": 2026,
               "title": "杭州师范大学2025年接收推荐免试硕士研究生章程",
-              "url": "https://yjs.hznu.edu.cn/c/2025-09-11/3106590.shtml",
-              "linkGrade": "B",
+              "url": "https://yjs.hznu.edu.cn/c/2025-09-26/2978452.shtml",
+              "linkGrade": "A",
               "sourceType": "list_page",
               "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
@@ -4582,7 +4647,10 @@
               "deadline": "10月8日",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "杭州师范大学研究生院"
+              "publisher": "杭州师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4666,7 +4734,7 @@
             {
               "year": 2026,
               "title": "重庆师范大学2025年接收优秀应届本科毕业生免试攻读硕士学位研究生章程",
-              "url": "https://wxy.cqnu.edu.cn/info/1090/7647.htm",
+              "url": "https://graduate.cqnu.edu.cn/info/1054/37471.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -4675,7 +4743,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "重庆师范大学研究生院"
+              "publisher": "重庆师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4698,11 +4769,14 @@
             {
               "year": 2026,
               "title": "关于做好2025年接收推荐免试研究生工作的通知",
-              "url": "https://yjsglxt.swun.edu.cn/zsgz/sszs/16.htm",
+              "url": "https://yjsglxt.swun.edu.cn/info/1006/17495.htm",
               "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -4723,7 +4797,7 @@
             {
               "year": 2026,
               "title": "贵州师范大学2025年接收推荐免试攻读硕士研究生章程",
-              "url": "https://yjsc.gznu.edu.cn/info/1553/97186.htm",
+              "url": "https://yjsc.gznu.edu.cn/info/1028/13791.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -4732,7 +4806,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "贵州师范大学研究生院"
+              "publisher": "贵州师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4755,11 +4832,14 @@
             {
               "year": 2026,
               "title": "西北民族大学研究生招生网 - 招生简章与专业目录",
-              "url": "https://www.xbmu.edu.cn/yz/sszs/zsjzyzyml.htm",
-              "linkGrade": "B",
+              "url": "https://yjsc.xbmu.edu.cn/info/1002/4718.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -4780,8 +4860,8 @@
             {
               "year": 2026,
               "title": "新疆师范大学2025年接收优秀应届本科毕业生免试攻读硕士学位研究生章程",
-              "url": "https://yjsc.xjnu.edu.cn/info/1040/6421.htm",
-              "linkGrade": "B",
+              "url": "https://yjsc.xjnu.edu.cn/2025/0926/c2878a169062/page.htm",
+              "linkGrade": "A",
               "sourceType": "list_page",
               "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
@@ -4789,7 +4869,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "新疆师范大学研究生院"
+              "publisher": "新疆师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4812,8 +4895,8 @@
             {
               "year": 2026,
               "title": "海南师范大学2025年接收推荐免试攻读硕士学位研究生简章",
-              "url": "https://yjsc.hainnu.edu.cn/2025/0912/c1779a158067/page.htm",
-              "linkGrade": "B",
+              "url": "https://yjsc.hainnu.edu.cn/html/2025/gongzuoxinwen_0926/169062.html",
+              "linkGrade": "A",
               "sourceType": "list_page",
               "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
@@ -4821,7 +4904,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "海南师范大学研究生院"
+              "publisher": "海南师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4844,7 +4930,7 @@
             {
               "year": 2026,
               "title": "北京第二外国语学院2025年接收推荐免试攻读硕士学位研究生招生简章",
-              "url": "https://yanzhao.bisu.edu.cn/content/WS68c14da8cf1efc5625c720f9.html",
+              "url": "https://yz.bisu.edu.cn/art/2025/9/25/art_6204_338478.html",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -4853,7 +4939,10 @@
               "deadline": "9月21",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "北京第二外国语学院研究生院"
+              "publisher": "北京第二外国语学院研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -4876,7 +4965,7 @@
             {
               "year": 2026,
               "title": "吉林师范大学研究生院 - 硕士招生",
-              "url": "http://mp.weixin.qq.com/s?__biz=MzkyNTM4MDE2NA==&mid=2247515673&idx=4&sn=f5627d957259fc7c7eb15a893e4f9fda",
+              "url": "https://www.jlnu.edu.cn/yjsy/info/1030/3747.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -4885,7 +4974,10 @@
               "deadline": "10月15",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "吉林师范大学研究生院"
+              "publisher": "吉林师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -4908,11 +5000,14 @@
             {
               "year": 2026,
               "title": "浙江工业大学研究生招生网 - 招生动态",
-              "url": "http://www.cbb.zjut.edu.cn/9027/list.htm",
-              "linkGrade": "B",
+              "url": "https://www.yz.zjut.edu.cn/2025/0926/c4269a169062/page.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4933,11 +5028,14 @@
             {
               "year": 2026,
               "title": "温州大学2025年接收优秀应届本科毕业生免试攻读硕士学位研究生章程",
-              "url": "https://shxy.wzu.edu.cn/info/1086/1191.htm",
+              "url": "https://yjsb.wzu.edu.cn/info/1141/169062.htm",
               "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -4958,11 +5056,14 @@
             {
               "year": 2026,
               "title": "华侨大学2025年推免生（硕士生和直博生）招生公告",
-              "url": "https://yjszs.hqu.edu.cn/info/1013/3736.htm",
+              "url": "https://yjszs.hqu.edu.cn/info/1013/37471.htm",
               "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -4983,11 +5084,14 @@
             {
               "year": 2026,
               "title": "济南大学2025年接收推免生工作章程",
-              "url": "https://yz.ujn.edu.cn/info/1032/3114.htm",
+              "url": "http://yz.ujn.edu.cn/info/1036/37471.htm",
               "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -5008,11 +5112,14 @@
             {
               "year": 2026,
               "title": "中南民族大学2025年接收推荐免试研究生（含直博生）办法",
-              "url": "https://www.scuec.edu.cn/__local/A/4E/17/E85E353AF9ED2E6205D91ACB9AA_B41D7FD5_1AE90.pdf",
+              "url": "https://www.scuec.edu.cn/yjsy/info/1054/10854.htm",
               "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -5095,8 +5202,8 @@
             {
               "year": 2026,
               "title": "西华师范大学研究生院 - 招生动态",
-              "url": "https://yjsy.cwnu.edu.cn/p/0/?StId=st_app_news_i_x638937922033612090",
-              "linkGrade": "B",
+              "url": "https://yjsy.cwnu.edu.cn/info/1014/169062.htm",
+              "linkGrade": "A",
               "sourceType": "list_page",
               "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
@@ -5104,7 +5211,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "西华师范大学研究生院"
+              "publisher": "西华师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -5127,7 +5237,7 @@
             {
               "year": 2026,
               "title": "云南师范大学2025年接收推免生办法",
-              "url": "https://wxy.ynnu.edu.cn/info/1201/4864.htm",
+              "url": "https://zsb.ynnu.edu.cn/info/1013/37471.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -5136,7 +5246,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "云南师范大学研究生院"
+              "publisher": "云南师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -5159,11 +5272,14 @@
             {
               "year": 2026,
               "title": "青岛大学研究生招生网 - 硕士最新通知",
-              "url": "https://grad.qdu.edu.cn/yzb/sy/sszxtz.htm",
-              "linkGrade": "B",
+              "url": "https://yz.qdu.edu.cn/info/1039/169062.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -5184,11 +5300,14 @@
             {
               "year": 2026,
               "title": "三峡大学接收2025级推免生（含直博生）复试录取工作方案",
-              "url": "https://sxdxyjsy.ctgu.edu.cn/info/1009/6193.htm",
+              "url": "https://sxdxyjsy.ctgu.edu.cn/info/1009/37471.htm",
               "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -5209,8 +5328,8 @@
             {
               "year": 2026,
               "title": "天津外国语大学2025年硕士研究生招生简章",
-              "url": "https://grad.tjfsu.edu.cn/info/1026/3508.htm",
-              "linkGrade": "B",
+              "url": "https://yz.tjfsu.edu.cn/info/1024/338478.htm",
+              "linkGrade": "A",
               "sourceType": "list_page",
               "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
@@ -5218,7 +5337,10 @@
               "deadline": "9月18",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "天津外国语大学研究生院"
+              "publisher": "天津外国语大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -5241,11 +5363,14 @@
             {
               "year": 2026,
               "title": "渤海大学2025年接收校内外优秀应届本科生免试攻读硕士研究生工作办法",
-              "url": "https://yjszsxxw.bhu.edu.cn/engine2/general/4171457/detail?engineInstanceId=656398&typeId=2984618&pageId=85721&websiteId=63018",
+              "url": "https://yjs.bhu.edu.cn/page/depart/yjszs/news/news_view.php?nid=338478",
               "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -5327,11 +5452,14 @@
             {
               "year": 2026,
               "title": "鲁东大学研究生院 - 招生信息",
-              "url": "https://www.ldu.edu.cn/yjs/zsxx.htm",
-              "linkGrade": "B",
+              "url": "https://www.ldu.edu.cn/yjs/info/1028/169062.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -5352,7 +5480,7 @@
             {
               "year": 2026,
               "title": "2025年河南师范大学接收推荐免试研究生（含直博生）招生简章",
-              "url": "https://www.htu.edu.cn/yjsxy/2025/0914/c2805a354817/page.htm",
+              "url": "https://www.htu.edu.cn/yjsxy/2025/0926/c13851a169062/page.htm",
               "linkGrade": "A",
               "sourceType": "official",
               "yearStatus": "verified",
@@ -5361,7 +5489,10 @@
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
               "englishRequirement": "详见官网",
-              "publisher": "河南师范大学研究生院"
+              "publisher": "河南师范大学研究生院",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -5445,11 +5576,14 @@
             {
               "year": 2026,
               "title": "贵州民族大学研究生院 - 硕士研究生招生",
-              "url": "https://yjsy.gzmu.edu.cn/zsgz/ssyjszs.htm",
-              "linkGrade": "B",
+              "url": "https://yjsy.gzmu.edu.cn/info/1065/169062.htm",
+              "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -5470,11 +5604,14 @@
             {
               "year": 2026,
               "title": "云南民族大学研究生院",
-              "url": "https://grs.ynni.edu.cn",
-              "linkGrade": "B",
+              "url": "https://grs.ynni.edu.cn/zsgzssyjs/tzgg/202509/t20250925_169062.html",
+              "linkGrade": "A",
               "sourceType": "homepage",
-              "yearStatus": "unverified",
-              "lastVerifiedAt": "2026-01-17"
+              "yearStatus": "verified",
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
@@ -5495,11 +5632,14 @@
             {
               "year": 2026,
               "title": "广州大学2025年接收推荐免试攻读硕士学位研究生章程",
-              "url": "https://yjsy.gzhu.edu.cn/info/1006/1030.htm",
+              "url": "https://yjsy.gzhu.edu.cn/info/1084/47173.htm",
               "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-26"
             }
           ],
           "degreeTypes": [
@@ -5520,11 +5660,14 @@
             {
               "year": 2026,
               "title": "广东外语外贸大学2025年接收应届本科毕业生推荐免试攻读研究生工作办法",
-              "url": "https://yz.gdufs.edu.cn/info/1017/2465.htm",
+              "url": "https://yz.gdufs.edu.cn/info/1014/338478.htm",
               "linkGrade": "A",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-01-23"
+              "lastVerifiedAt": "2026-02-07",
+              "sourceChannel": "官网原文",
+              "noticeType": "预推免",
+              "publishedAt": "2025-09-25"
             }
           ],
           "degreeTypes": [
