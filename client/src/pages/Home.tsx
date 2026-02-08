@@ -6,9 +6,29 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Search, BookOpen, GraduationCap, Calendar, ExternalLink, Filter, ChevronRight, Sparkles } from "lucide-react";
+import { Search, BookOpen, GraduationCap, Calendar, ExternalLink, Filter, ChevronRight, Sparkles, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
+
+// 通用/待核实数据的占位值
+const GENERIC_VALUES = {
+  specialty: ['汉语言文学、语言学等', '中国语言文学', '待确认', '待补充'],
+  examForm: ['材料审核、复试', '面试、笔试', '待确认', '待补充', '综合面试'],
+  englishRequirement: ['CET-6或同等', 'CET-4或同等', '待确认', '待补充', '无硬性要求'],
+};
+
+// 判断字段是否为通用/待核实值
+function isGenericValue(field: keyof typeof GENERIC_VALUES, value: string): boolean {
+  return GENERIC_VALUES[field]?.includes(value) ?? false;
+}
+
+// 显示值（如果是通用值且未核实，显示提示）
+function displayValue(value: string, field: keyof typeof GENERIC_VALUES, dataVerified: boolean): string {
+  if (!dataVerified && isGenericValue(field, value)) {
+    return '请查看通知原文';
+  }
+  return value;
+}
 
 // 数据状态标签配置
 const STATUS_CONFIG: Record<DataStatus, { label: string; className: string }> = {
@@ -299,9 +319,19 @@ export default function Home() {
                   <div className="flex flex-wrap gap-2">
                     <Badge className="bg-primary/20 text-primary border-0">{selectedUniversity.tier}</Badge>
                     <Badge className="bg-primary/20 text-primary border-0">{selectedUniversity.degreeType}</Badge>
+                    {selectedUniversity.noticeType && (
+                      <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border-0">
+                        {selectedUniversity.noticeType}
+                      </Badge>
+                    )}
                     <Badge className={`border-0 ${STATUS_CONFIG[selectedUniversity.dataStatus].className}`}>
                       {STATUS_CONFIG[selectedUniversity.dataStatus].label}
                     </Badge>
+                    {!selectedUniversity.dataVerified && (
+                      <Badge className="bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300 border-0">
+                        待核实
+                      </Badge>
+                    )}
                   </div>
                 </div>
                 <button
@@ -314,12 +344,27 @@ export default function Home() {
 
               <ScrollArea className="flex-1 overflow-y-auto">
                 <div className="p-6 space-y-6">
+                  {/* 待核实数据提示 */}
+                  {!selectedUniversity.dataVerified && (
+                    <div className="flex items-start gap-3 p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg">
+                      <AlertCircle className="w-5 h-5 text-orange-600 dark:text-orange-400 shrink-0 mt-0.5" />
+                      <div className="text-sm text-orange-800 dark:text-orange-200">
+                        <p className="font-medium mb-1">数据待核实</p>
+                        <p className="text-orange-600 dark:text-orange-300">
+                          以下部分信息为参考数据，可能与通知原文有差异。建议点击下方链接查看官方通知获取准确信息。
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
                   <div>
                     <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
                       <BookOpen className="w-5 h-5 text-primary" />
                       专业方向
                     </h3>
-                    <p className="text-base text-muted-foreground">{selectedUniversity.specialty}</p>
+                    <p className={`text-base ${!selectedUniversity.dataVerified && isGenericValue('specialty', selectedUniversity.specialty) ? 'text-orange-600 dark:text-orange-400 italic' : 'text-muted-foreground'}`}>
+                      {displayValue(selectedUniversity.specialty, 'specialty', selectedUniversity.dataVerified)}
+                    </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
@@ -329,13 +374,17 @@ export default function Home() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-sm text-muted-foreground mb-2">考核形式</h3>
-                      <p className="text-base">{selectedUniversity.examForm}</p>
+                      <p className={`text-base ${!selectedUniversity.dataVerified && isGenericValue('examForm', selectedUniversity.examForm) ? 'text-orange-600 dark:text-orange-400 italic' : ''}`}>
+                        {displayValue(selectedUniversity.examForm, 'examForm', selectedUniversity.dataVerified)}
+                      </p>
                     </div>
                   </div>
 
                   <div>
                     <h3 className="font-semibold text-sm text-muted-foreground mb-2">英语要求</h3>
-                    <p className="text-base">{selectedUniversity.englishRequirement}</p>
+                    <p className={`text-base ${!selectedUniversity.dataVerified && isGenericValue('englishRequirement', selectedUniversity.englishRequirement) ? 'text-orange-600 dark:text-orange-400 italic' : ''}`}>
+                      {displayValue(selectedUniversity.englishRequirement, 'englishRequirement', selectedUniversity.dataVerified)}
+                    </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
@@ -359,6 +408,7 @@ export default function Home() {
                       >
                         <ExternalLink className="w-4 h-4" />
                         查看官方通知
+                        {selectedUniversity.noticeType && ` (${selectedUniversity.noticeType})`}
                       </a>
                     </div>
                   )}

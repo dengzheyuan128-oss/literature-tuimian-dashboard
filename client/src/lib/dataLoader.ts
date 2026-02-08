@@ -51,6 +51,9 @@ export interface School {
   programs: Program[];
 }
 
+// 通知类型
+export type NoticeType = '夏令营' | '预推免' | '综合' | '未找到';
+
 // v1 兼容类型（扁平结构）+ dataStatus
 export interface University {
   id: number;
@@ -69,6 +72,10 @@ export interface University {
   deadline: string;
   url: string;
   dataStatus: DataStatus;
+  // Phase 2 新增
+  dataVerified: boolean;
+  noticeType?: NoticeType;
+  sourceChannel?: string;
 }
 
 export interface UniversitiesData {
@@ -282,6 +289,10 @@ function flattenSchool(school: School): University {
     deadline: safeString(firstNotice?.deadline),
     url: firstNotice?.url || '', // URL 不做占位符，保持空字符串
     dataStatus,
+    // Phase 2 新增字段
+    dataVerified: (firstNotice as any)?.dataVerified ?? false,
+    noticeType: (firstNotice as any)?.noticeType as NoticeType | undefined,
+    sourceChannel: (firstNotice as any)?.sourceChannel,
   };
 }
 
