@@ -14,7 +14,7 @@
           "schoolId": 1,
           "programName": "中国语言文学",
           "department": "中国语言文学系",
-          "specialty": "汉语言文学、语言学及应用语言学等",
+          "specialty": "文艺学、语言学及应用语言学、汉语言文字学、中国古典文献学、中国古代文学、中国现当代文学、比较文学与世界文学、中国民间文学",
           "degreeTypes": [
             "学硕",
             "直博"
@@ -29,16 +29,16 @@
               "sourceType": "official",
               "publisher": "北京大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月中旬",
-              "deadline": "2025年10月中旬",
-              "examForm": "面试、笔试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年9月1日起",
+              "deadline": "2025年9月7日16:00",
+              "examForm": "科研论文考核(30分)+面试(70分)",
+              "englishRequirement": "CET-4≥600分或CET-6≥426分或TOEFL≥90分或IELTS≥6.0",
               "duration": "3年（学硕）",
               "publishedAt": "2025年10月中旬",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         },
@@ -216,7 +216,7 @@
           "schoolId": 3,
           "programName": "中国语言文学",
           "department": "文学院",
-          "specialty": "汉语言文学、语言学等",
+          "specialty": "文艺学、语言学及应用语言学、汉语言文字学、中国古典文献学、中国古代文学、中国现当代文学、比较文学与世界文学、创意写作、国际中文教育",
           "degreeTypes": [
             "学硕",
             "专硕",
@@ -232,16 +232,16 @@
               "sourceType": "official",
               "publisher": "第三方平台",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年9月5日-9月10日",
+              "deadline": "2025年9月20日24:00",
+              "examForm": "材料审核+综合面试",
+              "englishRequirement": "CET-6≥425分或IELTS≥6.5分或TOEFL≥90分",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         }
@@ -562,7 +562,7 @@
           "schoolId": 9,
           "programName": "中国语言文学",
           "department": "文学与新闻学院",
-          "specialty": "汉语言文学、语言学等",
+          "specialty": "中国语言文学、新闻传播学、艺术学理论等全部招生专业",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -577,16 +577,16 @@
               "sourceType": "official",
               "publisher": "四川大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "通知发布后即可报名",
+              "deadline": "2025年9月8日14:00",
+              "examForm": "线下综合面试",
+              "englishRequirement": "未明确要求",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         },
@@ -634,7 +634,7 @@
           "schoolId": 10,
           "programName": "中国语言文学",
           "department": "中国语言文学系（广州）",
-          "specialty": "汉语言文学、语言学等",
+          "specialty": "国际中文教育",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -649,16 +649,16 @@
               "sourceType": "official",
               "publisher": "中山大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年9月27日前",
+              "deadline": "2025年9月27日08:00",
+              "examForm": "面试为主",
+              "englishRequirement": "CET-4/6成绩证明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         },
@@ -735,7 +735,7 @@
           "schoolId": 11,
           "programName": "中国语言文学",
           "department": "文学院",
-          "specialty": "汉语言文学、学科语文等",
+          "specialty": "文艺学、语言学及应用语言学、汉语言文字学、中国古代文学、中国现当代文学、比较文学与世界文学、中国民间文学、儿童文学、中国创意写作等16个方向",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -750,16 +750,16 @@
               "sourceType": "official",
               "publisher": "北京师范大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年9月5日起",
+              "deadline": "2025年9月11日23:59:59",
+              "examForm": "现场面试(≥180/300分合格)",
+              "englishRequirement": "CET-4/6或TOEFL或IELTS",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         },
@@ -907,7 +907,7 @@
           "schoolId": 13,
           "programName": "中国语言文学",
           "department": "文学院",
-          "specialty": "汉语言文学、语言学等",
+          "specialty": "中国语言文学、艺术学(学术)、国际中文教育(专业)",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -922,16 +922,16 @@
               "sourceType": "official",
               "publisher": "兰州大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "推免系统开通前预报名",
+              "deadline": "以教育部推免系统为准",
+              "examForm": "视频面试(3-5人专家组)",
+              "englishRequirement": "CET-6≥425分或IELTS≥6.0分或TOEFL≥90分(直博生)",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         }
@@ -950,7 +950,7 @@
           "schoolId": 14,
           "programName": "中国语言文学",
           "department": "文学院",
-          "specialty": "汉语言文学、学科语文等",
+          "specialty": "中国语言文学一级学科12个学硕点+3个专硕点",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -965,16 +965,16 @@
               "sourceType": "official",
               "publisher": "湖南师范大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "预报名9月6日-15日，正式9月22日",
+              "deadline": "2025年10月15日",
+              "examForm": "面试为主(笔试权重≤50%)",
+              "englishRequirement": "面试考查外语听说能力",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         }
@@ -992,7 +992,7 @@
           "schoolId": 15,
           "programName": "中国语言文学",
           "department": "中国语言文学系",
-          "specialty": "汉语言文学、汉语国际教育等",
+          "specialty": "文艺学、语言学及应用语言学、汉语言文字学、中国古典文献学、中国古代文学、中国现当代文学、比较文学与世界文学",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -1007,16 +1007,16 @@
               "sourceType": "official",
               "publisher": "第三方平台",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年7月1日-10日",
+              "deadline": "2025年7月10日",
+              "examForm": "综合评估考核",
+              "englishRequirement": "CET-6≥425分或CET-4≥500分或TOEFL/IELTS≥60%总分",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         },
@@ -1107,7 +1107,7 @@
           "schoolId": 17,
           "programName": "中国语言文学",
           "department": "文学院（含文艺美学研究中心）",
-          "specialty": "汉语言文学、语言学等",
+          "specialty": "文艺学、语言学及应用语言学、汉语言文字学、中国古典文献学、中国古代文学、中国现当代文学(含创意写作)、比较文学与世界文学",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -1122,16 +1122,16 @@
               "sourceType": "official",
               "publisher": "山东大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年9月1日起",
+              "deadline": "以学校预报名通知为准",
+              "examForm": "现场面试(自我介绍+回答问题)",
+              "englishRequirement": "需提供外语水平证明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         },
@@ -1208,7 +1208,7 @@
           "schoolId": 18,
           "programName": "中国语言文学",
           "department": "人文学院",
-          "specialty": "中国语言文学、汉语国际教育",
+          "specialty": "中文系、历史系、哲学系、汉语国际教育中心、艺术教育中心相关专业",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -1223,16 +1223,16 @@
               "sourceType": "official",
               "publisher": "上海交通大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年9月22日9:00起",
+              "deadline": "2025年9月22日",
+              "examForm": "面试(复试)",
+              "englishRequirement": "CET-6≥425分或TOEFL≥90分或IELTS≥6.0分",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         },
@@ -1351,7 +1351,7 @@
           "schoolId": 20,
           "programName": "中国语言文学",
           "department": "博雅学院（人文社会科学高等研究院）",
-          "specialty": "中国语言文学",
+          "specialty": "中国语言文学(学术博士/硕士)",
           "degreeTypes": [
             "学硕",
             "直博"
@@ -1366,16 +1366,16 @@
               "sourceType": "official",
               "publisher": "重庆大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬",
-              "deadline": "2025年9月15日",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年8月9日起",
+              "deadline": "2025年9月5日24:00",
+              "examForm": "材料审核+复试",
+              "englishRequirement": "CET-4/6或TOEFL或IELTS成绩",
               "duration": "3年（学硕）",
               "publishedAt": "2025年9月15日",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         },
@@ -1538,7 +1538,7 @@
           "schoolId": 23,
           "programName": "中国语言文学",
           "department": "文学与新闻传播学院",
-          "specialty": "中国语言文学、汉语国际教育",
+          "specialty": "全部可招收应届生的学科专业",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -1553,16 +1553,16 @@
               "sourceType": "official",
               "publisher": "中国海洋大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年7月18日起",
+              "deadline": "2025年9月14日24:00",
+              "examForm": "待定(后续开展复试)",
+              "englishRequirement": "需提供外语水平证明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         },
@@ -1610,7 +1610,7 @@
           "schoolId": 24,
           "programName": "中国语言文学",
           "department": "文学院",
-          "specialty": "汉语言文学、学科语文等",
+          "specialty": "各专业硕士研究生",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -1625,10 +1625,10 @@
               "sourceType": "official",
               "publisher": "华中师范大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年9月5日起",
+              "deadline": "2025年9月14日",
+              "examForm": "待定",
+              "englishRequirement": "待定",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -1681,7 +1681,7 @@
           "schoolId": 25,
           "programName": "中国语言文学",
           "department": "文学院",
-          "specialty": "汉语言文字学、中国古代文学等",
+          "specialty": "中国语言文学、新闻学、传播学、广播电视艺术学、国际语言相关专业",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -1696,10 +1696,10 @@
               "sourceType": "official",
               "publisher": "吉林大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月22日-23日",
-              "deadline": "2025年9月23日",
-              "examForm": "资格审核、面试",
-              "englishRequirement": "CET-4或CET-6",
+              "applicationPeriod": "2025年9月12日9:00起",
+              "deadline": "2025年9月14日9:00",
+              "examForm": "线下面试(专业+综合+外语听说)",
+              "englishRequirement": "外语听说能力测试",
               "duration": "3年",
               "publishedAt": "2025年9月23日",
               "lastVerifiedAt": "2026-02-07",
@@ -1724,7 +1724,7 @@
           "schoolId": 26,
           "programName": "中国语言文学",
           "department": "中国语言文学学院",
-          "specialty": "中国语言文学、汉语国际教育等",
+          "specialty": "应用语言学、比较文学与世界文学、文艺学、汉语言文字学、中国古代文学、中国现当代文学、中国古典文献学、国际中文教育、学科教学(语文)",
           "degreeTypes": [
             "学硕",
             "专硕",
@@ -1740,16 +1740,16 @@
               "sourceType": "official",
               "publisher": "湖南大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年7月25日起",
+              "deadline": "2025年9月12日14:00",
+              "examForm": "现场复试(外语+专业+综合，≥20分钟/人)",
+              "englishRequirement": "CET-4/6或TOEFL或IELTS成绩",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         }
@@ -1839,7 +1839,7 @@
           "schoolId": 28,
           "programName": "中国语言文学",
           "department": "文学院",
-          "specialty": "文艺学、汉语言文字学等",
+          "specialty": "文艺学、汉语言文字学、中国古代文学、中国现当代文学",
           "degreeTypes": [
             "学硕",
             "直博"
@@ -1854,10 +1854,10 @@
               "sourceType": "official",
               "publisher": "中央民族大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月17日-21日",
-              "deadline": "2025年9月21日",
-              "examForm": "笔试、面试",
-              "englishRequirement": "CET-6",
+              "applicationPeriod": "2025年9月17日0时起",
+              "deadline": "2025年9月21日17:00",
+              "examForm": "综合面试(50%)+专业笔试(50%)",
+              "englishRequirement": "CET-6通过(英语考生)",
               "duration": "3年（学硕）",
               "publishedAt": "2025年9月21日",
               "lastVerifiedAt": "2026-02-07",
@@ -2178,7 +2178,7 @@
           "schoolId": 34,
           "programName": "中国语言文学",
           "department": "人文艺术学院",
-          "specialty": "中国语言文学",
+          "specialty": "以推免系统公布为准",
           "degreeTypes": [
             "学硕"
           ],
@@ -2192,10 +2192,10 @@
               "sourceType": "official",
               "publisher": "天津大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "9月22日前校内系统报名",
+              "deadline": "2025年10月20日",
+              "examForm": "遴选考核(具体待通知)",
+              "englishRequirement": "待定",
               "duration": "3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -2248,7 +2248,7 @@
           "schoolId": 35,
           "programName": "中国语言文学",
           "department": "人文学院",
-          "specialty": "中国语言文学",
+          "specialty": "哲学、中国语言文学、旅游学、公共管理、医学人文学、社会学、历史学等",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -2263,16 +2263,16 @@
               "sourceType": "official",
               "publisher": "东南大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年8月29日起",
+              "deadline": "2025年9月1日(报名)，9月2日(材料)",
+              "examForm": "材料审核(+公开答辩)",
+              "englishRequirement": "CET-4≥520分或CET-6≥430分或TOEFL≥100分或IELTS≥7.0分",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         },
@@ -2320,7 +2320,7 @@
           "schoolId": 36,
           "programName": "中国语言文学",
           "department": "文学院",
-          "specialty": "汉语言文学、学科语文等",
+          "specialty": "全部接收推免的学科专业",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -2335,10 +2335,10 @@
               "sourceType": "official",
               "publisher": "东北师范大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年9月8日起",
+              "deadline": "以系统公布为准",
+              "examForm": "由各院部自行通知",
+              "englishRequirement": "需提供外语水平证明材料",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -2362,7 +2362,7 @@
           "schoolId": 37,
           "programName": "中国语言文学",
           "department": "文学院",
-          "specialty": "汉语言文学、学科语文等",
+          "specialty": "全日制学术学位、专业学位、本研衔接师范生公费教育",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -2377,16 +2377,16 @@
               "sourceType": "official",
               "publisher": "陕西师范大学文学院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "预报名9月19日前，正式9月22日9:00",
+              "deadline": "2025年10月10日前",
+              "examForm": "面试为主",
+              "englishRequirement": "待定",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         }
@@ -2446,7 +2446,7 @@
           "schoolId": 39,
           "programName": "中国语言文学",
           "department": "文学院",
-          "specialty": "汉语言文学、语言学等",
+          "specialty": "全日制硕士全部专业",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -2461,10 +2461,10 @@
               "sourceType": "official",
               "publisher": "苏州大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "推免系统开通后",
+              "deadline": "以系统为准",
+              "examForm": "面试(综合素质+外语+专业)",
+              "englishRequirement": "由各单位自定",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -2488,7 +2488,7 @@
           "schoolId": 40,
           "programName": "中国语言文学",
           "department": "文学院",
-          "specialty": "汉语言文学、语言学等",
+          "specialty": "文艺学、语言学及应用语言学、汉语言文字学、中国古典文献学、中国古代文学、中国现当代文学、比较文学与世界文学、国际中文教育",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -2503,10 +2503,10 @@
               "sourceType": "official",
               "publisher": "郑州大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2024年9月6日起",
+              "deadline": "2024年9月19日9:00前",
+              "examForm": "线上面试(英语口语+专业知识)",
+              "englishRequirement": "CET-4/6或TOEFL或IELTS或PETS成绩",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -2572,7 +2572,7 @@
           "schoolId": 42,
           "programName": "中国语言文学",
           "department": "文学院",
-          "specialty": "汉语言文学、语言学等",
+          "specialty": "除MBA/MPA外全部专业",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -2587,16 +2587,16 @@
               "sourceType": "official",
               "publisher": "西北大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "2025年9月1日起",
+              "deadline": "2025年9月18日",
+              "examForm": "材料审核+复试",
+              "englishRequirement": "CET-4/6或TOEFL或IELTS或PETS成绩",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         }
@@ -2880,7 +2880,7 @@
           "schoolId": 48,
           "programName": "中国语言文学",
           "department": "文学院",
-          "specialty": "汉语言文学、语言学等",
+          "specialty": "全日制学硕/专硕全部专业",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -2895,16 +2895,16 @@
               "sourceType": "official",
               "publisher": "广西大学文学院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-4或CET-6",
+              "applicationPeriod": "2025年7月18日起",
+              "deadline": "2025年9月20日",
+              "examForm": "待定",
+              "englishRequirement": "待定",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         }
@@ -2922,7 +2922,7 @@
           "schoolId": 49,
           "programName": "中国语言文学",
           "department": "中国语言文学学院",
-          "specialty": "汉语言文学、语言学等",
+          "specialty": "除法律非全日制及管理类专业学位外全部硕士专业",
           "degreeTypes": [
             "学硕",
             "专硕"
@@ -2937,16 +2937,16 @@
               "sourceType": "official",
               "publisher": "新疆大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-4或CET-6",
+              "applicationPeriod": "意向报名即日起，正式9月22日",
+              "deadline": "2025年10月19日",
+              "examForm": "笔试+面试",
+              "englishRequirement": "CET-4/6成绩单",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         },
@@ -3287,7 +3287,7 @@
           "schoolId": 55,
           "programName": "中国语言文学",
           "department": "文化与传媒学院",
-          "specialty": "中国语言文学",
+          "specialty": "中国语言文学、新闻传播学、艺术学理论、新闻与传播、美术与书法",
           "degreeTypes": [
             "学硕"
           ],
@@ -3301,16 +3301,16 @@
               "sourceType": "official",
               "publisher": "中央财经大学文学院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "applicationPeriod": "系统开放日起",
+              "deadline": "2025年9月14日17:00",
+              "examForm": "综合面试+外语听说测试",
+              "englishRequirement": "CET-4/6或其他英语成绩证明",
               "duration": "3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         },
@@ -3576,7 +3576,7 @@
           "schoolId": 60,
           "programName": "中国语言文学",
           "department": "人文学院",
-          "specialty": "中国语言文学",
+          "specialty": "教育学、教育技术学、中国语言文学、艺术学、学科教学(语文/数学/音乐)、现代教育技术、小学教育、心理健康教育、音乐、戏剧与影视",
           "degreeTypes": [
             "学硕"
           ],
@@ -3590,16 +3590,16 @@
               "sourceType": "official",
               "publisher": "江南大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-4或CET-6",
+              "applicationPeriod": "即日起",
+              "deadline": "2025年9月22日",
+              "examForm": "线下面试(专业+综合+外语听说)",
+              "englishRequirement": "待定",
               "duration": "3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         },
@@ -3822,20 +3822,20 @@
               "sourceType": "official",
               "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
-              "applicationPeriod": "详见官网",
-              "deadline": "详见官网",
-              "examForm": "材料审核+复试",
-              "englishRequirement": "详见官网",
+              "applicationPeriod": "2025年9月4日10:00起",
+              "deadline": "2025年9月12日9:00",
+              "examForm": "待定(9月16-21日复试)",
+              "englishRequirement": "较高外语水平(需提供成绩证明)",
               "publisher": "北京语言大学研究生院",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ],
           "degreeTypes": [
             "学硕",
             "专硕"
           ],
-          "specialty": "中国语言文学",
+          "specialty": "以2026年硕士招生专业目录为准",
           "department": "文学院"
         },
         {
@@ -4030,20 +4030,20 @@
               "sourceType": "official",
               "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
-              "applicationPeriod": "详见官网",
-              "deadline": "详见官网",
-              "examForm": "材料审核+复试",
-              "englishRequirement": "CET-6或同等水平",
+              "applicationPeriod": "2025年9月22日9:00起",
+              "deadline": "以推免系统为准",
+              "examForm": "线上线下结合",
+              "englishRequirement": "CET-4≥425分",
               "publisher": "河南大学研究生院",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ],
           "degreeTypes": [
             "学硕",
             "专硕"
           ],
-          "specialty": "中国语言文学",
+          "specialty": "应用经济学、民族学、中国语言文学、考古学、中国史、地理学等",
           "department": "文学院"
         },
         {
@@ -4187,22 +4187,22 @@
               "sourceType": "official",
               "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
-              "applicationPeriod": "详见官网",
-              "deadline": "详见官网",
-              "examForm": "材料审核+复试",
-              "englishRequirement": "详见官网",
+              "applicationPeriod": "复试前系统报名",
+              "deadline": "第一批9月30日，其他10月15日",
+              "examForm": "由各学科确定",
+              "englishRequirement": "待定",
               "publisher": "河北师范大学研究生院",
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025-09-26",
-              "dataVerified": false
+              "dataVerified": true
             }
           ],
           "degreeTypes": [
             "学硕",
             "专硕"
           ],
-          "specialty": "中国语言文学",
+          "specialty": "文艺学、语言学及应用语言学、汉语言文字学、中国古典文献学、中国古代文学、中国现当代文学、比较文学与世界文学、国际中文教育、学科教学(语文)、课程与教学论",
           "department": "文学院"
         }
       ]
@@ -4227,13 +4227,18 @@
               "noticeType": "预推免",
               "publishedAt": "2025-09-27",
               "note": "2025届链接，2026届待发布",
-              "dataVerified": true
+              "dataVerified": true,
+              "examForm": "面试",
+              "englishRequirement": "CET-4≥425分或IELTS≥5.5分或TOEFL≥80分",
+              "applicationPeriod": "推免系统开通后",
+              "deadline": "2025年10月20日"
             }
           ],
           "degreeTypes": [
             "学硕",
             "专硕"
-          ]
+          ],
+          "specialty": "28个培养单位131个专业"
         }
       ]
     },
@@ -4462,20 +4467,20 @@
               "sourceType": "official",
               "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
-              "applicationPeriod": "详见官网",
-              "deadline": "详见官网",
-              "examForm": "材料审核+复试",
-              "englishRequirement": "详见官网",
+              "applicationPeriod": "2025年9月16日8:00起",
+              "deadline": "2025年9月20日17:00",
+              "examForm": "线下面试(外语+学术+思政)",
+              "englishRequirement": "CET-4/6或其他等级证书",
               "publisher": "山西大学研究生院",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ],
           "degreeTypes": [
             "学硕",
             "专硕"
           ],
-          "specialty": "中国语言文学",
+          "specialty": "文艺学、汉语言文字学、中国古典文献学、中国古代文学、中国现当代文学、比较文学与世界文学、中国民间文学、国际中文教育、艺术学理论",
           "department": "文学院"
         },
         {
@@ -4691,20 +4696,20 @@
               "sourceType": "official",
               "yearStatus": "verified",
               "lastVerifiedAt": "2026-02-07",
-              "applicationPeriod": "详见官网",
-              "deadline": "详见官网",
-              "examForm": "材料审核+复试",
-              "englishRequirement": "CET-6或同等水平",
+              "applicationPeriod": "2025年9月11日起",
+              "deadline": "2025年9月17日10:00",
+              "examForm": "待定",
+              "englishRequirement": "待定",
               "publisher": "西南交通大学研究生院",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ],
           "degreeTypes": [
             "学硕",
             "专硕"
           ],
-          "specialty": "中国语言文学",
+          "specialty": "中国语言文学、新闻传播学、新闻与传播",
           "department": "人文学院"
         },
         {
@@ -4749,7 +4754,7 @@
           "schoolId": 63,
           "programName": "中国语言文学",
           "department": "人文与艺术学院",
-          "specialty": "中国语言文学",
+          "specialty": "全部招生专业(以系统为准)",
           "degreeTypes": [
             "学硕"
           ],
@@ -4763,16 +4768,16 @@
               "sourceType": "official",
               "publisher": "中国矿业大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "详见官网",
-              "deadline": "详见官网",
-              "examForm": "材料审核+复试",
-              "englishRequirement": "详见官网",
+              "applicationPeriod": "预报名2025年9月18日前",
+              "deadline": "2025年9月18日",
+              "examForm": "面试为主",
+              "englishRequirement": "待定",
               "duration": "2-3年",
               "publishedAt": "2026-02-07",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": true
             }
           ]
         }
