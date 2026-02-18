@@ -366,6 +366,16 @@ export default function Home() {
                               <Badge className={`border-0 text-[10px] px-1.5 py-0.5 ${STATUS_CONFIG[uni.dataStatus].className}`}>
                                 {STATUS_CONFIG[uni.dataStatus].label}
                               </Badge>
+                              {uni.noticeScope === 'general' && (
+                                <Badge variant="outline" className="border-amber-500 text-amber-600 text-[10px] px-1.5 py-0.5">
+                                  不分专业
+                                </Badge>
+                              )}
+                              {uni.websiteStatus === 'maintenance' && (
+                                <Badge variant="outline" className="border-orange-500 text-orange-600 text-[10px] px-1.5 py-0.5">
+                                  网站维护中
+                                </Badge>
+                              )}
                             </CardDescription>
                           </div>
                           <div className="flex gap-1">
@@ -471,6 +481,16 @@ export default function Home() {
                         待核实
                       </Badge>
                     )}
+                    {selectedUniversity.noticeScope === 'general' && (
+                      <Badge className="bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300 border-0">
+                        不分专业通知
+                      </Badge>
+                    )}
+                    {selectedUniversity.websiteStatus === 'maintenance' && (
+                      <Badge className="bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300 border-0">
+                        网站维护中
+                      </Badge>
+                    )}
                   </div>
                 </div>
                 <button
@@ -491,6 +511,32 @@ export default function Home() {
                         <p className="font-medium mb-1">数据待核实</p>
                         <p className="text-orange-600 dark:text-orange-300">
                           以下部分信息为参考数据，可能与通知原文有差异。建议点击下方链接查看官方通知获取准确信息。
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 不分专业通知提示 */}
+                  {selectedUniversity.noticeScope === 'general' && (
+                    <div className="flex items-start gap-3 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+                      <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                      <div className="text-sm text-amber-800 dark:text-amber-200">
+                        <p className="font-medium mb-1">不分专业通知</p>
+                        <p className="text-amber-600 dark:text-amber-300">
+                          {selectedUniversity.noticeNote || '该院校研招网发布的是不分专业的综合通知，具体中文专业招生信息请查阅官方通知原文确认。'}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 网站维护中提示 */}
+                  {selectedUniversity.websiteStatus === 'maintenance' && (
+                    <div className="flex items-start gap-3 p-4 bg-gray-50 dark:bg-gray-900/20 border border-gray-200 dark:border-gray-800 rounded-lg">
+                      <AlertCircle className="w-5 h-5 text-gray-600 dark:text-gray-400 shrink-0 mt-0.5" />
+                      <div className="text-sm text-gray-800 dark:text-gray-200">
+                        <p className="font-medium mb-1">网站维护中</p>
+                        <p className="text-gray-600 dark:text-gray-300">
+                          {selectedUniversity.websiteNote || '该院校官网目前正在维护，暂时无法访问。请稍后再试或关注其他渠道获取信息。'}
                         </p>
                       </div>
                     </div>

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "v1.1",
-  "lastUpdated": "2026-02-08",
+  "lastUpdated": "2026-02-18",
   "description": "三层嵌套结构：School / Program / Notice",
   "universities": [
     {
@@ -62,9 +62,9 @@
               "publisher": "北京大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月1日10点-9月7日16点",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -91,9 +91,9 @@
               "publisher": "北京大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月1日-9月8日08:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -132,8 +132,8 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -163,9 +163,9 @@
               "publisher": "华东师范大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "8月30日-9月12日18:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -192,9 +192,9 @@
               "publisher": "华东师范大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "8月30日-9月12日9:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -277,8 +277,8 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -308,9 +308,9 @@
               "publisher": "清华大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "7月1日中午12:00-7月28日中午12:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -349,8 +349,8 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -392,8 +392,8 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -423,9 +423,9 @@
               "publisher": "复旦大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "8月25日10:00-9月8日16:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -452,9 +452,9 @@
               "publisher": "复旦大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "8月29日10:00-9月10日16:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -493,8 +493,8 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -536,8 +536,8 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -610,9 +610,9 @@
               "publisher": "四川大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "8月31日-9月8日14:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -682,9 +682,9 @@
               "publisher": "中山大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月25日-9月29日上午8:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -711,9 +711,9 @@
               "publisher": "中山大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月5日-9月15日上午8:00前",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -782,10 +782,10 @@
               "sourceType": "official",
               "publisher": "北京师范大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "待确认",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "applicationPeriod": "未注明",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -824,8 +824,8 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -855,9 +855,9 @@
               "publisher": "西南大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月3日至9月15（17:00前）",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -883,10 +883,10 @@
               "sourceType": "official",
               "publisher": "西南大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "待确认",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "applicationPeriod": "未注明",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -1040,9 +1040,9 @@
               "publisher": "厦门大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "7月1日至7月10日",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -1081,8 +1081,8 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -1155,9 +1155,9 @@
               "publisher": "山东大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月1日-9月14日12:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -1184,9 +1184,9 @@
               "publisher": "山东大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月1日09:00—9月15日08:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -1256,9 +1256,9 @@
               "publisher": "上海交通大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "6月3日-7月4日上午8:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -1297,14 +1297,16 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         },
@@ -1328,18 +1330,22 @@
               "publisher": "华中科技大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月10日-9月18日12点",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
-              "lastVerifiedAt": "2026-01-27"
+              "lastVerifiedAt": "2026-01-27",
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         }
       ],
       "is985": true,
-      "is211": true
+      "is211": true,
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "id": 20,
@@ -1399,9 +1405,9 @@
               "publisher": "重庆大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "8月9日-9月5日24：00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -1439,8 +1445,8 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -1470,9 +1476,9 @@
               "publisher": "中南大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "8月1日-9月5日",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -1512,8 +1518,8 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -1586,9 +1592,9 @@
               "publisher": "中国海洋大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "7月18日—9月14日24点",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -1658,9 +1664,9 @@
               "publisher": "华中师范大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月5日8:30-9月14日18:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -1792,7 +1798,9 @@
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": true
+              "dataVerified": true,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         },
@@ -1816,17 +1824,21 @@
               "publisher": "中国传媒大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月1日10:00-9月11日20:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
-              "lastVerifiedAt": "2026-01-27"
+              "lastVerifiedAt": "2026-01-27",
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         }
       ],
-      "is211": true
+      "is211": true,
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "id": 28,
@@ -1887,9 +1899,9 @@
               "publisher": "中央民族大学研究生院",
               "linkGrade": "B",
               "applicationPeriod": "7月25日0时-8月10日24:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -1971,13 +1983,15 @@
               "applicationPeriod": "9月初-9月中旬",
               "deadline": "2025年9月中旬",
               "examForm": "心理测试、笔试、面试",
-              "englishRequirement": "CET-6或同等",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年9月中旬",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         },
@@ -2001,17 +2015,21 @@
               "publisher": "暨南大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月11日—9月14日",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
-              "lastVerifiedAt": "2026-01-27"
+              "lastVerifiedAt": "2026-01-27",
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         }
       ],
-      "is211": true
+      "is211": true,
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "id": 31,
@@ -2084,7 +2102,7 @@
               "linkGrade": "A",
               "applicationPeriod": "推免系统开通后",
               "deadline": "另行通知",
-              "examForm": "材料审核、复试",
+              "examForm": "未注明",
               "englishRequirement": "CET-4或CET-6",
               "duration": "2-3年",
               "publishedAt": "另行通知",
@@ -2115,9 +2133,9 @@
               "publisher": "云南大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "46288",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -2125,47 +2143,6 @@
           ]
         }
       ],
-      "is211": true
-    },
-    {
-      "id": 33,
-      "name": "西安交通大学",
-      "tier": "985",
-      "programs": [
-        {
-          "id": "33-1",
-          "schoolId": 33,
-          "programName": "中国语言文学",
-          "department": "文学院/中文系",
-          "specialty": "中国语言文学",
-          "degreeTypes": [
-            "学硕",
-            "专硕"
-          ],
-          "notices": [
-            {
-              "id": "33-1-1",
-              "programId": "33-1",
-              "year": 2026,
-              "title": "2026年推免硕士研究生招生通知",
-              "url": "https://yz.xjtu.edu.cn/2025tmzc.pdf",
-              "sourceType": "list_page",
-              "publisher": "西安交通大学研究生院",
-              "linkGrade": "B",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
-              "duration": "2-3年",
-              "publishedAt": "2025年10月初",
-              "lastVerifiedAt": "2026-01-16",
-              "noticeType": "预推免",
-              "dataVerified": false
-            }
-          ]
-        }
-      ],
-      "is985": true,
       "is211": true
     },
     {
@@ -2225,9 +2202,9 @@
               "publisher": "天津大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月8日-9月22日",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -2296,9 +2273,9 @@
               "publisher": "东南大学研究生院",
               "linkGrade": "B",
               "applicationPeriod": "7月7日中午12:00 — 8月15日中午12:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -2421,19 +2398,23 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": false,
+              "websiteStatus": "maintenance",
+              "verificationNote": "网站维护中，信息待核实"
             }
           ]
         }
       ],
-      "is211": true
+      "is211": true,
+      "websiteStatus": "maintenance",
+      "websiteNote": "网站正在维护，暂时无法访问"
     },
     {
       "id": 39,
@@ -2547,19 +2528,23 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         }
       ],
-      "is211": true
+      "is211": true,
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "id": 42,
@@ -2631,8 +2616,8 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -2673,14 +2658,16 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
+              "examForm": "未注明",
               "englishRequirement": "CET-4或CET-6",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         },
@@ -2703,18 +2690,22 @@
               "sourceType": "official",
               "publisher": "内蒙古大学研究生院",
               "linkGrade": "A",
-              "applicationPeriod": "待确认",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "applicationPeriod": "未注明",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
-              "lastVerifiedAt": "2026-01-27"
+              "lastVerifiedAt": "2026-01-27",
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         }
       ],
-      "is211": true
+      "is211": true,
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "id": 45,
@@ -2744,19 +2735,23 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
+              "examForm": "未注明",
               "englishRequirement": "CET-4或CET-6",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         }
       ],
-      "is211": true
+      "is211": true,
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "id": 46,
@@ -2786,7 +2781,7 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
+              "examForm": "未注明",
               "englishRequirement": "CET-4或CET-6",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
@@ -2816,9 +2811,9 @@
               "publisher": "海南大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月18日起",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -2855,7 +2850,7 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
+              "examForm": "未注明",
               "englishRequirement": "CET-4或CET-6",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
@@ -2970,9 +2965,9 @@
               "publisher": "新疆大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月15日-9月21日",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -3010,7 +3005,7 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
+              "examForm": "未注明",
               "englishRequirement": "CET-4或CET-6",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
@@ -3018,117 +3013,6 @@
               "yearStatus": "verified",
               "noticeType": "预推免",
               "dataVerified": false
-            }
-          ]
-        }
-      ],
-      "is211": true
-    },
-    {
-      "id": 51,
-      "name": "西藏大学",
-      "tier": "211",
-      "programs": [
-        {
-          "id": "51-1",
-          "schoolId": 51,
-          "programName": "中国语言文学",
-          "department": "文学院",
-          "specialty": "汉语言文学、语言学等",
-          "degreeTypes": [
-            "学硕",
-            "专硕"
-          ],
-          "notices": [
-            {
-              "id": "51-1-1",
-              "programId": "51-1",
-              "year": 2026,
-              "title": "2026年推免硕士研究生招生通知",
-              "url": "https://wxy.utibet.edu.cn/info/1087/2592.htm",
-              "sourceType": "official",
-              "publisher": "西藏大学研究生院",
-              "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-4或CET-6",
-              "duration": "2-3年",
-              "publishedAt": "2025年10月初",
-              "lastVerifiedAt": "2026-02-07",
-              "yearStatus": "verified",
-              "noticeType": "预推免",
-              "dataVerified": false
-            }
-          ]
-        }
-      ],
-      "is211": true
-    },
-    {
-      "id": 52,
-      "name": "石河子大学",
-      "tier": "211",
-      "programs": [
-        {
-          "id": "52-1",
-          "schoolId": 52,
-          "programName": "中国语言文学",
-          "department": "文学艺术学院",
-          "specialty": "汉语言文学",
-          "degreeTypes": [
-            "学硕",
-            "专硕"
-          ],
-          "notices": [
-            {
-              "id": "52-1-1",
-              "programId": "52-1",
-              "year": 2026,
-              "title": "2026年推免硕士研究生招生通知",
-              "url": "https://art.shzu.edu.cn/2025/0914/c2466a223896/page.htm",
-              "sourceType": "official",
-              "publisher": "石河子大学研究生院",
-              "linkGrade": "A",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-4或CET-6",
-              "duration": "2-3年",
-              "publishedAt": "2025年10月初",
-              "lastVerifiedAt": "2026-02-07",
-              "yearStatus": "verified",
-              "noticeType": "预推免",
-              "dataVerified": false
-            }
-          ]
-        },
-        {
-          "id": "52-2",
-          "schoolId": 52,
-          "programName": "中国语言文学",
-          "department": "文学艺术学院",
-          "specialty": "050100中国语言文学：\n文艺学\n语言学及应用语言学\n中国古典文献学\n中国古代文学\n中国现当代文学\n比较文学与世界文学\n民间文学",
-          "degreeTypes": [
-            "学硕"
-          ],
-          "notices": [
-            {
-              "id": "52-2-1",
-              "programId": "52-2",
-              "year": 2026,
-              "title": "2026年推免硕士研究生招生通知",
-              "url": "https://art.shzu.edu.cn/2025/0908/c9276a223361/page.htm",
-              "sourceType": "official",
-              "publisher": "石河子大学研究生院",
-              "linkGrade": "A",
-              "applicationPeriod": "待确认",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
-              "duration": "2-3年",
-              "publishedAt": "2026-01-27",
-              "lastVerifiedAt": "2026-01-27"
             }
           ]
         }
@@ -3163,14 +3047,16 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         },
@@ -3194,17 +3080,21 @@
               "publisher": "北京外国语大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "截止时间为9月10日17:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
-              "lastVerifiedAt": "2026-01-27"
+              "lastVerifiedAt": "2026-01-27",
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         }
       ],
-      "is211": true
+      "is211": true,
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "id": 54,
@@ -3234,14 +3124,16 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
               "yearStatus": "verified",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         },
@@ -3265,17 +3157,21 @@
               "publisher": "上海外国语大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月2日至9月13日",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
-              "lastVerifiedAt": "2026-01-27"
+              "lastVerifiedAt": "2026-01-27",
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         }
       ],
-      "is211": true
+      "is211": true,
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "id": 55,
@@ -3334,9 +3230,9 @@
               "publisher": "中央财经大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "系统开放日起至9月14日（星期日）17:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -3373,8 +3269,8 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -3413,8 +3309,8 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-6或同等",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-02-07",
@@ -3444,9 +3340,9 @@
               "publisher": "中国政法大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月12日起",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -3482,18 +3378,22 @@
               "linkGrade": "B",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
+              "examForm": "未注明",
               "englishRequirement": "CET-4或CET-6",
               "duration": "3年",
               "publishedAt": "2025年10月初",
               "lastVerifiedAt": "2026-01-16",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         }
       ],
-      "is211": true
+      "is211": true,
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "id": 59,
@@ -3523,7 +3423,7 @@
               "linkGrade": "A",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
+              "examForm": "未注明",
               "englishRequirement": "CET-4或CET-6",
               "duration": "2-3年",
               "publishedAt": "2025年10月初",
@@ -3554,9 +3454,9 @@
               "publisher": "南昌大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月3日-9月12日中午12:00:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -3623,90 +3523,12 @@
               "publisher": "江南大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月15日-22日",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
-            }
-          ]
-        }
-      ],
-      "is211": true
-    },
-    {
-      "id": 61,
-      "name": "合肥工业大学",
-      "tier": "211",
-      "programs": [
-        {
-          "id": "61-1",
-          "schoolId": 61,
-          "programName": "中国语言文学",
-          "department": "文学院/中文系",
-          "specialty": "中国语言文学",
-          "degreeTypes": [
-            "学硕"
-          ],
-          "notices": [
-            {
-              "id": "61-1-1",
-              "programId": "61-1",
-              "year": 2026,
-              "title": "2026年推免硕士研究生招生通知",
-              "url": "https://yjszs.hfut.edu.cn/2023/0919/c13524a296206/pagem.htm",
-              "sourceType": "list_page",
-              "publisher": "合肥工业大学研究生院",
-              "linkGrade": "B",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-4或CET-6",
-              "duration": "3年",
-              "publishedAt": "2025年10月初",
-              "lastVerifiedAt": "2026-01-16",
-              "noticeType": "预推免",
-              "dataVerified": false
-            }
-          ]
-        }
-      ],
-      "is211": true
-    },
-    {
-      "id": 62,
-      "name": "太原理工大学",
-      "tier": "211",
-      "programs": [
-        {
-          "id": "62-1",
-          "schoolId": 62,
-          "programName": "中国语言文学",
-          "department": "文学院/中文系",
-          "specialty": "中国语言文学",
-          "degreeTypes": [
-            "学硕"
-          ],
-          "notices": [
-            {
-              "id": "62-1-1",
-              "programId": "62-1",
-              "year": 2026,
-              "title": "2026年推免硕士研究生招生通知",
-              "url": "http://www.gs.tyut.edu.cn/info/1261/11099.htm",
-              "sourceType": "list_page",
-              "publisher": "太原理工大学研究生院",
-              "linkGrade": "B",
-              "applicationPeriod": "9月中旬-10月初",
-              "deadline": "2025年10月初",
-              "examForm": "材料审核、复试",
-              "englishRequirement": "CET-4或CET-6",
-              "duration": "3年",
-              "publishedAt": "2025年10月初",
-              "lastVerifiedAt": "2026-01-16",
-              "noticeType": "预推免",
-              "dataVerified": false
             }
           ]
         }
@@ -3735,7 +3557,9 @@
               "englishRequirement": "详见官网",
               "publisher": "首都师范大学研究生院",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ],
           "degreeTypes": [
@@ -3765,12 +3589,14 @@
               "publisher": "首都师范大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "46287",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
-              "lastVerifiedAt": "2026-01-27"
+              "lastVerifiedAt": "2026-01-27",
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         },
@@ -3794,17 +3620,21 @@
               "publisher": "首都师范大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "46287",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
-              "lastVerifiedAt": "2026-01-27"
+              "lastVerifiedAt": "2026-01-27",
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ]
         }
       ],
-      "is211": true
+      "is211": true,
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "name": "北京语言大学",
@@ -3858,9 +3688,9 @@
               "publisher": "北京语言大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月4日上午10:00至9月12日上午9:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -3894,7 +3724,9 @@
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025-09-28",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ],
           "degreeTypes": [
@@ -3904,7 +3736,9 @@
           "specialty": "中国语言文学",
           "department": "人文学院"
         }
-      ]
+      ],
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "name": "浙江师范大学",
@@ -3966,7 +3800,9 @@
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025-09-30",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ],
           "degreeTypes": [
@@ -3976,7 +3812,9 @@
           "specialty": "中国语言文学",
           "department": "文学院"
         }
-      ]
+      ],
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "name": "山东师范大学",
@@ -4066,9 +3904,9 @@
               "publisher": "河南大学研究生院",
               "linkGrade": "B",
               "applicationPeriod": "9月17日起",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -4095,9 +3933,9 @@
               "publisher": "河南大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "邮箱：9月17日-9月22日\n网上：9月22日",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -4130,7 +3968,9 @@
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025-09-26",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ],
           "degreeTypes": [
@@ -4140,7 +3980,9 @@
           "specialty": "中国语言文学",
           "department": "文学院"
         }
-      ]
+      ],
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "name": "河北大学",
@@ -4266,7 +4108,9 @@
               "sourceChannel": "待查",
               "note": "三渠道暂无2026届信息，建议电话咨询：0451-88067365",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ],
           "degreeTypes": [
@@ -4276,43 +4120,9 @@
           "specialty": "中国语言文学",
           "department": "文学院"
         }
-      ]
-    },
-    {
-      "name": "江苏师范大学",
-      "tier": "省重点师范",
-      "disciplineGrade": "B",
-      "programs": [
-        {
-          "programName": "中国语言文学",
-          "notices": [
-            {
-              "year": 2026,
-              "title": "江苏师范大学研究生院",
-              "url": "https://yjsy.jsnu.edu.cn/a6/44/c10836a304196/page.htm",
-              "linkGrade": "A",
-              "sourceType": "official",
-              "yearStatus": "verified",
-              "lastVerifiedAt": "2026-02-07",
-              "applicationPeriod": "详见官网",
-              "deadline": "详见官网",
-              "examForm": "材料审核+复试",
-              "englishRequirement": "详见官网",
-              "publisher": "江苏师范大学研究生院",
-              "sourceChannel": "官网原文",
-              "noticeType": "预推免",
-              "publishedAt": "2025-09-26",
-              "dataVerified": false
-            }
-          ],
-          "degreeTypes": [
-            "学硕",
-            "专硕"
-          ],
-          "specialty": "中国语言文学",
-          "department": "文学院"
-        }
-      ]
+      ],
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "name": "广西师范大学",
@@ -4338,7 +4148,9 @@
               "sourceChannel": "待查",
               "note": "三渠道暂无2026届信息，建议电话咨询：0773-5838221",
               "noticeType": "预推免",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ],
           "degreeTypes": [
@@ -4348,7 +4160,9 @@
           "specialty": "中国语言文学",
           "department": "文学院"
         }
-      ]
+      ],
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "name": "四川师范大学",
@@ -4374,7 +4188,9 @@
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025年",
-              "dataVerified": false
+              "dataVerified": false,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ],
           "degreeTypes": [
@@ -4384,7 +4200,9 @@
           "specialty": "中国语言文学",
           "department": "文学院"
         }
-      ]
+      ],
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "name": "西北师范大学",
@@ -4441,7 +4259,9 @@
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025-09-25",
-              "dataVerified": true
+              "dataVerified": true,
+              "noticeScope": "general",
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
             }
           ],
           "degreeTypes": [
@@ -4449,7 +4269,9 @@
             "专硕"
           ]
         }
-      ]
+      ],
+      "noticeScope": "general",
+      "noticeNote": "研招网不分专业的通知"
     },
     {
       "name": "山西大学",
@@ -4503,9 +4325,9 @@
               "publisher": "山西大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月16日上午8:00起至9月20日下午5:00前",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -4732,9 +4554,9 @@
               "publisher": "西南交通大学研究生院",
               "linkGrade": "A",
               "applicationPeriod": "9月11日至9月17日10:00",
-              "deadline": "待确认",
-              "examForm": "待确认",
-              "englishRequirement": "待确认",
+              "deadline": "未注明",
+              "examForm": "未注明",
+              "englishRequirement": "未注明",
               "duration": "2-3年",
               "publishedAt": "2026-01-27",
               "lastVerifiedAt": "2026-01-27"
@@ -4778,46 +4600,6 @@
               "yearStatus": "verified",
               "noticeType": "预推免",
               "dataVerified": true
-            }
-          ]
-        }
-      ],
-      "is211": true
-    },
-    {
-      "id": 64,
-      "name": "上海财经大学",
-      "tier": "211",
-      "programs": [
-        {
-          "id": "64-1",
-          "schoolId": 64,
-          "programName": "中国语言文学",
-          "department": "人文学院",
-          "specialty": "中国语言文学",
-          "degreeTypes": [
-            "学硕"
-          ],
-          "notices": [
-            {
-              "id": "64-1-1",
-              "programId": "64-1",
-              "year": 2026,
-              "title": "上海财经大学2026年推免研究生招生通知",
-              "url": "https://sh.sufe.edu.cn/b6/57/c3494a243287/page.htm",
-              "sourceType": "official",
-              "publisher": "上海财经大学研究生院",
-              "linkGrade": "A",
-              "applicationPeriod": "7月1-8月20",
-              "deadline": "详见官网",
-              "examForm": "材料审核+复试",
-              "englishRequirement": "CET-6或同等水平",
-              "duration": "2-3年",
-              "publishedAt": "2026-02-07",
-              "lastVerifiedAt": "2026-02-07",
-              "yearStatus": "verified",
-              "noticeType": "预推免",
-              "dataVerified": false
             }
           ]
         }

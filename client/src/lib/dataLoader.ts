@@ -272,6 +272,9 @@ function flattenSchool(school: School): University {
 
   const dataStatus = computeDataStatus(school);
 
+  // 从 school 级别获取标注信息
+  const schoolAny = school as any;
+
   return {
     id: school.id,
     name: school.name,
@@ -293,6 +296,11 @@ function flattenSchool(school: School): University {
     dataVerified: (firstNotice as any)?.dataVerified ?? false,
     noticeType: (firstNotice as any)?.noticeType as NoticeType | undefined,
     sourceChannel: (firstNotice as any)?.sourceChannel,
+    // 新增标注字段（优先从 notice 取，其次从 school 取）
+    noticeScope: (firstNotice as any)?.noticeScope || schoolAny.noticeScope,
+    noticeNote: (firstNotice as any)?.noticeNote || schoolAny.noticeNote,
+    websiteStatus: (firstNotice as any)?.websiteStatus || schoolAny.websiteStatus,
+    websiteNote: (firstNotice as any)?.websiteNote || schoolAny.websiteNote,
   };
 }
 

@@ -4,6 +4,12 @@ export type DataStatus = 'COMPLETE' | 'PARTIAL' | 'PENDING_MANUAL';
 // 通知类型
 export type NoticeType = '夏令营' | '预推免' | '综合' | '未找到';
 
+// 通知范围类型
+export type NoticeScope = 'general' | 'specific';
+
+// 网站状态
+export type WebsiteStatus = 'normal' | 'maintenance' | 'unavailable';
+
 export interface University {
   id: number;
   name: string;
@@ -25,4 +31,9 @@ export interface University {
   dataVerified: boolean;       // 数据是否已核实
   noticeType?: NoticeType;     // 通知类型（夏令营/预推免）
   sourceChannel?: string;      // 来源渠道
+  // 新增标注字段
+  noticeScope?: NoticeScope;   // 通知范围（general=不分专业）
+  noticeNote?: string;         // 通知说明
+  websiteStatus?: WebsiteStatus; // 网站状态
+  websiteNote?: string;        // 网站状态说明
 }
