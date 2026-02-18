@@ -1,9 +1,8 @@
 /**
- * 安全工具模块
- * 提供输入验证和加密功能
+ * 安全工具模块（简化版）
+ * 提供输入验证和基础文本清理
+ * 移除 dompurify 依赖，避免 Vite 构建问题
  */
-
-import type DOMPurifyType from 'dompurify';
 
 // ============ 输入验证 ============
 
@@ -81,39 +80,21 @@ export function validateURL(url: string): { valid: boolean; message?: string } {
   }
 }
 
-// ============ 动态导入工具 ============
+// ============ 简化版文本清理 ============
 
 /**
- * 动态导入 DOMPurify，避免 SSR/构建阶段解析错误
- * 只在浏览器环境中使用
+ * 清理 HTML 内容，防止 XSS 攻击（基础版本）
+ * 注意：这是简化版，适用于基本场景
+ * 如需高级 XSS 防护，请配置 dompurify 依赖
  */
-export async function getDOMPurify(): Promise<typeof DOMPurifyType> {
-  // 浏览器环境：使用静态导入
-  if (typeof window !== 'undefined') {
-    const module = await import('dompurify');
-    return module.default || module;
-  }
-
-  // Node.js 环境：返回 null，避免构建错误
-  return null;
-}
-
-// ============ XSS 防护 ============
-
-/**
- * 清理 HTML 内容，防止 XSS 攻击（使用动态导入）
- */
-export async function sanitizeHTML(html: string): Promise<string> {
-  const DOMPurify = await getDOMPurify();
-  if (!DOMPurify) {
-    // Node.js 环境：返回原文（生产环境不应该到达这里）
-    return html;
-  }
-
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: [], // 不允许任何 HTML 标签
-    ALLOWED_ATTR: [], // 不允许任何属性
-  });
+export function sanitizeHTML(html: string): string {
+  // 移除潜在的 HTML/JS 代码
+  return html
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\\/g, '&#x2F;');
 }
 
 /**
@@ -130,11 +111,12 @@ export function sanitizeText(text: string): string {
 }
 
 /**
- * 验证并清理用户输入
+ * 验证并清理用户输入（简化版）
+ * 注意：不使用 dompurify，避免依赖问题
  */
-export async function cleanUserInput(input: string, allowHTML: boolean = false): Promise<string> {
+export function cleanUserInput(input: string, allowHTML: boolean = false): string {
   if (allowHTML) {
-    return await sanitizeHTML(input);
+    return sanitizeHTML(input);
   }
   return sanitizeText(input);
 }
