@@ -1,14 +1,24 @@
 import { useState, useMemo } from "react";
 import { University, DataStatus } from "@/types/university";
-import { universities as universitiesData, getCoverageStats } from "@/lib/dataLoader";
+import { universities, getCoverageStats } from "@/lib/dataLoader";
+import { favoritesStorage, searchHistoryStorage } from "@/lib/storage";
+import { cleanUserInput } from "@/lib/security";
+import { useCompare } from "@/contexts/CompareContext";
+import { useReminders } from "@/contexts/ReminderContext";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Search, BookOpen, GraduationCap, Calendar, ExternalLink, Filter, ChevronRight, Sparkles, AlertCircle } from "lucide-react";
+import SearchCommand from "@/components/SearchCommand";
+import {
+  Search, BookOpen, GraduationCap, Calendar, ExternalLink,
+  Filter, ChevronRight, Sparkles, AlertCircle, Heart, HeartOff,
+  BarChart2, Bell, Star
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
+import FeedbackDialog from "@/components/FeedbackDialog";
 
 // 通用/待核实数据的占位值
 const GENERIC_VALUES = {
@@ -48,31 +58,102 @@ const STATUS_CONFIG: Record<DataStatus, { label: string; className: string }> = 
 
 export default function Home() {
   const [, setLocation] = useLocation();
+  const { addToCompare, isInCompare } = useCompare();
+  const { addReminder } = useReminders();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [selectedUniversity, setSelectedUniversity] = useState<University | null>(null);
+  const [favorites, setFavorites] = useState<number[]>([]);
 
-  const universities = universitiesData as University[];
+  // 加载收藏列表
+  useState(() => {
+    const favs = favoritesStorage.getFavorites();
+    setFavorites(favs.map(f => f.universityId));
+  });
 
-  // 覆盖率统计
-  const coverageStats = useMemo(() => getCoverageStats(universities), [universities]);
+  // 覆盖率统计（优化：不依赖 universities）
+  const coverageStats = useMemo(() => getCoverageStats(), []);
 
+  // 过滤大学列表（优化：移除不必要的依赖）
   const filteredUniversities = useMemo(() => {
+    const cleanTerm = cleanUserInput(searchTerm.trim().toLowerCase());
     return universities.filter((uni) => {
       const matchesSearch =
-        uni.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        uni.specialty.toLowerCase().includes(searchTerm.toLowerCase());
+        cleanTerm === '' ||
+        uni.name.toLowerCase().includes(cleanTerm) ||
+        uni.specialty.toLowerCase().includes(cleanTerm);
 
       const matchesLevel = selectedLevel ? uni.tier === selectedLevel : true;
 
       return matchesSearch && matchesLevel;
     });
-  }, [searchTerm, selectedLevel, universities]);
+  }, [searchTerm, selectedLevel]); // 移除 universities 依赖
 
   // 过滤掉 '待补充' 的梯队
-  const levels = Array.from(
-    new Set(universities.map(u => u.tier).filter(t => t && t !== '待补充'))
-  ).sort() as string[];
+  const levels = useMemo(() => {
+    return Array.from(
+      new Set(universities.map(u => u.tier).filter(t => t && t !== '待补充'))
+    ).sort() as string[];
+  }, []); // 只在初始化时计算一次
+
+  // 处理搜索（添加历史记录）
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
+    if (value.trim()) {
+      searchHistoryStorage.addSearch(value.trim());
+    }
+  };
+
+  // 切换收藏
+  const toggleFavorite = (university: University, e: React.MouseEvent) => {
+    e.stopPropagation(); // 防止触发卡片点击
+
+    if (favorites.includes(university.id)) {
+      favoritesStorage.removeFavorite(university.id);
+      setFavorites(prev => prev.filter(id => id !== university.id));
+    } else {
+      favoritesStorage.addFavorite({
+        universityId: university.id,
+        universityName: university.name,
+        tier: university.tier,
+        specialty: university.specialty,
+        addedAt: Date.now(),
+      });
+      setFavorites(prev => [...prev, university.id]);
+    }
+  };
+
+  // 添加到对比
+  const handleAddToCompare = (university: University, e: React.MouseEvent) => {
+    e.stopPropagation();
+    addToCompare(university);
+  };
+
+  // 设置提醒
+  const handleSetReminder = (university: University) => {
+    try {
+      // 解析截止日期
+      const deadlineMatch = university.deadline.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+      if (!deadlineMatch) {
+        alert("无法解析截止日期格式");
+        return;
+      }
+
+      const [, year, month, day] = deadlineMatch;
+      const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+
+      addReminder({
+        universityId: university.id,
+        universityName: university.name,
+        deadline: university.deadline,
+        reminderDate: 7, // 默认提前7天
+        active: true,
+      });
+    } catch (error) {
+      console.error("Failed to set reminder:", error);
+      alert("设置提醒失败，请稍后重试");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground font-serif selection:bg-primary/20">
@@ -87,15 +168,27 @@ export default function Home() {
           <div className="vertical-text text-muted-foreground hover:text-primary transition-colors cursor-pointer text-sm tracking-widest font-medium">
             推免资讯
           </div>
-          <div className="vertical-text text-muted-foreground hover:text-primary transition-colors cursor-pointer text-sm tracking-widest font-medium">
+          <div
+            className="vertical-text text-muted-foreground hover:text-primary transition-colors cursor-pointer text-sm tracking-widest font-medium"
+            onClick={() => setLocation("/analytics")}
+          >
             数据分析
           </div>
-          <div className="vertical-text text-muted-foreground hover:text-primary transition-colors cursor-pointer text-sm tracking-widest font-medium">
-            关于平台
+          <div
+            className="vertical-text text-muted-foreground hover:text-primary transition-colors cursor-pointer text-sm tracking-widest font-medium"
+            onClick={() => setLocation("/compare")}
+          >
+            院校对比
           </div>
-        </div>
-        <div className="mt-auto text-xs text-muted-foreground vertical-text opacity-50">
-          二零二五
+          <div
+            className="vertical-text text-muted-foreground hover:text-primary transition-colors cursor-pointer text-sm tracking-widest font-medium"
+            onClick={() => setLocation("/reminders")}
+          >
+            申请提醒
+          </div>
+          <div className="mt-auto text-xs text-muted-foreground vertical-text opacity-50">
+            二零二五
+          </div>
         </div>
       </aside>
 
@@ -104,7 +197,7 @@ export default function Home() {
         {/* 顶部Hero区域 */}
         <header className="relative py-16 md:py-24 px-6 md:px-12 overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl translate-y-1/3 -translate-x-1/2 pointer-events-none"></div>
 
           <div className="container max-w-5xl mx-auto relative z-10">
             <motion.div
@@ -125,12 +218,12 @@ export default function Home() {
                 助您在学术之路上，寻得理想归处。
               </p>
 
-              {/* 匹配功能入口 */}
+              {/* 功能快捷入口 */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="mb-8 inline-block"
+                className="flex flex-wrap gap-4 mb-8"
               >
                 <Button
                   onClick={() => setLocation("/matcher")}
@@ -139,17 +232,39 @@ export default function Home() {
                   <Sparkles className="w-4 h-4" />
                   院校匹配评估
                 </Button>
+                <Button
+                  onClick={() => setLocation("/compare")}
+                  variant="outline"
+                  className="font-sans px-6 py-2 rounded-lg flex items-center gap-2"
+                >
+                  <BarChart2 className="w-4 h-4" />
+                  院校对比
+                </Button>
+                <Button
+                  onClick={() => setLocation("/reminders")}
+                  variant="outline"
+                  className="font-sans px-6 py-2 rounded-lg flex items-center gap-2"
+                >
+                  <Bell className="w-4 h-4" />
+                  申请提醒
+                </Button>
+                <Button
+                  onClick={() => setLocation("/analytics")}
+                  variant="outline"
+                  className="font-sans px-6 py-2 rounded-lg flex items-center gap-2"
+                >
+                  <Star className="w-4 h-4" />
+                  数据分析
+                </Button>
               </motion.div>
 
-              {/* 搜索栏 */}
+              {/* 搜索栏 - 升级为命令面板 */}
               <div className="flex flex-col md:flex-row gap-4 max-w-2xl">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
-                  <Input
-                    placeholder="搜索高校名称或专业..."
-                    className="pl-10 h-12 bg-card/80 backdrop-blur-sm border-primary/20 focus:border-primary/50 transition-all shadow-sm font-sans"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                <div className="flex-1">
+                  <SearchCommand
+                    onSelect={(uni) => {
+                      setSelectedUniversity(uni);
+                    }}
                   />
                 </div>
                 <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
@@ -187,9 +302,12 @@ export default function Home() {
                   共收录 {filteredUniversities.length} 所高校
                 </span>
               </h2>
-              <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground font-sans">
-                <Filter className="w-4 h-4" />
-                <span>按拼音排序</span>
+              <div className="flex items-center gap-2">
+                <FeedbackDialog />
+                <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground font-sans">
+                  <Filter className="w-4 h-4" />
+                  <span>按拼音排序</span>
+                </div>
               </div>
             </div>
 
@@ -224,7 +342,7 @@ export default function Home() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.5) }}
                     layout
                   >
                     <Card
@@ -234,24 +352,45 @@ export default function Home() {
                       <div className="absolute top-0 left-0 w-1 h-full bg-primary/0 group-hover:bg-primary transition-all duration-300"></div>
                       <CardHeader className="pb-3 relative">
                         <div className="flex justify-between items-start">
-                          <div>
+                          <div className="flex-1">
                             <CardTitle className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">
-                              {uni.name}
+                              {cleanUserInput(uni.name)}
                             </CardTitle>
                             <CardDescription className="font-sans text-xs flex flex-wrap gap-1 mt-2">
                               <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground border-0 text-[10px] px-1.5 py-0.5">
                                 {uni.tier}
                               </Badge>
                               <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground border-0 text-[10px] px-1.5 py-0.5">
-                                {uni.degreeType}
+                                {cleanUserInput(uni.degreeType)}
                               </Badge>
                               <Badge className={`border-0 text-[10px] px-1.5 py-0.5 ${STATUS_CONFIG[uni.dataStatus].className}`}>
                                 {STATUS_CONFIG[uni.dataStatus].label}
                               </Badge>
                             </CardDescription>
                           </div>
-                          <div className="w-8 h-8 rounded-full bg-primary/5 flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                            <ChevronRight className="w-5 h-5" />
+                          <div className="flex gap-1">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="w-8 h-8 hover:bg-destructive/10 hover:text-destructive transition-colors"
+                              onClick={(e) => toggleFavorite(uni, e)}
+                              title="收藏"
+                            >
+                              {favorites.includes(uni.id) ? (
+                                <Heart className="w-5 h-5 fill-current text-red-500" />
+                              ) : (
+                                <HeartOff className="w-5 h-5" />
+                              )}
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className={`w-8 h-8 transition-colors ${isInCompare(uni.id) ? 'bg-primary/10 text-primary' : 'hover:bg-primary/10'}`}
+                              onClick={(e) => handleAddToCompare(uni, e)}
+                              title="添加到对比"
+                            >
+                              <BarChart2 className="w-5 h-5" />
+                            </Button>
                           </div>
                         </div>
                       </CardHeader>
@@ -259,17 +398,17 @@ export default function Home() {
                         <div className="space-y-3">
                           <div className="flex items-start gap-2 text-sm text-muted-foreground">
                             <GraduationCap className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
-                            <span className="line-clamp-2 font-sans">{uni.specialty}</span>
+                            <span className="line-clamp-2 font-sans">{cleanUserInput(uni.specialty)}</span>
                           </div>
                           <div className="flex items-start gap-2 text-sm text-muted-foreground">
                             <Calendar className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
-                            <span className="line-clamp-1 font-sans">{uni.deadline}</span>
+                            <span className="line-clamp-1 font-sans">{cleanUserInput(uni.deadline)}</span>
                           </div>
                         </div>
                       </CardContent>
                       <CardFooter className="pt-0 pb-4">
                         <div className="w-full pt-3 border-t border-border/30 flex justify-between items-center text-xs text-muted-foreground font-sans">
-                          <span>{uni.degreeType}</span>
+                          <span>{cleanUserInput(uni.degreeType)}</span>
                           <span className="group-hover:text-primary transition-colors">查看详情</span>
                         </div>
                       </CardFooter>
@@ -314,11 +453,11 @@ export default function Home() {
               className="relative w-full max-w-3xl max-h-[90vh] bg-card border border-border shadow-2xl rounded-xl overflow-hidden flex flex-col"
             >
               <div className="flex justify-between items-start p-6 border-b border-border/40">
-                <div>
-                  <h2 className="text-3xl font-bold mb-2">{selectedUniversity.name}</h2>
+                <div className="flex-1">
+                  <h2 className="text-3xl font-bold mb-2">{cleanUserInput(selectedUniversity.name)}</h2>
                   <div className="flex flex-wrap gap-2">
                     <Badge className="bg-primary/20 text-primary border-0">{selectedUniversity.tier}</Badge>
-                    <Badge className="bg-primary/20 text-primary border-0">{selectedUniversity.degreeType}</Badge>
+                    <Badge className="bg-primary/20 text-primary border-0">{cleanUserInput(selectedUniversity.degreeType)}</Badge>
                     {selectedUniversity.noticeType && (
                       <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border-0">
                         {selectedUniversity.noticeType}
@@ -336,7 +475,7 @@ export default function Home() {
                 </div>
                 <button
                   onClick={() => setSelectedUniversity(null)}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-foreground transition-colors ml-4"
                 >
                   ✕
                 </button>
@@ -363,19 +502,19 @@ export default function Home() {
                       专业方向
                     </h3>
                     <p className={`text-base ${!selectedUniversity.dataVerified && isGenericValue('specialty', selectedUniversity.specialty) ? 'text-orange-600 dark:text-orange-400 italic' : 'text-muted-foreground'}`}>
-                      {displayValue(selectedUniversity.specialty, 'specialty', selectedUniversity.dataVerified)}
+                      {displayValue(cleanUserInput(selectedUniversity.specialty), 'specialty', selectedUniversity.dataVerified)}
                     </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <h3 className="font-semibold text-sm text-muted-foreground mb-2">学制</h3>
-                      <p className="text-base">{selectedUniversity.duration || '待补充'}</p>
+                      <p className="text-base">{cleanUserInput(selectedUniversity.duration || '待补充')}</p>
                     </div>
                     <div>
                       <h3 className="font-semibold text-sm text-muted-foreground mb-2">考核形式</h3>
                       <p className={`text-base ${!selectedUniversity.dataVerified && isGenericValue('examForm', selectedUniversity.examForm) ? 'text-orange-600 dark:text-orange-400 italic' : ''}`}>
-                        {displayValue(selectedUniversity.examForm, 'examForm', selectedUniversity.dataVerified)}
+                        {displayValue(cleanUserInput(selectedUniversity.examForm), 'examForm', selectedUniversity.dataVerified)}
                       </p>
                     </div>
                   </div>
@@ -383,25 +522,26 @@ export default function Home() {
                   <div>
                     <h3 className="font-semibold text-sm text-muted-foreground mb-2">英语要求</h3>
                     <p className={`text-base ${!selectedUniversity.dataVerified && isGenericValue('englishRequirement', selectedUniversity.englishRequirement) ? 'text-orange-600 dark:text-orange-400 italic' : ''}`}>
-                      {displayValue(selectedUniversity.englishRequirement, 'englishRequirement', selectedUniversity.dataVerified)}
+                      {displayValue(cleanUserInput(selectedUniversity.englishRequirement), 'englishRequirement', selectedUniversity.dataVerified)}
                     </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <h3 className="font-semibold text-sm text-muted-foreground mb-2">申请期间</h3>
-                      <p className="text-base">{selectedUniversity.applicationPeriod}</p>
+                      <p className="text-base">{cleanUserInput(selectedUniversity.applicationPeriod)}</p>
                     </div>
                     <div>
                       <h3 className="font-semibold text-sm text-muted-foreground mb-2">截止时间</h3>
-                      <p className="text-base text-primary font-semibold">{selectedUniversity.deadline}</p>
+                      <p className="text-base text-primary font-semibold">{cleanUserInput(selectedUniversity.deadline)}</p>
                     </div>
                   </div>
 
-                  {selectedUniversity.url && selectedUniversity.url !== '' && (
-                    <div>
+                  {/* 操作按钮 */}
+                  <div className="flex flex-wrap gap-3 pt-4 border-t border-border/40">
+                    {selectedUniversity.url && selectedUniversity.url !== '' && (
                       <a
-                        href={selectedUniversity.url}
+                        href={cleanUserInput(selectedUniversity.url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-sans text-sm font-medium"
@@ -410,8 +550,47 @@ export default function Home() {
                         查看官方通知
                         {selectedUniversity.noticeType && ` (${selectedUniversity.noticeType})`}
                       </a>
-                    </div>
-                  )}
+                    )}
+                    <Button
+                      onClick={() => handleSetReminder(selectedUniversity)}
+                      variant="outline"
+                      className="font-sans"
+                    >
+                      <Bell className="w-4 h-4 mr-2" />
+                      设置提醒
+                    </Button>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFavorite(selectedUniversity, e as any);
+                      }}
+                      variant="outline"
+                      className="font-sans"
+                    >
+                      {favorites.includes(selectedUniversity.id) ? (
+                        <>
+                          <Heart className="w-4 h-4 mr-2 fill-current text-red-500" />
+                          已收藏
+                        </>
+                      ) : (
+                        <>
+                          <HeartOff className="w-4 h-4 mr-2" />
+                          收藏
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAddToCompare(selectedUniversity, e as any);
+                      }}
+                      variant="outline"
+                      className="font-sans"
+                    >
+                      <BarChart2 className="w-4 h-4 mr-2" />
+                      加入对比
+                    </Button>
+                  </div>
                 </div>
               </ScrollArea>
             </motion.div>
