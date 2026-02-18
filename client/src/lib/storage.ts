@@ -3,6 +3,95 @@ import { UserProfile, MatchReport } from "@/types/userProfile";
 const STORAGE_KEYS = {
   USER_PROFILE: "literature_user_profile",
   MATCH_REPORT: "literature_match_report",
+  FAVORITES: "literature_favorites",
+  SEARCH_HISTORY: "literature_search_history",
+};
+
+// Favorites storage
+interface FavoriteItem {
+  universityId: string;
+  universityName: string;
+  addedAt: string;
+}
+
+export const favoritesStorage = {
+  getFavorites: (): FavoriteItem[] => {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.FAVORITES);
+      return data ? JSON.parse(data) : [];
+    } catch (error) {
+      console.error("Failed to get favorites:", error);
+      return [];
+    }
+  },
+
+  addFavorite: (item: Omit<FavoriteItem, "addedAt">) => {
+    try {
+      const favorites = favoritesStorage.getFavorites();
+      if (favorites.some((f) => f.universityId === item.universityId)) {
+        return false;
+      }
+      favorites.push({ ...item, addedAt: new Date().toISOString() });
+      localStorage.setItem(STORAGE_KEYS.FAVORITES, JSON.stringify(favorites));
+      return true;
+    } catch (error) {
+      console.error("Failed to add favorite:", error);
+      return false;
+    }
+  },
+
+  removeFavorite: (universityId: string) => {
+    try {
+      const favorites = favoritesStorage.getFavorites();
+      const filtered = favorites.filter((f) => f.universityId !== universityId);
+      localStorage.setItem(STORAGE_KEYS.FAVORITES, JSON.stringify(filtered));
+      return true;
+    } catch (error) {
+      console.error("Failed to remove favorite:", error);
+      return false;
+    }
+  },
+
+  isFavorite: (universityId: string): boolean => {
+    return favoritesStorage.getFavorites().some((f) => f.universityId === universityId);
+  },
+};
+
+// Search history storage
+export const searchHistoryStorage = {
+  getHistory: (): string[] => {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.SEARCH_HISTORY);
+      return data ? JSON.parse(data) : [];
+    } catch (error) {
+      console.error("Failed to get search history:", error);
+      return [];
+    }
+  },
+
+  addSearch: (term: string) => {
+    try {
+      const history = searchHistoryStorage.getHistory();
+      const filtered = history.filter((h) => h !== term);
+      filtered.unshift(term);
+      const limited = filtered.slice(0, 20); // Keep last 20 searches
+      localStorage.setItem(STORAGE_KEYS.SEARCH_HISTORY, JSON.stringify(limited));
+      return true;
+    } catch (error) {
+      console.error("Failed to add search:", error);
+      return false;
+    }
+  },
+
+  clearHistory: () => {
+    try {
+      localStorage.removeItem(STORAGE_KEYS.SEARCH_HISTORY);
+      return true;
+    } catch (error) {
+      console.error("Failed to clear search history:", error);
+      return false;
+    }
+  },
 };
 
 export const storageUtils = {
