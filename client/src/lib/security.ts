@@ -1,8 +1,9 @@
 /**
- * 安全工具模块（简化版）
- * 提供输入验证和基础文本清理
- * 移除 dompurify 依赖，避免 Vite 构建问题
+ * 安全工具模块
+ * 提供输入验证和加密功能
  */
+
+import DOMPurify from 'dompurify';
 
 // ============ 输入验证 ============
 
@@ -80,21 +81,16 @@ export function validateURL(url: string): { valid: boolean; message?: string } {
   }
 }
 
-// ============ 简化版文本清理 ============
+// ============ XSS 防护 ============
 
 /**
- * 清理 HTML 内容，防止 XSS 攻击（基础版本）
- * 注意：这是简化版，适用于基本场景
- * 如需高级 XSS 防护，请配置 dompurify 依赖
+ * 清理 HTML 内容，防止 XSS 攻击
  */
 export function sanitizeHTML(html: string): string {
-  // 移除潜在的 HTML/JS 代码
-  return html
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .replace(/\\/g, '&#x2F;');
+  return DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: [], // 不允许任何 HTML 标签
+    ALLOWED_ATTR: [], // 不允许任何属性
+  });
 }
 
 /**
@@ -111,8 +107,7 @@ export function sanitizeText(text: string): string {
 }
 
 /**
- * 验证并清理用户输入（简化版）
- * 注意：不使用 dompurify，避免依赖问题
+ * 验证并清理用户输入
  */
 export function cleanUserInput(input: string, allowHTML: boolean = false): string {
   if (allowHTML) {

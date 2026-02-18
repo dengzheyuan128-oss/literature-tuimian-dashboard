@@ -1,0 +1,10 @@
+{
+  "name": "literature-tuimian-dashboard-client",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "dompurify": "^3.3.1",
+    "@types/dompurify": "^3.0.0"
+  }
+}
