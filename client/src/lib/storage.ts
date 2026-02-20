@@ -11,6 +11,8 @@ const STORAGE_KEYS = {
 interface FavoriteItem {
   universityId: string;
   universityName: string;
+  tier?: string;
+  specialty?: string;
   addedAt: string;
 }
 

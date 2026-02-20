@@ -5,6 +5,13 @@ import { favoritesStorage, searchHistoryStorage } from "@/lib/storage";
 import { cleanUserInput } from "@/lib/security";
 import { useCompare } from "@/contexts/CompareContext";
 import { useReminders } from "@/contexts/ReminderContext";
+import {
+  SIMPLIFIED_TIERS,
+  getSimplifiedTier,
+  getTierBadgeClassName,
+  getTierConfig,
+  SimplifiedTier
+} from "@/lib/tierUtils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
@@ -61,20 +68,20 @@ export default function Home() {
   const { addToCompare, isInCompare } = useCompare();
   const { addReminder } = useReminders();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
+  const [selectedLevel, setSelectedLevel] = useState<SimplifiedTier | null>(null);
   const [selectedUniversity, setSelectedUniversity] = useState<University | null>(null);
   const [favorites, setFavorites] = useState<number[]>([]);
 
   // 加载收藏列表
   useState(() => {
     const favs = favoritesStorage.getFavorites();
-    setFavorites(favs.map(f => f.universityId));
+    setFavorites(favs.map(f => parseInt(f.universityId, 10)).filter(id => !isNaN(id)));
   });
 
   // 覆盖率统计（优化：不依赖 universities）
   const coverageStats = useMemo(() => getCoverageStats(), []);
 
-  // 过滤大学列表（优化：移除不必要的依赖）
+  // 过滤大学列表（使用简化分类）
   const filteredUniversities = useMemo(() => {
     const cleanTerm = cleanUserInput(searchTerm.trim().toLowerCase());
     return universities.filter((uni) => {
@@ -83,18 +90,17 @@ export default function Home() {
         uni.name.toLowerCase().includes(cleanTerm) ||
         uni.specialty.toLowerCase().includes(cleanTerm);
 
-      const matchesLevel = selectedLevel ? uni.tier === selectedLevel : true;
+      // 使用简化分类进行筛选
+      const matchesLevel = selectedLevel
+        ? getSimplifiedTier(uni.tier) === selectedLevel
+        : true;
 
       return matchesSearch && matchesLevel;
     });
-  }, [searchTerm, selectedLevel]); // 移除 universities 依赖
+  }, [searchTerm, selectedLevel]);
 
-  // 过滤掉 '待补充' 的梯队
-  const levels = useMemo(() => {
-    return Array.from(
-      new Set(universities.map(u => u.tier).filter(t => t && t !== '待补充'))
-    ).sort() as string[];
-  }, []); // 只在初始化时计算一次
+  // 使用简化的5种分类
+  const levels = SIMPLIFIED_TIERS;
 
   // 处理搜索（添加历史记录）
   const handleSearch = (value: string) => {
@@ -109,15 +115,14 @@ export default function Home() {
     e.stopPropagation(); // 防止触发卡片点击
 
     if (favorites.includes(university.id)) {
-      favoritesStorage.removeFavorite(university.id);
+      favoritesStorage.removeFavorite(String(university.id));
       setFavorites(prev => prev.filter(id => id !== university.id));
     } else {
       favoritesStorage.addFavorite({
-        universityId: university.id,
+        universityId: String(university.id),
         universityName: university.name,
         tier: university.tier,
         specialty: university.specialty,
-        addedAt: Date.now(),
       });
       setFavorites(prev => [...prev, university.id]);
     }
@@ -143,7 +148,7 @@ export default function Home() {
       const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 
       addReminder({
-        universityId: university.id,
+        universityId: String(university.id),
         universityName: university.name,
         deadline: university.deadline,
         reminderDate: 7, // 默认提前7天
@@ -275,16 +280,24 @@ export default function Home() {
                   >
                     全部
                   </Button>
-                  {levels.map(level => (
-                    <Button
-                      key={level}
-                      variant={selectedLevel === level ? "default" : "outline"}
-                      onClick={() => setSelectedLevel(level === selectedLevel ? null : level)}
-                      className={`h-12 px-6 rounded-lg font-sans whitespace-nowrap transition-all ${selectedLevel === level ? 'bg-primary text-primary-foreground shadow-md' : 'bg-card/50 hover:bg-card'}`}
-                    >
-                      {level}
-                    </Button>
-                  ))}
+                  {levels.map(level => {
+                    const config = getTierConfig(level);
+                    const isSelected = selectedLevel === level;
+                    return (
+                      <Button
+                        key={level}
+                        variant={isSelected ? "default" : "outline"}
+                        onClick={() => setSelectedLevel(level === selectedLevel ? null : level)}
+                        className={`h-12 px-6 rounded-lg font-sans whitespace-nowrap transition-all ${
+                          isSelected
+                            ? `${config.bgColor} ${config.color} shadow-md border ${config.borderColor}`
+                            : `bg-card/50 hover:${config.bgColor} hover:${config.color}`
+                        }`}
+                      >
+                        {level}
+                      </Button>
+                    );
+                  })}
                 </div>
               </div>
             </motion.div>
@@ -357,8 +370,8 @@ export default function Home() {
                               {cleanUserInput(uni.name)}
                             </CardTitle>
                             <CardDescription className="font-sans text-xs flex flex-wrap gap-1 mt-2">
-                              <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground border-0 text-[10px] px-1.5 py-0.5">
-                                {uni.tier}
+                              <Badge className={`${getTierBadgeClassName(uni.tier)} text-[10px] px-1.5 py-0.5`}>
+                                {getSimplifiedTier(uni.tier)}
                               </Badge>
                               <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground border-0 text-[10px] px-1.5 py-0.5">
                                 {cleanUserInput(uni.degreeType)}
@@ -466,7 +479,7 @@ export default function Home() {
                 <div className="flex-1">
                   <h2 className="text-3xl font-bold mb-2">{cleanUserInput(selectedUniversity.name)}</h2>
                   <div className="flex flex-wrap gap-2">
-                    <Badge className="bg-primary/20 text-primary border-0">{selectedUniversity.tier}</Badge>
+                    <Badge className={getTierBadgeClassName(selectedUniversity.tier)}>{getSimplifiedTier(selectedUniversity.tier)}</Badge>
                     <Badge className="bg-primary/20 text-primary border-0">{cleanUserInput(selectedUniversity.degreeType)}</Badge>
                     {selectedUniversity.noticeType && (
                       <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border-0">

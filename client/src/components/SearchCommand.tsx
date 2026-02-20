@@ -1,10 +1,10 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Command } from 'cmdk';
-import { Search, ExternalLink, GraduationCap, Calendar, BookOpen, GraduationCap as GraduationCapIcon } from 'lucide-react';
+import { Search, ExternalLink, GraduationCap, Calendar, BookOpen, Sparkles } from 'lucide-react';
 import { University } from '@/types/university';
 import { universities } from '@/lib/dataLoader';
 import { cleanUserInput } from '@/lib/security';
-import { useLocation } from 'wouter';
+import { getSimplifiedTier, getTierBadgeClassName } from '@/lib/tierUtils';
 import {
   Dialog,
   DialogContent,
@@ -22,12 +22,12 @@ interface SearchCommandProps {
 export default function SearchCommand({ onSelect }: SearchCommandProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
-  const [, setLocation] = useLocation();
 
   // 搜索结果
   const results = useMemo(() => {
     if (!search.trim()) {
-      return [];
+      // 显示热门推荐（985高校）
+      return universities.filter(uni => uni.tier === '985').slice(0, 6);
     }
 
     const cleanSearch = cleanUserInput(search.trim().toLowerCase());
@@ -36,9 +36,10 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
       const nameMatch = uni.name.toLowerCase().includes(cleanSearch);
       const specialtyMatch = uni.specialty.toLowerCase().includes(cleanSearch);
       const tierMatch = uni.tier.toLowerCase().includes(cleanSearch);
+      const simplifiedTierMatch = getSimplifiedTier(uni.tier).toLowerCase().includes(cleanSearch);
 
-      return nameMatch || specialtyMatch || tierMatch;
-    }).slice(0, 10); // 限制显示前10条结果
+      return nameMatch || specialtyMatch || tierMatch || simplifiedTierMatch;
+    }).slice(0, 10);
   }, [search]);
 
   const handleSelect = (uni: University) => {
@@ -49,114 +50,174 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault();
-      setOpen((prev) => !prev);
-    }
-  };
+  // 全局键盘监听
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setOpen((prev) => !prev);
+      }
+    };
 
-  // 添加全局键盘监听
-  useState(() => {
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  });
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <button
-          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border/50 hover:border-primary/50 bg-card/50 hover:bg-card transition-all text-left text-sm text-muted-foreground"
+          className="group relative flex items-center gap-3 w-full px-5 py-3.5 rounded-xl border border-border/50 hover:border-primary/50 bg-gradient-to-r from-card/80 to-card/60 hover:from-card hover:to-card/80 backdrop-blur-sm transition-all duration-300 text-left shadow-sm hover:shadow-md"
         >
-          <Search className="w-4 h-4" />
-          <span className="flex-1">搜索高校、专业...</span>
-          <kbd className="px-1.5 py-0.5 rounded bg-muted text-[10px] font-mono">
-            ⌘K
-          </kbd>
+          {/* 搜索图标 */}
+          <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+            <Search className="w-5 h-5 text-primary" />
+          </div>
+
+          {/* 搜索提示文字 */}
+          <div className="flex-1 min-w-0">
+            <div className="text-sm font-medium text-foreground/80 group-hover:text-foreground transition-colors">
+              搜索高校、专业、分类...
+            </div>
+            <div className="text-xs text-muted-foreground mt-0.5">
+              快速定位目标院校
+            </div>
+          </div>
+
+          {/* 快捷键提示 */}
+          <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-muted/80 border border-border/50 shadow-inner">
+            <kbd className="text-[11px] font-mono font-medium text-muted-foreground">
+              {navigator.platform.includes('Mac') ? '⌘' : 'Ctrl'}
+            </kbd>
+            <span className="text-muted-foreground/50 text-[10px]">+</span>
+            <kbd className="text-[11px] font-mono font-medium text-muted-foreground">K</kbd>
+          </div>
+
+          {/* 装饰性渐变 */}
+          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
         </button>
       </DialogTrigger>
-      <DialogContent className="p-0 max-w-2xl">
-        <DialogHeader className="p-4 pb-2">
-          <DialogTitle className="sr-only">搜索高校</DialogTitle>
-          <DialogDescription className="sr-only">
+
+      <DialogContent className="p-0 max-w-2xl overflow-hidden border-border/50 shadow-2xl">
+        <DialogHeader className="sr-only">
+          <DialogTitle>搜索高校</DialogTitle>
+          <DialogDescription>
             使用快捷键 ⌘K 打开搜索，搜索高校和专业
           </DialogDescription>
         </DialogHeader>
 
-        <Command className="rounded-lg border-0 shadow-lg">
-          <div className="flex items-center border-b px-3" cmdk-input-wrapper>
-            <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+        <Command className="rounded-lg border-0">
+          {/* 搜索输入区域 */}
+          <div className="flex items-center border-b border-border/50 px-4 bg-gradient-to-r from-muted/30 to-muted/10">
+            <Search className="mr-3 h-5 w-5 shrink-0 text-primary" />
             <Command.Input
-              placeholder="搜索高校名称、专业方向、梯队..."
+              placeholder="输入高校名称、专业方向或分类..."
               value={search}
               onValueChange={setSearch}
-              className="flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex h-14 w-full rounded-md bg-transparent py-3 text-base outline-none placeholder:text-muted-foreground/70 disabled:cursor-not-allowed disabled:opacity-50"
             />
+            {search && (
+              <button
+                onClick={() => setSearch('')}
+                className="ml-2 p-1 rounded-md hover:bg-muted transition-colors"
+              >
+                <span className="text-xs text-muted-foreground">清除</span>
+              </button>
+            )}
           </div>
 
-          <Command.List className="max-h-[300px] overflow-y-auto p-2">
-            {results.length === 0 && (
-              <Command.Empty className="py-6 text-center text-sm">
-                <div className="flex flex-col items-center gap-2 text-muted-foreground">
-                  <Search className="h-8 w-8 opacity-50" />
-                  <p>未找到相关高校</p>
+          <Command.List className="max-h-[400px] overflow-y-auto p-3">
+            {results.length === 0 && search && (
+              <Command.Empty className="py-12 text-center">
+                <div className="flex flex-col items-center gap-3 text-muted-foreground">
+                  <div className="w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center">
+                    <Search className="h-8 w-8 opacity-40" />
+                  </div>
+                  <div>
+                    <p className="font-medium">未找到相关高校</p>
+                    <p className="text-sm mt-1">尝试其他关键词</p>
+                  </div>
                 </div>
               </Command.Empty>
             )}
 
-            <Command.Group heading="搜索结果">
+            <Command.Group
+              heading={
+                <div className="flex items-center gap-2 px-2 py-1.5 text-xs font-medium text-muted-foreground">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  {search ? '搜索结果' : '热门推荐'}
+                </div>
+              }
+            >
               {results.map((uni) => (
                 <Command.Item
                   key={uni.id}
                   value={uni.name}
                   onSelect={() => handleSelect(uni)}
-                  className="flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer hover:bg-accent aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-all"
+                  className="group flex items-center gap-4 px-3 py-3 rounded-lg cursor-pointer hover:bg-accent/50 aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-all my-1"
                 >
-                  <div className="flex-shrink-0">
-                    <GraduationCapIcon className="h-5 w-5 text-primary" />
+                  {/* 院校图标 */}
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 group-aria-selected:bg-primary/20 flex items-center justify-center transition-colors">
+                    <GraduationCap className="h-5 w-5 text-primary" />
                   </div>
 
+                  {/* 院校信息 */}
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <span className="font-medium text-sm truncate">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-semibold text-sm truncate">
                         {cleanUserInput(uni.name)}
                       </span>
-                      <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
-                        {uni.tier}
+                      <Badge className={`${getTierBadgeClassName(uni.tier)} text-[10px] px-1.5 py-0 shrink-0`}>
+                        {getSimplifiedTier(uni.tier)}
                       </Badge>
                     </div>
 
-                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <BookOpen className="h-3 w-3" />
-                        <span className="truncate">{cleanUserInput(uni.specialty)}</span>
+                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-1 min-w-0">
+                        <BookOpen className="h-3 w-3 shrink-0" />
+                        <span className="truncate max-w-[150px]">{cleanUserInput(uni.specialty)}</span>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 shrink-0">
                         <Calendar className="h-3 w-3" />
                         <span>{cleanUserInput(uni.deadline)}</span>
                       </div>
                     </div>
                   </div>
 
+                  {/* 外链按钮 */}
                   {uni.url && uni.url !== '' && (
                     <a
                       href={cleanUserInput(uni.url)}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="flex-shrink-0 p-1 rounded hover:bg-accent transition-colors"
+                      className="flex-shrink-0 p-2 rounded-lg hover:bg-primary/10 transition-colors opacity-0 group-hover:opacity-100"
+                      title="查看官方通知"
                     >
-                      <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                      <ExternalLink className="h-4 w-4 text-muted-foreground hover:text-primary" />
                     </a>
                   )}
                 </Command.Item>
               ))}
             </Command.Group>
 
-            <div className="border-t px-3 py-2 text-xs text-muted-foreground">
-              <div className="flex items-center justify-between">
-                <span>提示：使用 <kbd className="px-1 rounded bg-muted">↑↓</kbd> 选择，<kbd className="px-1 rounded bg-muted">Enter</kbd> 打开</span>
-                <span>按 <kbd className="px-1 rounded bg-muted">Esc</kbd> 关闭</span>
+            {/* 底部提示 */}
+            <div className="border-t border-border/30 mt-2 pt-3 px-2">
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <div className="flex items-center gap-4">
+                  <span className="flex items-center gap-1.5">
+                    <kbd className="px-1.5 py-0.5 rounded bg-muted text-[10px] font-mono">↑↓</kbd>
+                    <span>选择</span>
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <kbd className="px-1.5 py-0.5 rounded bg-muted text-[10px] font-mono">Enter</kbd>
+                    <span>打开</span>
+                  </span>
+                </div>
+                <span className="flex items-center gap-1.5">
+                  <kbd className="px-1.5 py-0.5 rounded bg-muted text-[10px] font-mono">Esc</kbd>
+                  <span>关闭</span>
+                </span>
               </div>
             </div>
           </Command.List>

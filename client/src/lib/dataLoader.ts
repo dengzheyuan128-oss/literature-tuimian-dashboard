@@ -54,6 +54,12 @@ export interface School {
 // 通知类型
 export type NoticeType = '夏令营' | '预推免' | '综合' | '未找到';
 
+// 通知范围类型
+export type NoticeScope = 'general' | 'specific';
+
+// 网站状态
+export type WebsiteStatus = 'normal' | 'maintenance' | 'unavailable';
+
 // v1 兼容类型（扁平结构）+ dataStatus
 export interface University {
   id: number;
@@ -76,6 +82,11 @@ export interface University {
   dataVerified: boolean;
   noticeType?: NoticeType;
   sourceChannel?: string;
+  // 新增标注字段
+  noticeScope?: NoticeScope;
+  noticeNote?: string;
+  websiteStatus?: WebsiteStatus;
+  websiteNote?: string;
 }
 
 export interface UniversitiesData {

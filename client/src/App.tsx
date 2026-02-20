@@ -9,6 +9,9 @@ import { ReminderProvider } from "./contexts/ReminderContext";
 import Home from "./pages/Home";
 import Matcher from "./pages/Matcher";
 import MatchResult from "./pages/MatchResult";
+import Compare from "./pages/Compare";
+import Reminders from "./pages/Reminders";
+import Analytics from "./pages/Analytics";
 import { BuildInfo } from "./components/BuildInfo";
 
 
@@ -18,6 +21,9 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/matcher"} component={Matcher} />
       <Route path={"/match-result"} component={MatchResult} />
+      <Route path={"/compare"} component={Compare} />
+      <Route path={"/reminders"} component={Reminders} />
+      <Route path={"/analytics"} component={Analytics} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
