@@ -67,13 +67,13 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <button
-          className="group flex items-center gap-2 h-12 px-4 rounded-lg border border-border/50 hover:border-primary/50 bg-card/50 hover:bg-card transition-all text-left"
+          className="group flex items-center gap-3 w-full h-12 px-5 rounded-lg border border-border/50 hover:border-primary/50 bg-card/50 hover:bg-card transition-all text-left"
         >
-          <Search className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-          <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-            搜索高校...
+          <Search className="w-4 h-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
+          <span className="flex-1 text-sm text-muted-foreground group-hover:text-foreground transition-colors truncate">
+            搜索高校、专业...
           </span>
-          <kbd className="ml-2 px-1.5 py-0.5 rounded bg-muted text-[10px] font-mono text-muted-foreground">
+          <kbd className="shrink-0 px-2 py-1 rounded bg-muted text-[10px] font-mono text-muted-foreground">
             {navigator.platform.includes('Mac') ? '⌘K' : 'Ctrl+K'}
           </kbd>
         </button>
