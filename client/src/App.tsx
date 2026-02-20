@@ -4,6 +4,7 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import { CompareProvider } from "./contexts/CompareContext";
 import { ReminderProvider } from "./contexts/ReminderContext";
 import Home from "./pages/Home";
@@ -43,19 +44,21 @@ function App() {
         defaultTheme="light"
         // switchable
       >
-        <CompareProvider>
-          <ReminderProvider>
-            <TooltipProvider>
-              <Toaster />
-              <div className="relative">
-                <Router />
-                <div className="fixed bottom-4 right-4 z-40 bg-card/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg">
-                  <BuildInfo />
+        <AuthProvider>
+          <CompareProvider>
+            <ReminderProvider>
+              <TooltipProvider>
+                <Toaster />
+                <div className="relative">
+                  <Router />
+                  <div className="fixed bottom-4 right-4 z-40 bg-card/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg">
+                    <BuildInfo />
+                  </div>
                 </div>
-              </div>
-            </TooltipProvider>
-          </ReminderProvider>
-        </CompareProvider>
+              </TooltipProvider>
+            </ReminderProvider>
+          </CompareProvider>
+        </AuthProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

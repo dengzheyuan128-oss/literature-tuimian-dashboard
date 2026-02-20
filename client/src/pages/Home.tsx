@@ -26,6 +26,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
 import FeedbackDialog from "@/components/FeedbackDialog";
+import UserMenu from "@/components/UserMenu";
 
 // 通用/待核实数据的占位值
 const GENERIC_VALUES = {
@@ -196,6 +197,11 @@ export default function Home() {
           </div>
         </div>
       </aside>
+
+      {/* 顶部用户菜单 */}
+      <div className="fixed top-4 right-4 z-50 lg:right-8">
+        <UserMenu />
+      </div>
 
       {/* 主内容区 */}
       <main className="lg:pl-20 min-h-screen flex flex-col">
