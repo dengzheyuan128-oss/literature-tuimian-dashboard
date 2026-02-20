@@ -67,34 +67,15 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <button
-          className="group relative flex items-center gap-3 w-full px-5 py-3.5 rounded-xl border border-border/50 hover:border-primary/50 bg-gradient-to-r from-card/80 to-card/60 hover:from-card hover:to-card/80 backdrop-blur-sm transition-all duration-300 text-left shadow-sm hover:shadow-md"
+          className="group flex items-center gap-2 h-12 px-4 rounded-lg border border-border/50 hover:border-primary/50 bg-card/50 hover:bg-card transition-all text-left"
         >
-          {/* 搜索图标 */}
-          <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-            <Search className="w-5 h-5 text-primary" />
-          </div>
-
-          {/* 搜索提示文字 */}
-          <div className="flex-1 min-w-0">
-            <div className="text-sm font-medium text-foreground/80 group-hover:text-foreground transition-colors">
-              搜索高校、专业、分类...
-            </div>
-            <div className="text-xs text-muted-foreground mt-0.5">
-              快速定位目标院校
-            </div>
-          </div>
-
-          {/* 快捷键提示 */}
-          <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-muted/80 border border-border/50 shadow-inner">
-            <kbd className="text-[11px] font-mono font-medium text-muted-foreground">
-              {navigator.platform.includes('Mac') ? '⌘' : 'Ctrl'}
-            </kbd>
-            <span className="text-muted-foreground/50 text-[10px]">+</span>
-            <kbd className="text-[11px] font-mono font-medium text-muted-foreground">K</kbd>
-          </div>
-
-          {/* 装饰性渐变 */}
-          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+          <Search className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+          <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+            搜索高校...
+          </span>
+          <kbd className="ml-2 px-1.5 py-0.5 rounded bg-muted text-[10px] font-mono text-muted-foreground">
+            {navigator.platform.includes('Mac') ? '⌘K' : 'Ctrl+K'}
+          </kbd>
         </button>
       </DialogTrigger>
 
