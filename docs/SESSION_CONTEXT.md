@@ -8,31 +8,27 @@
 
 ## 📍 当前状态（一句话总结）
 
-**正在进行**: 用户系统已上线！Supabase 集成完成，登录页面和路由保护已部署到 Vercel
+**正在进行**: 用户反馈和AI辅助提取功能已实现！代码已提交，等待用户在Supabase创建数据表
 
 **当前分支**: `main`
 
-**最后提交**: `3a9eb41` - feat: 添加独立登录页面和路由保护
+**最后提交**: `dd58673` - feat: add user feedback button and admin AI extract page
 
 ---
 
 ## 🎯 下次行动（优先级排序）
 
 ### 立即执行（P0）
-1. **完善用户体验**
-   - 添加「忘记密码」功能
-   - 添加用户资料编辑页面
-   - 云端同步收藏/提醒/对比列表（Supabase）
+1. **完成用户反馈功能部署**
+   - 在 Supabase 执行 SQL 创建 `user_feedback` 表
+   - 在 Vercel 配置 `VITE_ADMIN_EMAILS` 和 `VITE_GLM_API_KEY` 环境变量
+   - 测试反馈提交功能
 
 ### 接下来执行（P1）
-2. **可集成的可靠 API/服务**
-   | 服务 | 用途 | 优先级 | 复杂度 |
-   |------|------|--------|--------|
-   | 百度统计 | 用户行为分析 | 高 | 低 |
-   | Resend/SendGrid | 邮件提醒通知 | 高 | 中 |
-   | 微信登录 | 国内用户友好 | 中 | 高 |
-   | PWA 支持 | 离线访问/安装 | 中 | 低 |
-   | 数据导出 | Excel/PDF 导出 | 中 | 中 |
+2. **完善用户体验**
+   - 添加「忘记密码」功能
+   - 云端同步收藏/提醒/对比列表（Supabase）
+   - 集成微信登录（需企业认证）
 
 3. **数据质量工作**
    - 按SOP v2.0处理待补充院校
@@ -41,6 +37,43 @@
 ---
 
 ## 📜 最近会话记录
+
+### 会话 #7 (2026-02-21 - 用户反馈和AI提取功能)
+
+**做了什么**:
+- ✅ 创建 FeedbackButton 悬浮按钮组件（右下角）
+- ✅ 实现反馈表单：类型选择、院校关联、问题描述
+- ✅ 添加 submitFeedback 函数到 Supabase 库
+- ✅ 创建管理员工具函数 adminUtils.ts
+- ✅ 创建 Jina Reader API 封装 jinaReader.ts
+- ✅ 创建 GLM-4 API 封装 glmApi.ts
+- ✅ 创建 AdminExtract 管理员提取页面 `/admin/extract`
+- ✅ 更新 App.tsx 添加新路由和组件
+- ✅ 更新 .env.example 添加新环境变量
+- ✅ 通过类型检查和构建测试
+- ✅ 提交代码到 Git
+
+**路由结构新增**:
+- `/admin/extract` - AI通知提取（仅管理员）
+
+**新增文件**:
+- `client/src/components/FeedbackButton.tsx` - 反馈悬浮按钮
+- `client/src/lib/adminUtils.ts` - 管理员权限判断
+- `client/src/lib/jinaReader.ts` - Jina Reader API
+- `client/src/lib/glmApi.ts` - GLM-4 API
+- `client/src/pages/AdminExtract.tsx` - 管理员提取页面
+
+**待用户操作**:
+1. 在 Supabase Dashboard 执行 SQL 创建 `user_feedback` 表
+2. 在 Vercel 配置环境变量：
+   - `VITE_GLM_API_KEY` - 智谱 AI API Key
+   - `VITE_ADMIN_EMAILS` - 管理员邮箱列表（逗号分隔）
+
+**设计文档**:
+- `docs/plans/2026-02-21-feedback-and-ai-extract-design.md`
+- `docs/plans/2026-02-21-feedback-and-ai-extract-implementation.md`
+
+---
 
 ### 会话 #6 (2026-02-21 - 完整前端体验)
 
