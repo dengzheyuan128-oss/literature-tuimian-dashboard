@@ -9,8 +9,10 @@ import { CompareProvider } from "./contexts/CompareContext";
 import { ReminderProvider } from "./contexts/ReminderContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import BaiduAnalytics from "./components/BaiduAnalytics";
+import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 import Matcher from "./pages/Matcher";
 import MatchResult from "./pages/MatchResult";
 import Compare from "./pages/Compare";
@@ -22,12 +24,16 @@ import { BuildInfo } from "./components/BuildInfo";
 function Router() {
   return (
     <Switch>
-      {/* 登录页面 - 不需要保护 */}
+      {/* 公开页面 */}
+      <Route path={"/"} component={Landing} />
       <Route path={"/login"} component={Login} />
 
       {/* 受保护的页面 - 需要登录 */}
-      <Route path={"/"}>
+      <Route path={"/dashboard"}>
         <ProtectedRoute><Home /></ProtectedRoute>
+      </Route>
+      <Route path={"/profile"}>
+        <ProtectedRoute><Profile /></ProtectedRoute>
       </Route>
       <Route path={"/matcher"}>
         <ProtectedRoute><Matcher /></ProtectedRoute>

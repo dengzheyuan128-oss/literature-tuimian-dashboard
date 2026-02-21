@@ -17,9 +17,9 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    // 加载完成后，如果 Supabase 已配置但用户未登录，跳转到登录页
+    // 加载完成后，如果 Supabase 已配置但用户未登录，跳转到首页（Landing）
     if (!loading && isConfigured && !user) {
-      setLocation('/login');
+      setLocation('/');
     }
   }, [user, loading, isConfigured, setLocation]);
 

@@ -3,6 +3,7 @@
  * 显示已登录用户的头像和下拉菜单
  */
 
+import { useLocation } from 'wouter';
 import { useAuth } from '@/contexts/AuthContext';
 import AuthDialog from './AuthDialog';
 import {
@@ -15,11 +16,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { User, LogOut, Settings, Heart, Bell, Cloud, CloudOff } from 'lucide-react';
+import { User, LogOut, Heart, Bell, Cloud, CloudOff, LayoutDashboard } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function UserMenu() {
   const { user, profile, loading, signOut, isConfigured } = useAuth();
+  const [, setLocation] = useLocation();
 
   // 加载中
   if (loading) {
@@ -43,6 +45,7 @@ export default function UserMenu() {
   const handleSignOut = async () => {
     await signOut();
     toast.success('已退出登录');
+    setLocation('/');
   };
 
   return (
@@ -75,22 +78,22 @@ export default function UserMenu() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLocation('/dashboard')}>
+          <LayoutDashboard className="mr-2 h-4 w-4" />
+          <span>院校列表</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLocation('/profile')}>
           <User className="mr-2 h-4 w-4" />
           <span>个人资料</span>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Heart className="mr-2 h-4 w-4" />
-          <span>我的收藏</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Bell className="mr-2 h-4 w-4" />
-          <span>我的提醒</span>
-        </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Settings className="mr-2 h-4 w-4" />
-          <span>设置</span>
+        <DropdownMenuItem onClick={() => setLocation('/compare')}>
+          <Heart className="mr-2 h-4 w-4" />
+          <span>院校对比</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setLocation('/reminders')}>
+          <Bell className="mr-2 h-4 w-4" />
+          <span>申请提醒</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut} className="text-red-600">
