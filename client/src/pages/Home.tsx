@@ -27,6 +27,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
 import FeedbackDialog from "@/components/FeedbackDialog";
 import UserMenu from "@/components/UserMenu";
+import { useAuth } from "@/contexts/AuthContext";
+import { isAdmin } from "@/lib/adminUtils";
 
 // 通用/待核实数据的占位值
 const GENERIC_VALUES = {
@@ -66,8 +68,10 @@ const STATUS_CONFIG: Record<DataStatus, { label: string; className: string }> = 
 
 export default function Home() {
   const [, setLocation] = useLocation();
+  const { user } = useAuth();
   const { addToCompare, isInCompare } = useCompare();
   const { addReminder } = useReminders();
+  const userIsAdmin = isAdmin(user?.email);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLevel, setSelectedLevel] = useState<SimplifiedTier | null>(null);
   const [selectedUniversity, setSelectedUniversity] = useState<University | null>(null);
@@ -192,6 +196,14 @@ export default function Home() {
           >
             申请提醒
           </div>
+          {userIsAdmin && (
+            <div
+              className="vertical-text text-amber-600 hover:text-amber-500 transition-colors cursor-pointer text-sm tracking-widest font-medium"
+              onClick={() => setLocation("/admin/extract")}
+            >
+              AI提取
+            </div>
+          )}
           <div className="mt-auto text-xs text-muted-foreground vertical-text opacity-50">
             二零二五
           </div>
