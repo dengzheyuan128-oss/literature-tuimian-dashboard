@@ -7,7 +7,9 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { CompareProvider } from "./contexts/CompareContext";
 import { ReminderProvider } from "./contexts/ReminderContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import Matcher from "./pages/Matcher";
 import MatchResult from "./pages/MatchResult";
 import Compare from "./pages/Compare";
@@ -19,12 +21,29 @@ import { BuildInfo } from "./components/BuildInfo";
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/matcher"} component={Matcher} />
-      <Route path={"/match-result"} component={MatchResult} />
-      <Route path={"/compare"} component={Compare} />
-      <Route path={"/reminders"} component={Reminders} />
-      <Route path={"/analytics"} component={Analytics} />
+      {/* 登录页面 - 不需要保护 */}
+      <Route path={"/login"} component={Login} />
+
+      {/* 受保护的页面 - 需要登录 */}
+      <Route path={"/"}>
+        <ProtectedRoute><Home /></ProtectedRoute>
+      </Route>
+      <Route path={"/matcher"}>
+        <ProtectedRoute><Matcher /></ProtectedRoute>
+      </Route>
+      <Route path={"/match-result"}>
+        <ProtectedRoute><MatchResult /></ProtectedRoute>
+      </Route>
+      <Route path={"/compare"}>
+        <ProtectedRoute><Compare /></ProtectedRoute>
+      </Route>
+      <Route path={"/reminders"}>
+        <ProtectedRoute><Reminders /></ProtectedRoute>
+      </Route>
+      <Route path={"/analytics"}>
+        <ProtectedRoute><Analytics /></ProtectedRoute>
+      </Route>
+
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
