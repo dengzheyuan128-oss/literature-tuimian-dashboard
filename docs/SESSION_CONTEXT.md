@@ -42,36 +42,48 @@
 
 ## 📜 最近会话记录
 
-### 会话 #6 (2026-02-21 - 用户系统上线)
+### 会话 #6 (2026-02-21 - 完整前端体验)
 
 **做了什么**:
-- ✅ 创建独立登录页面 (`/login`)，支持邮箱登录/注册和 OAuth
+- ✅ 创建独立登录页面 (`/login`)，支持邮箱登录/注册
 - ✅ 创建 ProtectedRoute 组件，实现路由保护
-- ✅ 更新 App.tsx，所有页面需登录才能访问
+- ✅ 创建 Landing 介绍页 (`/`)，展示平台功能和特色
+- ✅ 创建 Profile 个人资料页 (`/profile`)
+- ✅ 添加百度统计组件（通过环境变量配置）
+- ✅ 添加 PWA 支持（manifest.json + Service Worker）
+- ✅ 移除 GitHub/Google OAuth，添加微信登录占位
 - ✅ 配置 Supabase 环境变量到 Vercel
-- ✅ 修复 API Key 配置问题
 - ✅ 部署到线上环境
 
-**核心变更**:
-- **登录页面**: 美观的登录/注册界面，支持 GitHub/Google OAuth
-- **路由保护**: 未登录用户自动跳转到 `/login`
-- **访客模式**: Supabase 未配置时允许本地存储模式
-- **Vercel 部署**: 环境变量配置完成，线上可用
+**路由结构**:
+- `/` - Landing 介绍页（公开）
+- `/login` - 登录/注册页（公开）
+- `/dashboard` - 院校列表（需登录）
+- `/profile` - 个人资料（需登录）
+- `/matcher` - 智能匹配（需登录）
+- `/compare` - 院校对比（需登录）
+- `/reminders` - 申请提醒（需登录）
+- `/analytics` - 数据分析（需登录）
 
 **新增文件**:
-- `client/src/pages/Login.tsx` - 登录页面
-- `client/src/components/ProtectedRoute.tsx` - 路由保护组件
+- `client/src/pages/Landing.tsx` - 介绍页
+- `client/src/pages/Profile.tsx` - 个人资料页
+- `client/src/components/BaiduAnalytics.tsx` - 百度统计组件
+- `client/public/manifest.json` - PWA 配置
+- `client/public/sw.js` - Service Worker
+- `client/public/favicon.svg` - 网站图标
 
 **本次会话成果**:
-- ✅ 用户系统完整上线
-- ✅ 登录/注册功能可用
-- ✅ Supabase 数据库连接正常
+- ✅ 完整前端体验：介绍页 → 登录 → 功能页面
+- ✅ 个人资料编辑功能
+- ✅ PWA 支持（可安装到桌面）
+- ✅ 百度统计准备就绪
 
 **下次应该做什么**:
-1. 添加「忘记密码」功能
-2. 实现收藏/提醒的云端同步
-3. 集成百度统计
-4. 考虑添加邮件提醒通知
+1. 集成微信登录（需企业认证）
+2. 添加用户反馈功能
+3. 实现收藏/提醒的云端同步
+4. 添加「忘记密码」功能
 
 ---
 
