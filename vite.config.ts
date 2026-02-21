@@ -39,6 +39,7 @@ export default defineConfig({
   define: {
     __BUILD_COMMIT__: JSON.stringify(buildInfo.commit),
     __BUILD_TIME__: JSON.stringify(buildInfo.time),
+    __BAIDU_SITE_ID__: JSON.stringify(process.env.VITE_BAIDU_SITE_ID || ''),
   },
   plugins,
   resolve: {

@@ -8,6 +8,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { CompareProvider } from "./contexts/CompareContext";
 import { ReminderProvider } from "./contexts/ReminderContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import BaiduAnalytics from "./components/BaiduAnalytics";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Matcher from "./pages/Matcher";
@@ -68,6 +69,7 @@ function App() {
             <ReminderProvider>
               <TooltipProvider>
                 <Toaster />
+                <BaiduAnalytics />
                 <div className="relative">
                   <Router />
                   <div className="fixed bottom-4 right-4 z-40 bg-card/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg">
