@@ -53,15 +53,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    // 获取初始会话
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        loadProfile(session.user.id);
-      }
+    // 获取初始会话（添加错误处理和超时）
+    const timeoutId = setTimeout(() => {
+      console.warn('[Auth] Session check timeout, setting loading to false');
       setLoading(false);
-    });
+    }, 10000); // 10秒超时
+
+    supabase.auth.getSession()
+      .then(({ data: { session } }) => {
+        clearTimeout(timeoutId);
+        setSession(session);
+        setUser(session?.user ?? null);
+        if (session?.user) {
+          loadProfile(session.user.id);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        clearTimeout(timeoutId);
+        console.error('[Auth] Failed to get session:', error);
+        setLoading(false);
+      });
 
     // 监听认证状态变化
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -78,6 +90,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     );
 
     return () => {
+      clearTimeout(timeoutId);
       subscription.unsubscribe();
     };
   }, []);
