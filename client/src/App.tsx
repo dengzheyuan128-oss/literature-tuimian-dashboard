@@ -19,6 +19,8 @@ import Compare from "./pages/Compare";
 import Reminders from "./pages/Reminders";
 import Analytics from "./pages/Analytics";
 import { BuildInfo } from "./components/BuildInfo";
+import FeedbackButton from "./components/FeedbackButton";
+import AdminExtract from "./pages/AdminExtract";
 
 
 function Router() {
@@ -50,6 +52,9 @@ function Router() {
       <Route path={"/analytics"}>
         <ProtectedRoute><Analytics /></ProtectedRoute>
       </Route>
+      <Route path={"/admin/extract"}>
+        <ProtectedRoute><AdminExtract /></ProtectedRoute>
+      </Route>
 
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
@@ -76,6 +81,7 @@ function App() {
               <TooltipProvider>
                 <Toaster />
                 <BaiduAnalytics />
+                <FeedbackButton />
                 <div className="relative">
                   <Router />
                   <div className="fixed bottom-4 right-4 z-40 bg-card/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg">

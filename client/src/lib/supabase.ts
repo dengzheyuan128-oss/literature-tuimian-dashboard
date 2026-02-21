@@ -295,3 +295,53 @@ export async function updateCompareList(userId: string, universityIds: number[])
 
   return true;
 }
+
+// ============ 用户反馈相关 ============
+
+export type FeedbackType = 'link_invalid' | 'info_outdated' | 'info_wrong';
+
+export interface UserFeedback {
+  id: number;
+  user_id: string;
+  feedback_type: FeedbackType;
+  university_id: number | null;
+  university_name: string | null;
+  description: string;
+  page_url: string | null;
+  status: 'pending' | 'resolved' | 'ignored';
+  created_at: string;
+}
+
+/**
+ * 提交用户反馈
+ */
+export async function submitFeedback(
+  userId: string,
+  feedback: {
+    feedback_type: FeedbackType;
+    university_id?: number;
+    university_name?: string;
+    description: string;
+    page_url?: string;
+  }
+): Promise<boolean> {
+  if (!supabase) return false;
+
+  const { error } = await supabase
+    .from('user_feedback')
+    .insert({
+      user_id: userId,
+      feedback_type: feedback.feedback_type,
+      university_id: feedback.university_id || null,
+      university_name: feedback.university_name || null,
+      description: feedback.description,
+      page_url: feedback.page_url || null,
+    });
+
+  if (error) {
+    console.error('Error submitting feedback:', error);
+    return false;
+  }
+
+  return true;
+}
