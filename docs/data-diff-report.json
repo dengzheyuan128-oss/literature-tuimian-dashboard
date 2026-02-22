@@ -1,0 +1,103 @@
+{
+  "generatedAt": "2026-02-22T15:38:09.165Z",
+  "totalDifferences": 7,
+  "differences": [
+    {
+      "id": 3,
+      "name": "武汉大学",
+      "program": "中国语言文学",
+      "diffs": [
+        {
+          "field": "英语要求",
+          "fieldKey": "englishRequirement",
+          "current": "CET-6≥425分或IELTS≥6.5分或TOEFL≥90分",
+          "extracted": "TOEFL≥90分或IELTS≥6.5分"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "兰州大学",
+      "program": "中国语言文学",
+      "diffs": [
+        {
+          "field": "英语要求",
+          "fieldKey": "englishRequirement",
+          "current": "CET-6≥425分或IELTS≥6.0分或TOEFL≥90分(直博生)",
+          "extracted": "CET-6≥425分或TOEFL≥90分或IELTS≥6.0分"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "厦门大学",
+      "program": "中国语言文学",
+      "diffs": [
+        {
+          "field": "英语要求",
+          "fieldKey": "englishRequirement",
+          "current": "CET-6≥425分或CET-4≥500分或TOEFL/IELTS≥60%总分",
+          "extracted": "CET-4≥500分或CET-6≥425分或TOEFL≥60分或IELTS≥60分"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "name": "湖南大学",
+      "program": "中国语言文学",
+      "diffs": [
+        {
+          "field": "考核形式",
+          "fieldKey": "examForm",
+          "current": "现场复试(外语+专业+综合，≥20分钟/人)",
+          "extracted": "资格审查"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "name": "天津大学",
+      "program": "中国语言文学",
+      "diffs": [
+        {
+          "field": "考核形式",
+          "fieldKey": "examForm",
+          "current": "遴选考核(具体待通知)",
+          "extracted": "材料审核"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "name": "东南大学",
+      "program": "中国语言文学",
+      "diffs": [
+        {
+          "field": "英语要求",
+          "fieldKey": "englishRequirement",
+          "current": "CET-4≥520分或CET-6≥430分或TOEFL≥100分或IELTS≥7.0分",
+          "extracted": "TOEFL≥100分或IELTS≥7分"
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "name": "南昌大学",
+      "program": "中国语言文学",
+      "diffs": [
+        {
+          "field": "考核形式",
+          "fieldKey": "examForm",
+          "current": "线下笔试+面试",
+          "extracted": "资格审查"
+        },
+        {
+          "field": "英语要求",
+          "fieldKey": "englishRequirement",
+          "current": "CET-4≥450分或CET-6≥425分或TOEFL≥80分或IELTS≥6分",
+          "extracted": "CET-4≥100分或CET-6≥100分或TOEFL≥80分或IELTS≥6分"
+        }
+      ]
+    }
+  ]
+}

@@ -19,12 +19,37 @@ import {
   Clock,
   FileText,
   Loader2,
+  Download,
+  FileSpreadsheet,
+  File,
 } from 'lucide-react';
+
+// 附件类型定义
+interface Attachment {
+  title: string;
+  url: string;
+  type: 'pdf' | 'word' | 'excel' | 'document' | 'archive';
+}
+
+// 获取文件类型图标
+function getFileIcon(type: string) {
+  switch (type) {
+    case 'pdf':
+      return <FileText className="w-4 h-4 text-red-500" />;
+    case 'word':
+      return <FileText className="w-4 h-4 text-blue-500" />;
+    case 'excel':
+      return <FileSpreadsheet className="w-4 h-4 text-green-500" />;
+    default:
+      return <File className="w-4 h-4 text-gray-500" />;
+  }
+}
 
 export default function NoticeDetail() {
   const [, params] = useRoute('/notice/:id');
   const [, setLocation] = useLocation();
   const [content, setContent] = useState<string | null>(null);
+  const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,18 +59,25 @@ export default function NoticeDetail() {
   useEffect(() => {
     if (!universityId) return;
 
-    // 尝试加载通知原文
-    const loadContent = async () => {
+    // 并行加载通知原文和附件
+    const loadData = async () => {
       try {
-        // 动态导入通知内容文件
-        const response = await fetch(`/data/notices/${universityId}.md`);
-        if (response.ok) {
-          const text = await response.text();
-          // 移除 frontmatter
+        // 加载通知内容
+        const contentResponse = await fetch(`/data/notices/${universityId}.md`);
+        if (contentResponse.ok) {
+          const text = await contentResponse.text();
           const contentWithoutFrontmatter = text.replace(/^---[\s\S]*?---\n*/, '');
           setContent(contentWithoutFrontmatter);
         } else {
           setError('暂无通知原文');
+        }
+
+        // 加载附件列表
+        const attachmentsResponse = await fetch('/data/attachments.json');
+        if (attachmentsResponse.ok) {
+          const allAttachments = await attachmentsResponse.json();
+          const schoolAttachments = allAttachments[universityId.toString()] || [];
+          setAttachments(schoolAttachments);
         }
       } catch (err) {
         setError('加载失败');
@@ -54,7 +86,7 @@ export default function NoticeDetail() {
       }
     };
 
-    loadContent();
+    loadData();
   }, [universityId]);
 
   if (!university) {
@@ -137,6 +169,43 @@ export default function NoticeDetail() {
             </div>
           </CardContent>
         </Card>
+
+        {/* 附件下载 */}
+        {attachments.length > 0 && (
+          <Card className="mb-6">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Download className="w-5 h-5" />
+                附件下载
+              </CardTitle>
+              <CardDescription>
+                共 {attachments.length} 个附件，点击可直接下载
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-2">
+                {attachments.map((attachment, index) => (
+                  <a
+                    key={index}
+                    href={attachment.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors group"
+                  >
+                    {getFileIcon(attachment.type)}
+                    <span className="flex-1 text-sm truncate group-hover:text-primary">
+                      {attachment.title}
+                    </span>
+                    <Badge variant="secondary" className="text-xs">
+                      {attachment.type.toUpperCase()}
+                    </Badge>
+                    <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </a>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* 通知原文 */}
         <Card>

@@ -16,21 +16,33 @@
 const fs = require('fs');
 const path = require('path');
 
-// 加载 .env.local 文件
+// 加载 .env.local 文件 - 必须在读取环境变量之前
 const envPath = path.join(__dirname, '../.env.local');
 if (fs.existsSync(envPath)) {
   const envContent = fs.readFileSync(envPath, 'utf-8');
-  envContent.split('\n').forEach(line => {
-    const match = line.match(/^([^=]+)=(.*)$/);
-    if (match && !process.env[match[1]]) {
-      process.env[match[1]] = match[2].trim().replace(/^["']|["']$/g, '');
+  // 处理 Windows 换行符 (CRLF)
+  envContent.replace(/\r\n/g, '\n').split('\n').forEach(line => {
+    // 跳过注释行和空行
+    line = line.trim();
+    if (!line || line.startsWith('#')) return;
+
+    const eqIndex = line.indexOf('=');
+    if (eqIndex > 0) {
+      const key = line.substring(0, eqIndex).trim();
+      const value = line.substring(eqIndex + 1).trim().replace(/^["']|["']$/g, '');
+      if (!process.env[key]) {
+        process.env[key] = value;
+      }
     }
   });
   console.log('已加载 .env.local 配置');
+} else {
+  console.log('未找到 .env.local 文件，使用环境变量');
 }
 
-// 配置
+// 配置 - 必须在加载 .env.local 之后
 const GLM_API_KEY = process.env.VITE_GLM_API_KEY || process.env.GLM_API_KEY || '';
+console.log(`GLM API Key: ${GLM_API_KEY ? '已配置 (' + GLM_API_KEY.substring(0, 8) + '...)' : '未配置'}`);
 const JINA_READER_BASE = 'https://r.jina.ai/';
 const GLM_API_BASE = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
 
@@ -70,6 +82,30 @@ const EXTRACTION_PROMPT = `你是一个高校推免通知信息提取助手。�
 // 延迟函数
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// 带重试的 GLM 调用
+async function callGlmWithRetry(markdownContent, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    const result = await extractNoticeInfo(markdownContent);
+
+    if (result.success) {
+      return result;
+    }
+
+    // 如果是 429 错误，等待后重试（智谱AI免费版限制严格）
+    if (result.error && result.error.includes('429')) {
+      const waitTime = attempt * 60000; // 60s, 120s, 180s（更长的等待时间）
+      console.log(`  [GLM] 速率限制，等待 ${waitTime/1000} 秒后重试 (${attempt}/${maxRetries})...`);
+      await delay(waitTime);
+      continue;
+    }
+
+    // 其他错误直接返回
+    return result;
+  }
+
+  return { success: false, data: null, error: '超过最大重试次数' };
 }
 
 // 使用 Jina Reader 获取网页内容
@@ -158,8 +194,8 @@ async function processUniversity(school, programIndex = 0) {
     return { success: false, error: `获取网页失败: ${jinaResult.error}` };
   }
 
-  // Step 2: 提取信息
-  const glmResult = await extractNoticeInfo(jinaResult.content);
+  // Step 2: 提取信息（带重试）
+  const glmResult = await callGlmWithRetry(jinaResult.content);
   if (!glmResult.success) {
     return { success: false, error: `提取失败: ${glmResult.error}`, rawContent: jinaResult.content };
   }
@@ -263,10 +299,10 @@ async function main() {
       }
     }
 
-    // 延迟避免速率限制
+    // 延迟避免速率限制（智谱AI免费版限制严格，需要更长等待）
     if (i < endIndex - 1) {
-      console.log('  等待 2 秒...');
-      await delay(2000);
+      console.log('  等待 30 秒...');
+      await delay(30000);
     }
   }
 
