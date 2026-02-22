@@ -8,13 +8,29 @@
  * 示例：
  *   node scripts/batch-extract.cjs 0 10    # 处理前10个
  *   node scripts/batch-extract.cjs 10 10   # 处理第11-20个
+ *
+ * 配置：
+ *   在项目根目录的 .env.local 文件中设置 GLM_API_KEY
  */
 
 const fs = require('fs');
 const path = require('path');
 
+// 加载 .env.local 文件
+const envPath = path.join(__dirname, '../.env.local');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf-8');
+  envContent.split('\n').forEach(line => {
+    const match = line.match(/^([^=]+)=(.*)$/);
+    if (match && !process.env[match[1]]) {
+      process.env[match[1]] = match[2].trim().replace(/^["']|["']$/g, '');
+    }
+  });
+  console.log('已加载 .env.local 配置');
+}
+
 // 配置
-const GLM_API_KEY = process.env.GLM_API_KEY || '';
+const GLM_API_KEY = process.env.VITE_GLM_API_KEY || process.env.GLM_API_KEY || '';
 const JINA_READER_BASE = 'https://r.jina.ai/';
 const GLM_API_BASE = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
 
@@ -185,9 +201,14 @@ async function main() {
 
   // 检查 API Key
   if (!GLM_API_KEY) {
-    console.error('错误: 请设置 GLM_API_KEY 环境变量');
-    console.error('Windows: set GLM_API_KEY=your-api-key');
-    console.error('Linux/Mac: export GLM_API_KEY=your-api-key');
+    console.error('错误: 未找到 GLM API Key');
+    console.error('');
+    console.error('请在项目根目录的 .env.local 文件中添加：');
+    console.error('  VITE_GLM_API_KEY=your-api-key');
+    console.error('');
+    console.error('或通过环境变量设置：');
+    console.error('  Windows: set GLM_API_KEY=your-api-key');
+    console.error('  Linux/Mac: export GLM_API_KEY=your-api-key');
     process.exit(1);
   }
 
