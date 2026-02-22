@@ -561,7 +561,7 @@
               "url": "http://www.lit.zju.edu.cn/2025/0804/c64557a3072914/page.htm",
               "sourceType": "official",
               "publisher": "浙江大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "B",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
               "examForm": "未注明",
@@ -572,7 +572,8 @@
               "yearStatus": "verified",
               "noticeType": "预推免",
               "dataVerified": true,
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "needs_verification"
             }
           ]
         }
@@ -865,7 +866,7 @@
               "url": "https://wxs.swu.edu.cn/info/1179/6714.htm",
               "sourceType": "official",
               "publisher": "西南大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "D",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
               "examForm": "未注明",
@@ -876,7 +877,8 @@
               "yearStatus": "verified",
               "noticeType": "预推免",
               "dataVerified": true,
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "broken"
             }
           ]
         },
@@ -898,7 +900,7 @@
               "url": "https://wxs.swu.edu.cn/info/1018/1971.htm",
               "sourceType": "official",
               "publisher": "西南大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "D",
               "applicationPeriod": "9月3日至9月15（17:00前）",
               "deadline": "未注明",
               "examForm": "未注明",
@@ -908,7 +910,8 @@
               "lastVerifiedAt": "2026-02-22",
               "yearStatus": "verified",
               "dataVerified": true,
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "broken"
             }
           ]
         },
@@ -930,7 +933,7 @@
               "url": "https://xinshi.swu.edu.cn/info/1013/2303.htm",
               "sourceType": "official",
               "publisher": "西南大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "D",
               "applicationPeriod": "未注明",
               "deadline": "未注明",
               "examForm": "未注明",
@@ -940,7 +943,8 @@
               "lastVerifiedAt": "2026-02-22",
               "yearStatus": "verified",
               "dataVerified": true,
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "broken"
             }
           ]
         }
@@ -1179,7 +1183,7 @@
               "url": "https://www.lit.sdu.edu.cn/info/1048/5004.htm",
               "sourceType": "official",
               "publisher": "山东大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "D",
               "applicationPeriod": "2025年9月1日起",
               "deadline": "以学校预报名通知为准",
               "examForm": "现场面试(自我介绍+回答问题)",
@@ -1190,7 +1194,8 @@
               "yearStatus": "verified",
               "noticeType": "预推免",
               "dataVerified": true,
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "broken"
             }
           ]
         },
@@ -1212,7 +1217,7 @@
               "url": "https://www.lit.sdu.edu.cn/info/1048/4756.htm",
               "sourceType": "official",
               "publisher": "山东大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "D",
               "applicationPeriod": "9月1日-9月14日12:00",
               "deadline": "未注明",
               "examForm": "现场面试",
@@ -1222,7 +1227,8 @@
               "lastVerifiedAt": "2026-02-22",
               "yearStatus": "verified",
               "dataVerified": true,
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "broken"
             }
           ]
         },
@@ -1244,7 +1250,7 @@
               "url": "https://whcb.wh.sdu.edu.cn/info/1070/12926.htm",
               "sourceType": "official",
               "publisher": "山东大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "D",
               "applicationPeriod": "9月1日09:00—9月15日08:00",
               "deadline": "未注明",
               "examForm": "现场面试",
@@ -1254,7 +1260,8 @@
               "lastVerifiedAt": "2026-02-22",
               "yearStatus": "verified",
               "dataVerified": true,
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "broken"
             }
           ]
         }
@@ -2080,7 +2087,7 @@
               "url": "https://wxy.jnu.edu.cn/info/1024/4531.htm",
               "sourceType": "official",
               "publisher": "暨南大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "D",
               "applicationPeriod": "9月初-9月中旬",
               "deadline": "2025年9月中旬",
               "examForm": "心理测试、笔试、面试",
@@ -2093,7 +2100,8 @@
               "dataVerified": true,
               "noticeScope": "general",
               "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文",
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "broken"
             }
           ]
         },
@@ -2115,7 +2123,7 @@
               "url": "https://hwy.jnu.edu.cn/2025/0910/c13406a842341/page.htm",
               "sourceType": "official",
               "publisher": "暨南大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "D",
               "applicationPeriod": "9月11日—9月14日",
               "deadline": "未注明",
               "examForm": "未注明",
@@ -2127,7 +2135,8 @@
               "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文",
               "yearStatus": "verified",
               "dataVerified": true,
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "broken"
             }
           ]
         }
@@ -2161,7 +2170,7 @@
               "url": "https://wxy.ahu.edu.cn/info/1053/10883.htm",
               "sourceType": "official",
               "publisher": "安徽大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "B",
               "applicationPeriod": "9月中旬-9月23日",
               "deadline": "2025年9月23日",
               "examForm": "线下面试",
@@ -2172,7 +2181,8 @@
               "yearStatus": "verified",
               "noticeType": "预推免",
               "dataVerified": true,
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "needs_verification"
             }
           ]
         }
@@ -2353,7 +2363,7 @@
               "url": "https://rwxy.seu.edu.cn/2025/0826/c12624a537176/page.htm",
               "sourceType": "official",
               "publisher": "东南大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "B",
               "applicationPeriod": "2025年8月29日起",
               "deadline": "2025年9月1日(报名)，9月2日(材料)",
               "examForm": "材料审核(+公开答辩)",
@@ -2364,7 +2374,8 @@
               "yearStatus": "verified",
               "noticeType": "预推免",
               "dataVerified": true,
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "needs_verification"
             }
           ]
         },
@@ -2396,7 +2407,8 @@
               "lastVerifiedAt": "2026-02-22",
               "yearStatus": "verified",
               "dataVerified": true,
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "needs_verification"
             }
           ]
         }
@@ -2515,7 +2527,7 @@
               "url": "http://wxy.njnu.edu.cn/info/1105/12596.htm",
               "sourceType": "official",
               "publisher": "南京师范大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "B",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
               "examForm": "未注明",
@@ -2528,7 +2540,8 @@
               "dataVerified": true,
               "websiteStatus": "maintenance",
               "verificationNote": "网站维护中，信息待核实",
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "needs_verification"
             }
           ]
         }
@@ -2562,7 +2575,7 @@
               "url": "https://yjs.suda.edu.cn/4e/bd/c8365a675517/page.htm",
               "sourceType": "official",
               "publisher": "苏州大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "B",
               "applicationPeriod": "推免系统开通后",
               "deadline": "以系统为准",
               "examForm": "面试(综合素质+外语+专业)",
@@ -2573,7 +2586,8 @@
               "yearStatus": "verified",
               "noticeType": "预推免",
               "dataVerified": true,
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "needs_verification"
             }
           ]
         }
@@ -2648,7 +2662,7 @@
               "url": "https://wxy.shu.edu.cn/a/2025/0926/63639.html",
               "sourceType": "official",
               "publisher": "上海大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "B",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
               "examForm": "未注明",
@@ -2661,7 +2675,8 @@
               "dataVerified": true,
               "noticeScope": "general",
               "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文",
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "needs_verification"
             }
           ]
         }
@@ -2781,7 +2796,7 @@
               "url": "https://wxxy.imu.edu.cn/info/1054/7375.htm",
               "sourceType": "official",
               "publisher": "内蒙古大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "D",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
               "examForm": "未注明",
@@ -2794,7 +2809,8 @@
               "dataVerified": true,
               "noticeScope": "general",
               "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文",
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "broken"
             }
           ]
         },
@@ -2816,7 +2832,7 @@
               "url": "https://gs.imu.edu.cn/info/1020/2123.htm",
               "sourceType": "official",
               "publisher": "内蒙古大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "D",
               "applicationPeriod": "未注明",
               "deadline": "未注明",
               "examForm": "未注明",
@@ -2828,7 +2844,8 @@
               "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文",
               "yearStatus": "verified",
               "dataVerified": true,
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "broken"
             }
           ]
         }
@@ -2862,7 +2879,7 @@
               "url": "https://grad.ybu.edu.cn/info/1063/12532.htm",
               "sourceType": "official",
               "publisher": "延边大学研究生院",
-              "linkGrade": "A",
+              "linkGrade": "D",
               "applicationPeriod": "9月中旬-10月初",
               "deadline": "2025年10月初",
               "examForm": "未注明",
@@ -2875,7 +2892,8 @@
               "dataVerified": true,
               "noticeScope": "general",
               "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文",
-              "noticeStatus": "2026届有效"
+              "noticeStatus": "2026届有效",
+              "linkStatus": "broken"
             }
           ]
         }
@@ -3882,10 +3900,10 @@
               "year": 2026,
               "title": "上海师范大学研究生院",
               "url": "https://yjsc.shnu.edu.cn/a2/70/c17206a848496/page.htm",
-              "linkGrade": "A",
+              "linkGrade": "C",
               "sourceType": "official",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-02-07",
+              "lastVerifiedAt": "2026-02-22",
               "applicationPeriod": "详见官网",
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
@@ -3896,7 +3914,8 @@
               "publishedAt": "2025-09-28",
               "dataVerified": false,
               "noticeScope": "general",
-              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文",
+              "linkStatus": "needs_verification"
             }
           ],
           "degreeTypes": [
@@ -3998,10 +4017,10 @@
               "year": 2026,
               "title": "山东师范大学研究生招生信息网",
               "url": "https://www.yjszs.sdnu.edu.cn/info/1013/3687.htm",
-              "linkGrade": "A",
+              "linkGrade": "B",
               "sourceType": "official",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-02-07",
+              "lastVerifiedAt": "2026-02-22",
               "applicationPeriod": "详见官网",
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
@@ -4010,7 +4029,8 @@
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025-09-26",
-              "dataVerified": false
+              "dataVerified": false,
+              "linkStatus": "needs_verification"
             }
           ],
           "degreeTypes": [
@@ -4126,10 +4146,10 @@
               "year": 2026,
               "title": "天津师范大学研究生院",
               "url": "https://yjsy.tjnu.edu.cn/info/1026/2355.htm",
-              "linkGrade": "A",
+              "linkGrade": "C",
               "sourceType": "official",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-02-07",
+              "lastVerifiedAt": "2026-02-22",
               "applicationPeriod": "详见官网",
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
@@ -4140,7 +4160,8 @@
               "publishedAt": "2025-09-26",
               "dataVerified": false,
               "noticeScope": "general",
-              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文",
+              "linkStatus": "needs_verification"
             }
           ],
           "degreeTypes": [
@@ -4166,14 +4187,15 @@
               "year": 2026,
               "title": "河北大学研究生院",
               "url": "https://yjsy.hbu.edu.cn/info/1018/3747.htm",
-              "linkGrade": "A",
+              "linkGrade": "C",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-02-07",
+              "lastVerifiedAt": "2026-02-22",
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025-09-25",
-              "dataVerified": true
+              "dataVerified": true,
+              "linkStatus": "needs_verification"
             }
           ],
           "degreeTypes": [
@@ -4280,7 +4302,8 @@
               "noticeType": "预推免",
               "dataVerified": false,
               "noticeScope": "general",
-              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文",
+              "linkStatus": "needs_verification"
             }
           ],
           "degreeTypes": [
@@ -4386,10 +4409,10 @@
               "year": 2026,
               "title": "关于做好2025年接收优秀应届本科毕业生免试攻读研究生工作的通知",
               "url": "https://yjsy.nwnu.edu.cn/2025/0926/c2711a169062/page.htm",
-              "linkGrade": "A",
+              "linkGrade": "C",
               "sourceType": "official",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-02-07",
+              "lastVerifiedAt": "2026-02-22",
               "applicationPeriod": "详见官网",
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
@@ -4398,7 +4421,8 @@
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025-09-26",
-              "dataVerified": false
+              "dataVerified": false,
+              "linkStatus": "needs_verification"
             }
           ],
           "degreeTypes": [
@@ -4422,16 +4446,17 @@
               "year": 2026,
               "title": "扬州大学研究生院",
               "url": "https://yjszs.yzu.edu.cn/info/1014/2430.htm",
-              "linkGrade": "A",
+              "linkGrade": "C",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-02-07",
+              "lastVerifiedAt": "2026-02-22",
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025-09-25",
               "dataVerified": true,
               "noticeScope": "general",
-              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文"
+              "noticeNote": "研招网不分专业的通知，具体专业信息请查阅原文",
+              "linkStatus": "needs_verification"
             }
           ],
           "degreeTypes": [
@@ -4518,10 +4543,10 @@
               "year": 2026,
               "title": "2025年安徽师范大学招收推荐免试攻读硕士研究生 and 直接攻读博士研究生工作的通知",
               "url": "https://yjs.ahnu.edu.cn/info/1022/74430.htm",
-              "linkGrade": "A",
+              "linkGrade": "B",
               "sourceType": "official",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-02-07",
+              "lastVerifiedAt": "2026-02-22",
               "applicationPeriod": "详见官网",
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
@@ -4530,7 +4555,8 @@
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025-09-26",
-              "dataVerified": false
+              "dataVerified": false,
+              "linkStatus": "needs_verification"
             }
           ],
           "degreeTypes": [
@@ -4590,10 +4616,10 @@
               "year": 2026,
               "title": "曲阜师范大学研究生处 - 硕士招生",
               "url": "https://yjs.qfnu.edu.cn/info/1024/4218.htm",
-              "linkGrade": "A",
+              "linkGrade": "C",
               "sourceType": "official",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-02-07",
+              "lastVerifiedAt": "2026-02-22",
               "applicationPeriod": "详见官网",
               "deadline": "详见官网",
               "examForm": "材料审核+复试",
@@ -4602,7 +4628,8 @@
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025-09-25",
-              "dataVerified": false
+              "dataVerified": false,
+              "linkStatus": "needs_verification"
             }
           ],
           "degreeTypes": [
@@ -4626,14 +4653,15 @@
               "year": 2026,
               "title": "湖北大学2025年接收具有推荐免试资格的考生攻读研究生公告",
               "url": "https://yjsy.hubu.edu.cn/info/1011/1234.htm",
-              "linkGrade": "A",
+              "linkGrade": "B",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-02-07",
+              "lastVerifiedAt": "2026-02-22",
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025-09-25",
-              "dataVerified": true
+              "dataVerified": true,
+              "linkStatus": "needs_verification"
             }
           ],
           "degreeTypes": [
@@ -4655,14 +4683,15 @@
               "year": 2026,
               "title": "广西民族大学2025年接收推荐免试硕士研究生简章",
               "url": "https://yjs.gxun.edu.cn/info/1022/16904.htm",
-              "linkGrade": "A",
+              "linkGrade": "B",
               "sourceType": "homepage",
               "yearStatus": "verified",
-              "lastVerifiedAt": "2026-02-07",
+              "lastVerifiedAt": "2026-02-22",
               "sourceChannel": "官网原文",
               "noticeType": "预推免",
               "publishedAt": "2025-09-26",
-              "dataVerified": true
+              "dataVerified": true,
+              "linkStatus": "needs_verification"
             }
           ],
           "degreeTypes": [

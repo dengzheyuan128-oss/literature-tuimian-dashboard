@@ -1,0 +1,211 @@
+{
+  "checkedAt": "2026-02-22T15:56:32.003Z",
+  "summary": {
+    "total": 125,
+    "valid": 102,
+    "invalid": 16,
+    "timeout": 0,
+    "error": 7
+  },
+  "invalid": [
+    {
+      "id": 8,
+      "name": "浙江大学",
+      "program": "中国语言文学",
+      "url": "http://www.lit.zju.edu.cn/2025/0804/c64557a3072914/page.htm",
+      "valid": false,
+      "status": 403,
+      "message": "客户端错误 403"
+    },
+    {
+      "id": 12,
+      "name": "西南大学",
+      "program": "中国语言文学",
+      "url": "https://wxs.swu.edu.cn/info/1179/6714.htm",
+      "valid": false,
+      "status": 404,
+      "message": "客户端错误 404"
+    },
+    {
+      "id": 17,
+      "name": "山东大学",
+      "program": "中国语言文学",
+      "url": "https://whcb.wh.sdu.edu.cn/info/1070/12926.htm",
+      "valid": false,
+      "status": 404,
+      "message": "客户端错误 404"
+    },
+    {
+      "id": 30,
+      "name": "暨南大学",
+      "program": "中国语言文学",
+      "url": "https://wxy.jnu.edu.cn/info/1024/4531.htm",
+      "valid": false,
+      "status": 404,
+      "message": "客户端错误 404"
+    },
+    {
+      "id": 31,
+      "name": "安徽大学",
+      "program": "中国语言文学",
+      "url": "https://wxy.ahu.edu.cn/info/1053/10883.htm",
+      "valid": false,
+      "status": 412,
+      "message": "客户端错误 412"
+    },
+    {
+      "id": 35,
+      "name": "东南大学",
+      "program": "中国语言文学",
+      "url": "https://rwxy.seu.edu.cn/2025/0826/c12624a537176/page.htm",
+      "valid": false,
+      "status": 403,
+      "message": "客户端错误 403"
+    },
+    {
+      "id": 35,
+      "name": "东南大学",
+      "program": "中国语言文学",
+      "url": "https://yzb.seu.edu.cn/2025/0927/c6676a520000/page.htm",
+      "valid": false,
+      "status": 403,
+      "message": "客户端错误 403"
+    },
+    {
+      "id": 38,
+      "name": "南京师范大学",
+      "program": "中国语言文学",
+      "url": "http://wxy.njnu.edu.cn/info/1105/12596.htm",
+      "valid": false,
+      "status": 412,
+      "message": "客户端错误 412"
+    },
+    {
+      "id": 44,
+      "name": "内蒙古大学",
+      "program": "中国语言文学",
+      "url": "https://wxxy.imu.edu.cn/info/1054/7375.htm",
+      "valid": false,
+      "status": 404,
+      "message": "客户端错误 404"
+    },
+    {
+      "id": 45,
+      "name": "延边大学",
+      "program": "中国语言文学",
+      "url": "https://grad.ybu.edu.cn/info/1063/12532.htm",
+      "valid": false,
+      "status": 404,
+      "message": "客户端错误 404"
+    },
+    {
+      "name": "上海师范大学",
+      "program": "中国语言文学",
+      "url": "https://yjsc.shnu.edu.cn/a2/70/c17206a848496/page.htm",
+      "valid": false,
+      "status": 403,
+      "message": "客户端错误 403"
+    },
+    {
+      "name": "天津师范大学",
+      "program": "中国语言文学",
+      "url": "https://yjsy.tjnu.edu.cn/info/1026/2355.htm",
+      "valid": false,
+      "status": 404,
+      "message": "客户端错误 404"
+    },
+    {
+      "name": "河北大学",
+      "program": "中国语言文学",
+      "url": "https://yjsy.hbu.edu.cn/info/1018/3747.htm",
+      "valid": false,
+      "status": 404,
+      "message": "客户端错误 404"
+    },
+    {
+      "name": "西北师范大学",
+      "program": "中国语言文学",
+      "url": "https://yjsy.nwnu.edu.cn/2025/0926/c2711a169062/page.htm",
+      "valid": false,
+      "status": 412,
+      "message": "客户端错误 412"
+    },
+    {
+      "name": "扬州大学",
+      "program": "中国语言文学",
+      "url": "https://yjszs.yzu.edu.cn/info/1014/2430.htm",
+      "valid": false,
+      "status": 412,
+      "message": "客户端错误 412"
+    },
+    {
+      "name": "曲阜师范大学",
+      "program": "中国语言文学",
+      "url": "https://yjs.qfnu.edu.cn/info/1024/4218.htm",
+      "valid": false,
+      "status": 404,
+      "message": "客户端错误 404"
+    }
+  ],
+  "timeout": [],
+  "error": [
+    {
+      "id": 39,
+      "name": "苏州大学",
+      "program": "中国语言文学",
+      "url": "https://yjs.suda.edu.cn/4e/bd/c8365a675517/page.htm",
+      "valid": false,
+      "status": "error",
+      "message": "Client network socket disconnected before secure TLS connection was established"
+    },
+    {
+      "id": 41,
+      "name": "上海大学",
+      "program": "中国语言文学",
+      "url": "https://wxy.shu.edu.cn/a/2025/0926/63639.html",
+      "valid": false,
+      "status": "error",
+      "message": "Client network socket disconnected before secure TLS connection was established"
+    },
+    {
+      "name": "山东师范大学",
+      "program": "中国语言文学",
+      "url": "https://www.yjszs.sdnu.edu.cn/info/1013/3687.htm",
+      "valid": false,
+      "status": "error",
+      "message": "Hostname/IP does not match certificate's altnames: Host: www.yjszs.sdnu.edu.cn. is not in the cert's altnames: DNS:*.sdnu.edu.cn, DNS:sdnu.edu.cn"
+    },
+    {
+      "name": "哈尔滨师范大学",
+      "program": "中国语言文学",
+      "url": "https://yjsxy.hrbnu.edu.cn/info/1045/25370.htm",
+      "valid": false,
+      "status": "error",
+      "message": "Client network socket disconnected before secure TLS connection was established"
+    },
+    {
+      "name": "安徽师范大学",
+      "program": "中国语言文学",
+      "url": "https://yjs.ahnu.edu.cn/info/1022/74430.htm",
+      "valid": false,
+      "status": "error",
+      "message": "Client network socket disconnected before secure TLS connection was established"
+    },
+    {
+      "name": "湖北大学",
+      "program": "中国语言文学",
+      "url": "https://yjsy.hubu.edu.cn/info/1011/1234.htm",
+      "valid": false,
+      "status": "error",
+      "message": "Client network socket disconnected before secure TLS connection was established"
+    },
+    {
+      "name": "广西民族大学",
+      "program": "中国语言文学",
+      "url": "https://yjs.gxun.edu.cn/info/1022/16904.htm",
+      "valid": false,
+      "status": "error",
+      "message": "Client network socket disconnected before secure TLS connection was established"
+    }
+  ]
+}

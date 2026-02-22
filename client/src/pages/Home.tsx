@@ -616,16 +616,25 @@ export default function Home() {
 
                   {/* 操作按钮 */}
                   <div className="flex flex-wrap gap-3 pt-4 border-t border-border/40">
+                    {/* 查看通知详情（提取的内容） */}
+                    <Button
+                      onClick={() => setLocation(`/notice/${selectedUniversity.id}`)}
+                      className="font-sans"
+                    >
+                      <BookOpen className="w-4 h-4 mr-2" />
+                      查看通知详情
+                      {selectedUniversity.noticeType && ` (${selectedUniversity.noticeType})`}
+                    </Button>
+                    {/* 查看原始链接（外部） */}
                     {selectedUniversity.url && selectedUniversity.url !== '' && (
                       <a
                         href={cleanUserInput(selectedUniversity.url)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-sans text-sm font-medium"
+                        className="inline-flex items-center gap-2 px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors font-sans text-sm font-medium"
                       >
                         <ExternalLink className="w-4 h-4" />
-                        查看官方通知
-                        {selectedUniversity.noticeType && ` (${selectedUniversity.noticeType})`}
+                        原始链接
                       </a>
                     )}
                     <Button
