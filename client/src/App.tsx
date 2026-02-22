@@ -21,6 +21,7 @@ import Analytics from "./pages/Analytics";
 import { BuildInfo } from "./components/BuildInfo";
 import FeedbackButton from "./components/FeedbackButton";
 import AdminExtract from "./pages/AdminExtract";
+import NoticeDetail from "./pages/NoticeDetail";
 
 
 function Router() {
@@ -54,6 +55,9 @@ function Router() {
       </Route>
       <Route path={"/admin/extract"}>
         <ProtectedRoute><AdminExtract /></ProtectedRoute>
+      </Route>
+      <Route path={"/notice/:id"}>
+        <ProtectedRoute><NoticeDetail /></ProtectedRoute>
       </Route>
 
       <Route path={"/404"} component={NotFound} />
