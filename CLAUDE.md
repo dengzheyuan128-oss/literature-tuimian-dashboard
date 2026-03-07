@@ -324,6 +324,27 @@ pnpm preview  # Preview production build
 - Output directory: `dist/public`
 - See `docs/03-Plans/VERCEL_DEPLOYMENT_GUIDE.md` for details
 
+## Project Advisor System
+
+当需要讨论新功能、评估想法或规划项目时，可以启用**项目顾问模式**。
+
+**文档位置**：`docs/ADVISOR.md`
+
+**快捷指令**：
+| 指令 | 作用 |
+|------|------|
+| "启动顾问模式" | 开始完整分析流程（澄清→分析→方案） |
+| "快速评估：[想法]" | 跳过澄清，直接给简要分析 |
+| "只看产品视角" | 只运行产品经理分析 |
+| "只看技术视角" | 只运行技术顾问分析 |
+| "给我项目计划" | 直接输出任务拆解 |
+
+**4 个专家角色**：
+1. **产品经理**：需求价值、优先级（ICE模型）
+2. **技术顾问**：可行性、技术方案、实现步骤
+3. **UX设计师**：用户体验、交互流程
+4. **项目经理**：任务拆解、工时评估、风险管理
+
 ## Documentation References
 
 **Start Here**: `docs/00-INDEX.md` - Complete documentation navigation
@@ -332,6 +353,7 @@ pnpm preview  # Preview production build
 - `docs/01-Project/PROJECT_STATUS.md` - Project status and progress
 - `docs/01-Project/DECISIONS.md` - Critical architectural decisions
 - `docs/03-Plans/TODO.md` - Current TODO list
+- `docs/ADVISOR.md` - Project advisor system (4-role analysis framework)
 
 **Data Documentation** (load when working with data):
 - `docs/02-Data/SCHEMA.md` - Data schema specifications (v1 and v1.1)

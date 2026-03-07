@@ -366,3 +366,46 @@ chore: 构建/工具链相关
 ---
 
 **祝所有推免学生申请顺利，金榜题名！** 🎓✨
+
+## Development Baseline (Phase 0)
+
+### Version Baseline
+
+- Node.js: `>=20.19.0 <25`
+- pnpm: `>=10.4.1 <11`
+- Package manager: `pnpm` only (enforced by `packageManager` + `.npmrc`)
+
+### Install and Verify Workflow
+
+1. Repair stage (local fix):
+
+```bash
+pnpm install
+pnpm verify
+```
+
+2. Validation stage (CI/release check):
+
+```bash
+pnpm install --frozen-lockfile
+pnpm verify
+```
+
+### Verify Script
+
+`pnpm verify` runs:
+
+```bash
+pnpm check && pnpm build
+```
+
+`pnpm verify:full` runs:
+
+```bash
+pnpm check && pnpm build && pnpm check:data
+```
+
+Notes:
+
+- Phase 0 uses `pnpm verify`.
+- After Phase 2 data normalization, use `pnpm verify:full` as the default full gate.

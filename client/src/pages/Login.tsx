@@ -3,9 +3,10 @@
  * 用户必须登录才能使用应用功能
  */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
 import { useAuth } from '@/contexts/AuthContext';
+import { getAuthErrorMessage, shouldRedirectToDashboard } from '@/lib/authFlow';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -20,6 +21,7 @@ export default function Login() {
   const [, setLocation] = useLocation();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [loginRequested, setLoginRequested] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -32,26 +34,35 @@ export default function Login() {
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerNickname, setRegisterNickname] = useState('');
 
-  // 如果已登录，跳转到控制台
-  if (user) {
-    setLocation('/dashboard');
-    return null;
-  }
+  useEffect(() => {
+    if (
+      shouldRedirectToDashboard({
+        user,
+        authLoading,
+      })
+    ) {
+      setLoginRequested(false);
+      setLocation('/dashboard');
+    }
+  }, [user, authLoading, setLocation]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
     setIsLoading(true);
 
     try {
       const { error } = await signInWithEmail(loginEmail, loginPassword);
       if (error) {
-        setError(error);
+        setError(getAuthErrorMessage(error));
+        setLoginRequested(false);
       } else {
-        setLocation('/dashboard');
+        setLoginRequested(true);
       }
     } catch (err) {
-      setError('登录失败，请重试');
+      setError(getAuthErrorMessage(err));
+      setLoginRequested(false);
     } finally {
       setIsLoading(false);
     }
@@ -72,7 +83,7 @@ export default function Login() {
     try {
       const { error } = await signUpWithEmail(registerEmail, registerPassword);
       if (error) {
-        setError(error);
+        setError(getAuthErrorMessage(error));
       } else {
         setSuccess('注册成功！请查收验证邮件后登录。');
         setRegisterEmail('');
@@ -80,7 +91,7 @@ export default function Login() {
         setRegisterNickname('');
       }
     } catch (err) {
-      setError('注册失败，请重试');
+      setError(getAuthErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -93,10 +104,10 @@ export default function Login() {
     try {
       const { error } = await signInWithOAuth(provider);
       if (error) {
-        setError(error);
+        setError(getAuthErrorMessage(error));
       }
     } catch (err) {
-      setError('OAuth 登录失败，请重试');
+      setError(getAuthErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -218,7 +229,7 @@ export default function Login() {
                     {isLoading ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        登录中...
+                        {loginRequested ? '跳转中...' : '登录中...'}
                       </>
                     ) : (
                       '登录'

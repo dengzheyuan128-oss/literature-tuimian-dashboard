@@ -6,6 +6,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { useAuth } from '@/contexts/AuthContext';
+import { shouldRedirectToLogin } from '@/lib/authFlow';
 import { Loader2 } from 'lucide-react';
 
 interface ProtectedRouteProps {
@@ -17,9 +18,14 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    // 加载完成后，如果 Supabase 已配置但用户未登录，跳转到首页（Landing）
-    if (!loading && isConfigured && !user) {
-      setLocation('/');
+    if (
+      shouldRedirectToLogin({
+        user,
+        authLoading: loading,
+        isConfigured,
+      })
+    ) {
+      setLocation('/login');
     }
   }, [user, loading, isConfigured, setLocation]);
 
