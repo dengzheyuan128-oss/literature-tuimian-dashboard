@@ -1,142 +1,168 @@
-/**
- * 认证上下文
- * 管理用户登录状态和认证操作
- */
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import type { Session, User } from '@supabase/supabase-js';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User, Session } from '@supabase/supabase-js';
-import { supabase, isSupabaseConfigured, getUserProfile, UserProfile } from '@/lib/supabase';
+import { checkAuthServiceHealth, getAuthErrorMessage } from '@/lib/authFlow';
+import { getUserProfile, isSupabaseConfigured, supabase, type UserProfile } from '@/lib/supabase';
 
 interface AuthContextType {
-  // 状态
   user: User | null;
   profile: UserProfile | null;
   session: Session | null;
   loading: boolean;
   isConfigured: boolean;
-
-  // 认证方法
+  authIssue: string | null;
+  authReachable: boolean | null;
   signInWithEmail: (email: string, password: string) => Promise<{ error: string | null }>;
   signUpWithEmail: (email: string, password: string) => Promise<{ error: string | null }>;
   signInWithOAuth: (provider: 'github' | 'google' | 'wechat') => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
-
-  // 工具方法
   refreshProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || '';
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authIssue, setAuthIssue] = useState<string | null>(null);
+  const [authReachable, setAuthReachable] = useState<boolean | null>(null);
 
-  // 加载用户 Profile
   const loadProfile = async (userId: string) => {
     const userProfile = await getUserProfile(userId);
     setProfile(userProfile);
   };
 
-  // 刷新 Profile
   const refreshProfile = async () => {
     if (user) {
       await loadProfile(user.id);
     }
   };
 
-  // 初始化：检查现有会话
   useEffect(() => {
     if (!supabase) {
+      setAuthReachable(false);
+      setAuthIssue('认证服务未配置，请检查 Supabase 环境变量。');
       setLoading(false);
       return;
     }
 
-    // 获取初始会话（添加错误处理和超时）
-    const timeoutId = setTimeout(() => {
-      console.warn('[Auth] Session check timeout, setting loading to false');
-      setLoading(false);
-    }, 10000); // 10秒超时
+    let cancelled = false;
 
-    supabase.auth.getSession()
+    void checkAuthServiceHealth({
+      supabaseUrl: SUPABASE_URL,
+      supabaseAnonKey: SUPABASE_ANON_KEY,
+    }).then((result) => {
+      if (cancelled) return;
+      setAuthReachable(result.ok);
+      setAuthIssue(result.message);
+    });
+
+    const timeoutId = setTimeout(() => {
+      if (!cancelled) {
+        setLoading(false);
+      }
+    }, 10000);
+
+    supabase.auth
+      .getSession()
       .then(({ data: { session } }) => {
+        if (cancelled) return;
         clearTimeout(timeoutId);
         setSession(session);
         setUser(session?.user ?? null);
         if (session?.user) {
-          loadProfile(session.user.id);
+          void loadProfile(session.user.id);
         }
         setLoading(false);
       })
       .catch((error) => {
+        if (cancelled) return;
         clearTimeout(timeoutId);
-        console.error('[Auth] Failed to get session:', error);
+        setAuthIssue(getAuthErrorMessage(error, { supabaseUrl: SUPABASE_URL }));
         setLoading(false);
       });
 
-    // 监听认证状态变化
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      setSession(session);
+      setUser(session?.user ?? null);
 
-        if (session?.user) {
-          await loadProfile(session.user.id);
-        } else {
-          setProfile(null);
-        }
+      if (session?.user) {
+        await loadProfile(session.user.id);
+      } else {
+        setProfile(null);
       }
-    );
+    });
 
     return () => {
+      cancelled = true;
       clearTimeout(timeoutId);
       subscription.unsubscribe();
     };
   }, []);
 
-  // 邮箱登录
   const signInWithEmail = async (email: string, password: string) => {
-    if (!supabase) return { error: '认证服务未配置' };
+    if (!supabase) return { error: '认证服务未配置。' };
+    if (authReachable === false && authIssue) return { error: authIssue };
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    return { error: error?.message || null };
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      return {
+        error: error ? getAuthErrorMessage(error.message, { supabaseUrl: SUPABASE_URL }) : null,
+      };
+    } catch (error) {
+      return {
+        error: getAuthErrorMessage(error, { supabaseUrl: SUPABASE_URL }),
+      };
+    }
   };
 
-  // 邮箱注册
   const signUpWithEmail = async (email: string, password: string) => {
-    if (!supabase) return { error: '认证服务未配置' };
+    if (!supabase) return { error: '认证服务未配置。' };
+    if (authReachable === false && authIssue) return { error: authIssue };
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    return { error: error?.message || null };
+    try {
+      const { error } = await supabase.auth.signUp({ email, password });
+      return {
+        error: error ? getAuthErrorMessage(error.message, { supabaseUrl: SUPABASE_URL }) : null,
+      };
+    } catch (error) {
+      return {
+        error: getAuthErrorMessage(error, { supabaseUrl: SUPABASE_URL }),
+      };
+    }
   };
 
-  // OAuth 登录
   const signInWithOAuth = async (provider: 'github' | 'google' | 'wechat') => {
-    if (!supabase) return { error: '认证服务未配置' };
+    if (!supabase) return { error: '认证服务未配置。' };
+    if (authReachable === false && authIssue) return { error: authIssue };
 
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: provider as any,
-      options: {
-        redirectTo: window.location.origin,
-      },
-    });
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: provider as never,
+        options: {
+          redirectTo: window.location.origin,
+        },
+      });
 
-    return { error: error?.message || null };
+      return {
+        error: error ? getAuthErrorMessage(error.message, { supabaseUrl: SUPABASE_URL }) : null,
+      };
+    } catch (error) {
+      return {
+        error: getAuthErrorMessage(error, { supabaseUrl: SUPABASE_URL }),
+      };
+    }
   };
 
-  // 退出登录
   const signOut = async () => {
     if (!supabase) return;
-
     await supabase.auth.signOut();
     setUser(null);
     setProfile(null);
@@ -151,6 +177,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         session,
         loading,
         isConfigured: isSupabaseConfigured,
+        authIssue,
+        authReachable,
         signInWithEmail,
         signUpWithEmail,
         signInWithOAuth,
@@ -165,7 +193,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;

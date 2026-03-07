@@ -1,12 +1,14 @@
 import { describe, expect, it } from 'vitest';
+
 import {
+  buildConnectivityMessage,
   getAuthErrorMessage,
   shouldRedirectToDashboard,
   shouldRedirectToLogin,
 } from './authFlow';
 
 describe('authFlow', () => {
-  it('redirects to dashboard only after login was requested and user is ready', () => {
+  it('redirects to dashboard only after auth is ready', () => {
     expect(
       shouldRedirectToDashboard({
         user: null,
@@ -47,9 +49,15 @@ describe('authFlow', () => {
     ).toBe(true);
   });
 
-  it('maps fetch failures to a clear auth error message', () => {
-    expect(getAuthErrorMessage(new Error('Failed to fetch'))).toBe(
-      '认证服务暂时不可达，请检查网络连接或稍后重试。',
-    );
+  it('maps fetch failures to a connectivity message with Supabase origin', () => {
+    expect(
+      getAuthErrorMessage(new Error('Failed to fetch'), {
+        supabaseUrl: 'https://example.supabase.co',
+      }),
+    ).toBe(buildConnectivityMessage('https://example.supabase.co'));
+  });
+
+  it('passes through non-connectivity auth errors', () => {
+    expect(getAuthErrorMessage('Invalid login credentials')).toBe('Invalid login credentials');
   });
 });

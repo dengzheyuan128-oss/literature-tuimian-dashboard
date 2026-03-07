@@ -1,8 +1,7 @@
-/**
- * 登录/注册对话框组件
- */
-
 import { useState } from 'react';
+import { Github, Loader2, Lock, LogIn, Mail, UserPlus } from 'lucide-react';
+import { toast } from 'sonner';
+
 import { useAuth } from '@/contexts/AuthContext';
 import {
   Dialog,
@@ -15,25 +14,29 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
-import { LogIn, UserPlus, Mail, Lock, Github, Loader2 } from 'lucide-react';
-import { toast } from 'sonner';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface AuthDialogProps {
   trigger?: React.ReactNode;
 }
 
 export default function AuthDialog({ trigger }: AuthDialogProps) {
-  const { signInWithEmail, signUpWithEmail, signInWithOAuth, isConfigured } = useAuth();
+  const {
+    signInWithEmail,
+    signUpWithEmail,
+    signInWithOAuth,
+    isConfigured,
+    authIssue,
+    authReachable,
+  } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // 邮箱登录
-  const handleEmailSignIn = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleEmailSignIn = async (event: React.FormEvent) => {
+    event.preventDefault();
     if (!email || !password) {
       toast.error('请填写邮箱和密码');
       return;
@@ -45,24 +48,24 @@ export default function AuthDialog({ trigger }: AuthDialogProps) {
 
     if (error) {
       toast.error(error);
-    } else {
-      toast.success('登录成功');
-      setOpen(false);
-      setEmail('');
-      setPassword('');
+      return;
     }
+
+    toast.success('登录成功');
+    setOpen(false);
+    setEmail('');
+    setPassword('');
   };
 
-  // 邮箱注册
-  const handleEmailSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleEmailSignUp = async (event: React.FormEvent) => {
+    event.preventDefault();
     if (!email || !password) {
       toast.error('请填写邮箱和密码');
       return;
     }
 
     if (password.length < 6) {
-      toast.error('密码至少需要6位');
+      toast.error('密码至少需要 6 位');
       return;
     }
 
@@ -72,15 +75,15 @@ export default function AuthDialog({ trigger }: AuthDialogProps) {
 
     if (error) {
       toast.error(error);
-    } else {
-      toast.success('注册成功，请查收验证邮件');
-      setOpen(false);
-      setEmail('');
-      setPassword('');
+      return;
     }
+
+    toast.success('注册成功，请查收验证邮件');
+    setOpen(false);
+    setEmail('');
+    setPassword('');
   };
 
-  // OAuth 登录
   const handleOAuthSignIn = async (provider: 'github' | 'google') => {
     setLoading(true);
     const { error } = await signInWithOAuth(provider);
@@ -91,23 +94,22 @@ export default function AuthDialog({ trigger }: AuthDialogProps) {
     }
   };
 
-  // 未配置时显示提示
   if (!isConfigured) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           {trigger || (
             <Button variant="outline" size="sm">
-              <LogIn className="w-4 h-4 mr-2" />
+              <LogIn className="mr-2 h-4 w-4" />
               登录
             </Button>
           )}
         </DialogTrigger>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>功能开发中</DialogTitle>
+            <DialogTitle>认证功能未配置</DialogTitle>
             <DialogDescription>
-              用户系统正在开发中，敬请期待。目前数据保存在浏览器本地。
+              当前环境缺少 Supabase 配置，登录和注册暂不可用。
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
@@ -120,7 +122,7 @@ export default function AuthDialog({ trigger }: AuthDialogProps) {
       <DialogTrigger asChild>
         {trigger || (
           <Button variant="outline" size="sm">
-            <LogIn className="w-4 h-4 mr-2" />
+            <LogIn className="mr-2 h-4 w-4" />
             登录
           </Button>
         )}
@@ -128,10 +130,14 @@ export default function AuthDialog({ trigger }: AuthDialogProps) {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>欢迎使用推免指南</DialogTitle>
-          <DialogDescription>
-            登录后可云端同步收藏、提醒等数据
-          </DialogDescription>
+          <DialogDescription>登录后可同步收藏、提醒和提交通知链接。</DialogDescription>
         </DialogHeader>
+
+        {authIssue ? (
+          <div className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
+            {authIssue}
+          </div>
+        ) : null}
 
         <Tabs defaultValue="signin" className="mt-4">
           <TabsList className="grid w-full grid-cols-2">
@@ -139,19 +145,18 @@ export default function AuthDialog({ trigger }: AuthDialogProps) {
             <TabsTrigger value="signup">注册</TabsTrigger>
           </TabsList>
 
-          {/* 登录 */}
           <TabsContent value="signin">
             <form onSubmit={handleEmailSignIn} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">邮箱</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     id="email"
                     type="email"
                     placeholder="your@email.com"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(event) => setEmail(event.target.value)}
                     className="pl-10"
                   />
                 </div>
@@ -159,41 +164,36 @@ export default function AuthDialog({ trigger }: AuthDialogProps) {
               <div className="space-y-2">
                 <Label htmlFor="password">密码</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     id="password"
                     type="password"
-                    placeholder="••••••••"
+                    placeholder="请输入密码"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(event) => setPassword(event.target.value)}
                     className="pl-10"
                   />
                 </div>
               </div>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? (
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                ) : (
-                  <LogIn className="w-4 h-4 mr-2" />
-                )}
+              <Button type="submit" className="w-full" disabled={loading || authReachable === false}>
+                {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <LogIn className="mr-2 h-4 w-4" />}
                 登录
               </Button>
             </form>
           </TabsContent>
 
-          {/* 注册 */}
           <TabsContent value="signup">
             <form onSubmit={handleEmailSignUp} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="signup-email">邮箱</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     id="signup-email"
                     type="email"
                     placeholder="your@email.com"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(event) => setEmail(event.target.value)}
                     className="pl-10"
                   />
                 </div>
@@ -201,65 +201,46 @@ export default function AuthDialog({ trigger }: AuthDialogProps) {
               <div className="space-y-2">
                 <Label htmlFor="signup-password">密码</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     id="signup-password"
                     type="password"
-                    placeholder="至少6位"
+                    placeholder="至少 6 位"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(event) => setPassword(event.target.value)}
                     className="pl-10"
                   />
                 </div>
               </div>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? (
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                ) : (
-                  <UserPlus className="w-4 h-4 mr-2" />
-                )}
+              <Button type="submit" className="w-full" disabled={loading || authReachable === false}>
+                {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <UserPlus className="mr-2 h-4 w-4" />}
                 注册
               </Button>
             </form>
           </TabsContent>
         </Tabs>
 
-        {/* OAuth 登录 */}
         <div className="mt-4">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <Separator className="w-full" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                或使用第三方登录
-              </span>
+              <span className="bg-background px-2 text-muted-foreground">第三方登录</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-2 mt-4">
+          <div className="mt-4 grid grid-cols-1 gap-2">
             <Button
               variant="outline"
               onClick={() => handleOAuthSignIn('github')}
-              disabled={loading}
+              disabled={loading || authReachable === false}
             >
-              <Github className="w-4 h-4 mr-2" />
+              <Github className="mr-2 h-4 w-4" />
               GitHub 登录
             </Button>
-            {/* 微信登录需要在 Supabase 配置后启用 */}
-            {/* <Button
-              variant="outline"
-              onClick={() => handleOAuthSignIn('wechat')}
-              disabled={loading}
-            >
-              微信登录
-            </Button> */}
           </div>
         </div>
-
-        <p className="text-xs text-center text-muted-foreground mt-4">
-          登录即表示同意我们的服务条款和隐私政策
-        </p>
       </DialogContent>
     </Dialog>
   );

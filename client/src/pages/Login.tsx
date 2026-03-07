@@ -17,7 +17,16 @@ import { Separator } from '@/components/ui/separator';
 import { BookOpen, Mail, Lock, User, Loader2, AlertCircle } from 'lucide-react';
 
 export default function Login() {
-  const { signInWithEmail, signUpWithEmail, signInWithOAuth, user, loading: authLoading, isConfigured } = useAuth();
+  const {
+    signInWithEmail,
+    signUpWithEmail,
+    signInWithOAuth,
+    user,
+    loading: authLoading,
+    isConfigured,
+    authIssue,
+    authReachable,
+  } = useAuth();
   const [, setLocation] = useLocation();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -182,6 +191,13 @@ export default function Login() {
                 </Alert>
               )}
 
+              {!error && authIssue && (
+                <Alert variant="destructive" className="mb-4">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{authIssue}</AlertDescription>
+                </Alert>
+              )}
+
               {success && (
                 <Alert className="mb-4 border-green-500 text-green-700">
                   <AlertDescription>{success}</AlertDescription>
@@ -225,7 +241,7 @@ export default function Login() {
                     </div>
                   </div>
 
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full" disabled={isLoading || authReachable === false}>
                     {isLoading ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -292,7 +308,7 @@ export default function Login() {
                     </div>
                   </div>
 
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full" disabled={isLoading || authReachable === false}>
                     {isLoading ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
