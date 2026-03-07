@@ -174,7 +174,7 @@ export default function Matcher() {
     }
   };
 
-  const handleMatch = () => {
+  const handleMatch = async () => {
     // 验证必填字段
     if (
       !formData.undergraduateUniversity ||
@@ -190,7 +190,7 @@ export default function Matcher() {
     storageUtils.saveUserProfile(formData);
 
     // 生成匹配报告
-    const report = matchingAlgorithm.generateMatchReport(formData);
+    const report = await matchingAlgorithm.generateMatchReport(formData);
     storageUtils.saveMatchReport(report);
 
     // 跳转到结果页面

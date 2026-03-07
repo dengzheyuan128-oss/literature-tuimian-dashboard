@@ -7,7 +7,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { submitFeedback, FeedbackType } from '@/lib/supabase';
-import { universities } from '@/lib/dataLoader';
+import { useProgramCards } from '@/lib/programCards';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -38,6 +38,7 @@ const FEEDBACK_TYPES: { value: FeedbackType; label: string; description: string 
 
 export default function FeedbackDialog() {
   const { user } = useAuth();
+  const { universities } = useProgramCards();
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -152,7 +153,6 @@ export default function FeedbackDialog() {
                   <SelectValue placeholder="选择院校..." />
                 </SelectTrigger>
                 <SelectContent className="max-h-60">
-                  <SelectItem value="">不选择</SelectItem>
                   {universities.map((u) => (
                     <SelectItem key={u.id} value={String(u.id)}>
                       {u.name}

@@ -5,7 +5,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRoute, useLocation } from 'wouter';
-import { universities } from '@/lib/dataLoader';
+import type { University } from '@/types/university';
+import { getProgramCardById } from '@/lib/programCards';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -52,9 +53,9 @@ export default function NoticeDetail() {
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [university, setUniversity] = useState<University | null>(null);
 
-  const universityId = params?.id ? parseInt(params.id) : null;
-  const university = universityId ? universities.find(u => u.id === universityId) : null;
+  const universityId = params?.id ?? null;
 
   useEffect(() => {
     if (!universityId) return;
@@ -62,6 +63,9 @@ export default function NoticeDetail() {
     // 并行加载通知原文和附件
     const loadData = async () => {
       try {
+        const loadedUniversity = await getProgramCardById(universityId);
+        setUniversity(loadedUniversity);
+
         // 加载通知内容
         const contentResponse = await fetch(`/data/notices/${universityId}.md`);
         if (contentResponse.ok) {
@@ -76,7 +80,7 @@ export default function NoticeDetail() {
         const attachmentsResponse = await fetch('/data/attachments.json');
         if (attachmentsResponse.ok) {
           const allAttachments = await attachmentsResponse.json();
-          const schoolAttachments = allAttachments[universityId.toString()] || [];
+          const schoolAttachments = allAttachments[String(universityId)] || [];
           setAttachments(schoolAttachments);
         }
       } catch (err) {

@@ -104,3 +104,14 @@ temp/
 *.db
 *.sqlite
 *.sqlite3
+
+# Local source data and generated import artifacts
+excel/
+reports/excel-import/staging-rows.json
+reports/excel-import/staging-summary.json
+data_analysis_report.json
+data_quality_report.json
+excel_universities.json
+extraction-report.json
+pending_manual.md
+nul

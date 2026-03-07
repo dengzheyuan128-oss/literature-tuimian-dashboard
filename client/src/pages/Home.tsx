@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { University, DataStatus } from "@/types/university";
-import { universities, getCoverageStats } from "@/lib/dataLoader";
+import { useProgramCards } from "@/lib/programCards";
 import { favoritesStorage, searchHistoryStorage } from "@/lib/storage";
 import { cleanUserInput } from "@/lib/security";
 import { useCompare } from "@/contexts/CompareContext";
@@ -21,7 +21,7 @@ import SearchCommand from "@/components/SearchCommand";
 import {
   Search, BookOpen, GraduationCap, Calendar, ExternalLink,
   Filter, ChevronRight, Sparkles, AlertCircle, Heart, HeartOff,
-  BarChart2, Bell, Star
+  BarChart2, Bell, Star, Link2, Inbox
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
@@ -71,6 +71,7 @@ export default function Home() {
   const { user } = useAuth();
   const { addToCompare, isInCompare } = useCompare();
   const { addReminder } = useReminders();
+  const { universities, coverageStats } = useProgramCards();
   const userIsAdmin = isAdmin(user?.email);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLevel, setSelectedLevel] = useState<SimplifiedTier | null>(null);
@@ -82,9 +83,6 @@ export default function Home() {
     const favs = favoritesStorage.getFavorites();
     setFavorites(favs.map(f => parseInt(f.universityId, 10)).filter(id => !isNaN(id)));
   });
-
-  // 覆盖率统计（优化：不依赖 universities）
-  const coverageStats = useMemo(() => getCoverageStats(), []);
 
   // 过滤大学列表（使用简化分类）
   const filteredUniversities = useMemo(() => {
@@ -618,7 +616,7 @@ export default function Home() {
                   <div className="flex flex-wrap gap-3 pt-4 border-t border-border/40">
                     {/* 查看通知详情（提取的内容） */}
                     <Button
-                      onClick={() => setLocation(`/notice/${selectedUniversity.id}`)}
+                      onClick={() => setLocation(`/notice/${selectedUniversity.sourceCardId ?? selectedUniversity.id}`)}
                       className="font-sans"
                     >
                       <BookOpen className="w-4 h-4 mr-2" />

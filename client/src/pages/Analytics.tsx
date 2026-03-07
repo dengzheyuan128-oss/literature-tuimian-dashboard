@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { universities, getCoverageStats } from "@/lib/dataLoader";
+import { useProgramCards } from "@/lib/programCards";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -24,7 +24,7 @@ import {
 } from "@/lib/tierUtils";
 
 // 计算各层级院校数量
-function getTierDistribution(): Map<SimplifiedTier, number> {
+function getTierDistribution(universities: { tier: string }[]): Map<SimplifiedTier, number> {
   const distribution = new Map<SimplifiedTier, number>();
   SIMPLIFIED_TIERS.forEach((tier) => distribution.set(tier, 0));
 
@@ -136,12 +136,10 @@ function SimplePieChart({
 
 export default function Analytics() {
   const [, setLocation] = useLocation();
+  const { universities, coverageStats } = useProgramCards();
 
   // 层级分布
-  const tierDistribution = useMemo(() => getTierDistribution(), []);
-
-  // 数据完整性统计
-  const coverageStats = useMemo(() => getCoverageStats(), []);
+  const tierDistribution = useMemo(() => getTierDistribution(universities), [universities]);
 
   // 饼图数据
   const pieData = useMemo(() => {
@@ -180,7 +178,7 @@ export default function Analytics() {
         rate: Math.round((hasDeadline / total) * 100),
       },
     };
-  }, []);
+  }, [universities]);
 
   return (
     <div className="min-h-screen bg-background">

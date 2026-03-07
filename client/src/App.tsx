@@ -21,7 +21,9 @@ import Analytics from "./pages/Analytics";
 import { BuildInfo } from "./components/BuildInfo";
 import FeedbackButton from "./components/FeedbackButton";
 import AdminExtract from "./pages/AdminExtract";
+import AdminNoticeReview from "./pages/AdminNoticeReview";
 import NoticeDetail from "./pages/NoticeDetail";
+import SubmitNotice from "./pages/SubmitNotice";
 
 
 function Router() {
@@ -55,6 +57,12 @@ function Router() {
       </Route>
       <Route path={"/admin/extract"}>
         <ProtectedRoute><AdminExtract /></ProtectedRoute>
+      </Route>
+      <Route path={"/admin/review"}>
+        <ProtectedRoute><AdminNoticeReview /></ProtectedRoute>
+      </Route>
+      <Route path={"/submit-notice"}>
+        <ProtectedRoute><SubmitNotice /></ProtectedRoute>
       </Route>
       <Route path={"/notice/:id"}>
         <ProtectedRoute><NoticeDetail /></ProtectedRoute>

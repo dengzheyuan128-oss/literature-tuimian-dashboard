@@ -1,48 +1,51 @@
-/**
- * 管理员 AI 提取页面
- * 从 URL 自动提取院校通知信息
- */
-
 import { useState } from 'react';
 import { useLocation } from 'wouter';
-import { useAuth } from '@/contexts/AuthContext';
-import { isAdmin } from '@/lib/adminUtils';
-import { fetchUrlAsMarkdown } from '@/lib/jinaReader';
-import { extractNoticeInfo, ExtractedNotice, isGlmConfigured } from '@/lib/glmApi';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Separator } from '@/components/ui/separator';
 import {
-  ArrowLeft,
-  Loader2,
-  Sparkles,
   AlertCircle,
-  CheckCircle,
+  ArrowLeft,
+  CheckCircle2,
   Copy,
   ExternalLink,
+  Loader2,
+  Sparkles,
 } from 'lucide-react';
 import { toast } from 'sonner';
+
+import { useAuth } from '@/contexts/AuthContext';
+import { isAdmin } from '@/lib/adminUtils';
+import { extractNoticeInfo, type ExtractedNotice, isGlmConfigured } from '@/lib/glmApi';
+import { fetchUrlAsMarkdown } from '@/lib/jinaReader';
+import { useProgramCards } from '@/lib/programCards';
+import { submitLinkSubmission } from '@/lib/supabase';
+import {
+  buildSubmissionExtractedPayload,
+  findBestProgramCardMatch,
+} from '@/lib/submissionWorkflow';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 
 export default function AdminExtract() {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
+  const { universities } = useProgramCards();
 
   const [url, setUrl] = useState('');
   const [isExtracting, setIsExtracting] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ExtractedNotice | null>(null);
 
-  // 权限检查
   if (!user || !isAdmin(user.email)) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
             <CardTitle>无权限访问</CardTitle>
-            <CardDescription>此页面仅限管理员使用</CardDescription>
+            <CardDescription>此页面仅管理员可用。</CardDescription>
           </CardHeader>
           <CardContent>
             <Button onClick={() => setLocation('/dashboard')}>返回首页</Button>
@@ -59,87 +62,98 @@ export default function AdminExtract() {
     setError(null);
     setResult(null);
 
-    // Step 1: 获取网页内容
-    toast.info('正在获取网页内容...');
-    const jinaResult = await fetchUrlAsMarkdown(url);
-
-    if (!jinaResult.success) {
-      setError(`获取网页失败: ${jinaResult.error}`);
+    toast.info('正在抓取网页内容');
+    const markdownResult = await fetchUrlAsMarkdown(url.trim());
+    if (!markdownResult.success) {
+      setError(markdownResult.error || '网页抓取失败');
       setIsExtracting(false);
       return;
     }
 
-    // Step 2: 调用 GLM 提取
-    toast.info('正在 AI 提取信息...');
-    const glmResult = await extractNoticeInfo(jinaResult.content);
-
-    if (!glmResult.success || !glmResult.data) {
-      setError(`AI 提取失败: ${glmResult.error}`);
+    toast.info('正在提取结构化字段');
+    const extractResult = await extractNoticeInfo(markdownResult.content);
+    if (!extractResult.success || !extractResult.data) {
+      setError(extractResult.error || 'AI 提取失败');
       setIsExtracting(false);
       return;
     }
 
-    setResult(glmResult.data);
+    setResult(extractResult.data);
     setIsExtracting(false);
-    toast.success('提取成功！');
+    toast.success('提取完成');
   };
 
-  const handleCopyJson = () => {
+  const handleCopyJson = async () => {
     if (!result) return;
 
-    const json = JSON.stringify(
-      {
-        ...result,
-        url: url,
-        linkGrade: 'A',
-        yearStatus: 'verified',
-        year: new Date().getFullYear(),
-      },
-      null,
-      2
+    await navigator.clipboard.writeText(
+      JSON.stringify(
+        {
+          ...result,
+          url: url.trim(),
+          year: new Date().getFullYear(),
+        },
+        null,
+        2,
+      ),
     );
+    toast.success('提取结果已复制');
+  };
 
-    navigator.clipboard.writeText(json);
-    toast.success('JSON 已复制到剪贴板');
+  const handleSaveToQueue = async () => {
+    if (!result) return;
+
+    setIsSaving(true);
+    const payload = buildSubmissionExtractedPayload(result);
+    const matchedCard = findBestProgramCardMatch(payload, universities);
+    const success = await submitLinkSubmission(user.id, {
+      submitted_url: url.trim(),
+      submission_note: '管理员提取后提交',
+      extract_status: 'pending_review',
+      review_status: 'pending_review',
+      extracted_payload: payload as unknown as Record<string, unknown>,
+      matched_program_card_id: matchedCard?.sourceCardId || null,
+    });
+    setIsSaving(false);
+
+    if (!success) {
+      toast.error('写入待审核队列失败');
+      return;
+    }
+
+    toast.success('已写入待审核队列');
+    setLocation('/admin/review');
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
-      {/* 顶部导航 */}
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur">
-        <div className="container mx-auto px-4 h-14 flex items-center gap-4">
+        <div className="container mx-auto flex h-14 items-center gap-4 px-4">
           <Button variant="ghost" size="sm" onClick={() => setLocation('/dashboard')}>
-            <ArrowLeft className="w-4 h-4 mr-2" />
+            <ArrowLeft className="mr-2 h-4 w-4" />
             返回
           </Button>
           <Separator orientation="vertical" className="h-6" />
-          <span className="font-medium">AI 通知提取</span>
-          <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded">
-            管理员工具
-          </span>
+          <span className="font-medium">AI 公告提取</span>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-3xl">
-        {/* API 配置检查 */}
-        {!isGlmConfigured() && (
+      <main className="container mx-auto max-w-3xl px-4 py-8">
+        {!isGlmConfigured() ? (
           <Alert variant="destructive" className="mb-6">
             <AlertCircle className="h-4 w-4" />
-            <AlertDescription>
-              GLM API Key 未配置。请在环境变量中设置 VITE_GLM_API_KEY
-            </AlertDescription>
+            <AlertDescription>未配置 `VITE_GLM_API_KEY`，当前无法执行 AI 提取。</AlertDescription>
           </Alert>
-        )}
+        ) : null}
 
-        {/* URL 输入 */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5" />
-              输入通知 URL
+              <Sparkles className="h-5 w-5" />
+              输入公告链接
             </CardTitle>
             <CardDescription>
-              输入高校推免通知页面的 URL，AI 将自动提取结构化信息
+              这里用于管理员手动抓取新链接，并直接写入待审核队列。
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -147,7 +161,7 @@ export default function AdminExtract() {
               <Input
                 placeholder="https://example.edu.cn/notice/..."
                 value={url}
-                onChange={(e) => setUrl(e.target.value)}
+                onChange={(event) => setUrl(event.target.value)}
                 disabled={isExtracting}
               />
               <Button
@@ -160,87 +174,72 @@ export default function AdminExtract() {
                     提取中
                   </>
                 ) : (
-                  '提取'
+                  '开始提取'
                 )}
               </Button>
             </div>
           </CardContent>
         </Card>
 
-        {/* 错误提示 */}
-        {error && (
+        {error ? (
           <Alert variant="destructive" className="mb-6">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>{error}</AlertDescription>
           </Alert>
-        )}
+        ) : null}
 
-        {/* 提取结果 */}
-        {result && (
+        {result ? (
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <CheckCircle className="w-5 h-5 text-green-500" />
+                <CheckCircle2 className="h-5 w-5 text-green-600" />
                 提取结果
               </CardTitle>
-              <CardDescription>
-                请核对以下信息，如有错误可手动修改后复制
-              </CardDescription>
+              <CardDescription>确认字段无误后，可直接送入管理员审核队列。</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label>院校名称</Label>
-                  <Input value={result.name} readOnly />
-                </div>
-                <div>
-                  <Label>专业方向</Label>
-                  <Input value={result.specialty} readOnly />
-                </div>
-                <div>
-                  <Label>学位类型</Label>
-                  <Input value={result.degreeType} readOnly />
-                </div>
-                <div>
-                  <Label>通知类型</Label>
-                  <Input value={result.noticeType} readOnly />
-                </div>
-                <div>
-                  <Label>申请时间</Label>
-                  <Input value={result.applicationPeriod} readOnly />
-                </div>
-                <div>
-                  <Label>截止日期</Label>
-                  <Input value={result.deadline} readOnly />
-                </div>
-                <div>
-                  <Label>考核形式</Label>
-                  <Input value={result.examForm} readOnly />
-                </div>
-                <div>
-                  <Label>英语要求</Label>
-                  <Input value={result.englishRequirement} readOnly />
-                </div>
+                <ReadonlyField label="学校" value={result.name} />
+                <ReadonlyField label="项目" value={result.specialty} />
+                <ReadonlyField label="学位类型" value={result.degreeType} />
+                <ReadonlyField label="通知类型" value={result.noticeType} />
+                <ReadonlyField label="申请时间" value={result.applicationPeriod} />
+                <ReadonlyField label="截止日期" value={result.deadline} />
+                <ReadonlyField label="考核形式" value={result.examForm} />
+                <ReadonlyField label="英语要求" value={result.englishRequirement} />
               </div>
 
               <Separator />
 
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 <Button onClick={handleCopyJson} className="gap-2">
-                  <Copy className="w-4 h-4" />
+                  <Copy className="h-4 w-4" />
                   复制 JSON
                 </Button>
+                <Button onClick={handleSaveToQueue} disabled={isSaving} className="gap-2">
+                  {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                  写入待审核队列
+                </Button>
                 <Button variant="outline" asChild>
-                  <a href={url} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    查看原始链接
+                  <a href={url} target="_blank" rel="noreferrer">
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    查看原链接
                   </a>
                 </Button>
               </div>
             </CardContent>
           </Card>
-        )}
+        ) : null}
       </main>
+    </div>
+  );
+}
+
+function ReadonlyField({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <Label>{label}</Label>
+      <Input value={value} readOnly />
     </div>
   );
 }

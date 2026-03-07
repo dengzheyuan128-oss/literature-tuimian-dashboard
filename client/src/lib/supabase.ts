@@ -312,6 +312,42 @@ export interface UserFeedback {
   created_at: string;
 }
 
+export type SubmissionExtractStatus =
+  | 'pending_extract'
+  | 'extract_failed'
+  | 'pending_review'
+  | 'approved'
+  | 'rejected'
+  | 'merged';
+
+export type SubmissionReviewStatus = 'pending_review' | 'approved' | 'rejected' | 'merged';
+
+export interface SubmissionQueueItem {
+  id: string;
+  submitted_by: string | null;
+  submitted_url: string;
+  submission_note: string;
+  extract_status: SubmissionExtractStatus;
+  review_status: SubmissionReviewStatus;
+  raw_content: string;
+  extracted_payload: Record<string, unknown>;
+  matched_program_card_id: string | null;
+  reviewer_id: string | null;
+  reviewed_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SubmissionDraftInput {
+  submitted_url: string;
+  submission_note?: string;
+  extract_status?: SubmissionExtractStatus;
+  review_status?: SubmissionReviewStatus;
+  raw_content?: string;
+  extracted_payload?: Record<string, unknown>;
+  matched_program_card_id?: string | null;
+}
+
 /**
  * 提交用户反馈
  */
@@ -340,6 +376,230 @@ export async function submitFeedback(
 
   if (error) {
     console.error('Error submitting feedback:', error);
+    return false;
+  }
+
+  return true;
+}
+
+export async function submitLinkSubmission(
+  userId: string,
+  submission: SubmissionDraftInput,
+): Promise<boolean> {
+  if (!supabase) return false;
+
+  const { error } = await supabase.from('submission_queue').insert({
+    submitted_by: userId,
+    submitted_url: submission.submitted_url,
+    submission_note: submission.submission_note || '',
+    extract_status: submission.extract_status || 'pending_extract',
+    review_status: submission.review_status || 'pending_review',
+    raw_content: submission.raw_content || '',
+    extracted_payload: submission.extracted_payload || {},
+    matched_program_card_id: submission.matched_program_card_id || null,
+  });
+
+  if (error) {
+    console.error('Error submitting link submission:', error);
+    return false;
+  }
+
+  return true;
+}
+
+export async function getOwnSubmissions(userId: string): Promise<SubmissionQueueItem[]> {
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from('submission_queue')
+    .select('*')
+    .eq('submitted_by', userId)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching own submissions:', error);
+    return [];
+  }
+
+  return (data as SubmissionQueueItem[]) || [];
+}
+
+export async function listSubmissionQueue(): Promise<SubmissionQueueItem[]> {
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from('submission_queue')
+    .select('*')
+    .in('extract_status', ['pending_extract', 'extract_failed', 'pending_review'])
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching submission queue:', error);
+    return [];
+  }
+
+  return (data as SubmissionQueueItem[]) || [];
+}
+
+export async function updateSubmissionDraft(
+  submissionId: string,
+  updates: Partial<SubmissionDraftInput> & {
+    reviewer_id?: string | null;
+    reviewed_at?: string | null;
+  },
+): Promise<boolean> {
+  if (!supabase) return false;
+
+  const { error } = await supabase
+    .from('submission_queue')
+    .update({
+      ...updates,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', submissionId);
+
+  if (error) {
+    console.error('Error updating submission draft:', error);
+    return false;
+  }
+
+  return true;
+}
+
+export async function approveSubmissionNotice(
+  submission: SubmissionQueueItem,
+  reviewerId: string,
+  approval: {
+    program_card_id: string;
+    notice: {
+      title: string;
+      notice_url: string;
+      published_at_raw: string;
+      stage: string;
+      application_start_raw: string;
+      application_end_raw: string;
+      requirement_text: string;
+      ranking_requirement_text: string;
+      english_requirement_text: string;
+      materials_text: string;
+      application_method: string;
+      source_channel: string;
+      source_type: string;
+      review_status: 'approved';
+    };
+  },
+): Promise<boolean> {
+  if (!supabase) return false;
+
+  const { data: noticeData, error: noticeError } = await supabase
+    .from('notices')
+    .insert({
+      program_card_id: approval.program_card_id,
+      ...approval.notice,
+    })
+    .select('id')
+    .single();
+
+  if (noticeError || !noticeData?.id) {
+    console.error('Error inserting approved notice:', noticeError);
+    return false;
+  }
+
+  const { error: sourceError } = await supabase.from('notice_sources').insert({
+    notice_id: noticeData.id,
+    source_url: submission.submitted_url,
+    raw_payload: submission.extracted_payload || {},
+  });
+
+  if (sourceError) {
+    console.error('Error inserting notice source:', sourceError);
+    return false;
+  }
+
+  const reviewedAt = new Date().toISOString();
+
+  const { error: reviewError } = await supabase.from('admin_reviews').insert({
+    submission_id: submission.id,
+    reviewer_id: reviewerId,
+    action: 'approve',
+    review_note: submission.submission_note || '',
+    before_payload: submission.extracted_payload || {},
+    after_payload: {
+      ...submission.extracted_payload,
+      approved_notice_id: noticeData.id,
+      matched_program_card_id: approval.program_card_id,
+    },
+  });
+
+  if (reviewError) {
+    console.error('Error inserting admin review log:', reviewError);
+    return false;
+  }
+
+  const { error: queueError } = await supabase
+    .from('submission_queue')
+    .update({
+      extract_status: 'approved',
+      review_status: 'approved',
+      matched_program_card_id: approval.program_card_id,
+      reviewer_id: reviewerId,
+      reviewed_at: reviewedAt,
+      updated_at: reviewedAt,
+    })
+    .eq('id', submission.id);
+
+  if (queueError) {
+    console.error('Error updating submission queue after approval:', queueError);
+    return false;
+  }
+
+  await supabase
+    .from('program_cards')
+    .update({
+      latest_notice_id: noticeData.id,
+      updated_at: reviewedAt,
+    })
+    .eq('id', approval.program_card_id);
+
+  return true;
+}
+
+export async function rejectSubmissionNotice(
+  submissionId: string,
+  reviewerId: string,
+  reviewNote = '',
+  beforePayload: Record<string, unknown> = {},
+): Promise<boolean> {
+  if (!supabase) return false;
+
+  const reviewedAt = new Date().toISOString();
+  const { error: queueError } = await supabase
+    .from('submission_queue')
+    .update({
+      extract_status: 'rejected',
+      review_status: 'rejected',
+      reviewer_id: reviewerId,
+      reviewed_at: reviewedAt,
+      updated_at: reviewedAt,
+    })
+    .eq('id', submissionId);
+
+  if (queueError) {
+    console.error('Error rejecting submission:', queueError);
+    return false;
+  }
+
+  const { error: reviewError } = await supabase.from('admin_reviews').insert({
+    submission_id: submissionId,
+    reviewer_id: reviewerId,
+    action: 'reject',
+    review_note: reviewNote,
+    before_payload: beforePayload,
+    after_payload: {},
+  });
+
+  if (reviewError) {
+    console.error('Error inserting rejection review log:', reviewError);
     return false;
   }
 

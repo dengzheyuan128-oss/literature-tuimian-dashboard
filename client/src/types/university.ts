@@ -12,6 +12,7 @@ export type WebsiteStatus = 'normal' | 'maintenance' | 'unavailable';
 
 export interface University {
   id: number;
+  sourceCardId?: string;
   name: string;
   tier: string;
   location?: string;

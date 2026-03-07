@@ -4,18 +4,17 @@
  * 用于验收数据部署是否成功
  */
 
-import { universities } from "@/lib/dataLoader";
-import universitiesData from "@/data/universities.json";
+import { useProgramCards } from "@/lib/programCards";
 
 // 这些全局变量由vite.config.ts在构建时注入
 declare const __BUILD_COMMIT__: string;
 declare const __BUILD_TIME__: string;
 
 export function BuildInfo() {
+  const { universities, lastUpdated, source } = useProgramCards();
   const buildCommit = typeof __BUILD_COMMIT__ !== "undefined" ? __BUILD_COMMIT__ : "unknown";
   const buildTime = typeof __BUILD_TIME__ !== "undefined" ? __BUILD_TIME__ : "unknown";
   const universitiesCount = universities.length;
-  const lastUpdated = (universitiesData as any).lastUpdated || "unknown";
 
   // 格式化时间
   const formatTime = (isoString: string) => {
@@ -36,6 +35,9 @@ export function BuildInfo() {
       </div>
       <div className="flex items-center gap-2">
         <span>Data Updated: {lastUpdated}</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="text-xs text-muted-foreground/70">Source: {source}</span>
       </div>
       <div className="flex items-center gap-2">
         <span className="text-xs text-muted-foreground/70">Built: {formatTime(buildTime)}</span>

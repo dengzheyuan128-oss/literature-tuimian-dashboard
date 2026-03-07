@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { Command } from 'cmdk';
 import { Search, ExternalLink, GraduationCap, Calendar, BookOpen, Sparkles } from 'lucide-react';
 import { University } from '@/types/university';
-import { universities } from '@/lib/dataLoader';
+import { useProgramCards } from '@/lib/programCards';
 import { cleanUserInput } from '@/lib/security';
 import { getSimplifiedTier, getTierBadgeClassName } from '@/lib/tierUtils';
 import {
@@ -22,6 +22,7 @@ interface SearchCommandProps {
 export default function SearchCommand({ onSelect }: SearchCommandProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
+  const { universities } = useProgramCards({ search });
 
   // 搜索结果
   const results = useMemo(() => {

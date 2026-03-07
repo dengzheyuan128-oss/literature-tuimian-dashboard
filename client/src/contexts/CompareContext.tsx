@@ -1,7 +1,9 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from "react";
-import { University } from "@/types/university";
-import { universities } from "@/lib/dataLoader";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+
 import { toast } from "sonner";
+
+import { useProgramCards } from "@/lib/programCards";
+import type { University } from "@/types/university";
 
 interface CompareContextType {
   compareList: University[];
@@ -17,60 +19,57 @@ const MAX_COMPARE_ITEMS = 4;
 const CompareContext = createContext<CompareContextType | undefined>(undefined);
 
 export function CompareProvider({ children }: { children: ReactNode }) {
-  const [compareList, setCompareList] = useState<University[]>(() => {
-    // 从localStorage恢复数据
+  const { universities } = useProgramCards();
+  const [compareIds, setCompareIds] = useState<number[]>(() => {
     if (typeof window === "undefined") return [];
+
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      if (!stored) return [];
-
-      const ids: number[] = JSON.parse(stored);
-      // 根据ID从universities中恢复完整数据
-      return ids
-        .map(id => universities.find(u => u.id === id))
-        .filter((u): u is University => u !== undefined);
+      return stored ? (JSON.parse(stored) as number[]) : [];
     } catch {
       return [];
     }
   });
 
-  // 持久化到localStorage
+  const compareList = compareIds
+    .map((id) => universities.find((u) => u.id === id))
+    .filter((u): u is University => u !== undefined);
+
   useEffect(() => {
-    const ids = compareList.map(u => u.id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
-  }, [compareList]);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(compareIds));
+  }, [compareIds]);
 
   const addToCompare = (university: University) => {
-    setCompareList((prev) => {
-      if (prev.find((u) => u.id === university.id)) {
+    setCompareIds((prev) => {
+      if (prev.includes(university.id)) {
         toast.info("该院校已在对比列表中");
         return prev;
       }
+
       if (prev.length >= MAX_COMPARE_ITEMS) {
-        toast.warning(`对比列表最多添加${MAX_COMPARE_ITEMS}所院校`);
+        toast.warning(`对比列表最多添加 ${MAX_COMPARE_ITEMS} 所院校`);
         return prev;
       }
+
       toast.success(`已添加 ${university.name} 到对比列表`);
-      return [...prev, university];
+      return [...prev, university.id];
     });
   };
 
   const removeFromCompare = (id: number) => {
-    setCompareList((prev) => {
-      const university = prev.find(u => u.id === id);
+    setCompareIds((prev) => {
+      const university = universities.find((u) => u.id === id);
       if (university) {
         toast.info(`已从对比列表移除 ${university.name}`);
       }
-      return prev.filter((u) => u.id !== id);
+      return prev.filter((item) => item !== id);
     });
   };
 
-  const isInCompare = (id: number) => {
-    return compareList.some((u) => u.id === id);
-  };
+  const isInCompare = (id: number) => compareIds.includes(id);
 
   const clearCompare = () => {
-    setCompareList([]);
+    setCompareIds([]);
     toast.info("已清空对比列表");
   };
 

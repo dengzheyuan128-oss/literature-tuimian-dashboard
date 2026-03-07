@@ -141,3 +141,40 @@ VITE_SUPABASE_ANON_KEY=你的anon key
 ```
 
 注意：`.env.local` 已在 `.gitignore` 中，不会被提交到 Git。
+
+## 6. Excel 入库数据库初始化（草案）
+
+如果要把 `excel/` 中的基础数据迁移进数据库，并支持“用户补链 + 管理员审核”，先执行以下 schema 草案：
+
+- `docs/plans/sql/2026-03-07-excel-to-database-schema.sql`
+
+该草案包含：
+
+- 正式展示数据：
+  - `institutions`
+  - `departments`
+  - `program_cards`
+  - `notices`
+  - `notice_sources`
+  - `tags`
+  - `program_card_tags`
+- 待审核数据：
+  - `submission_queue`
+  - `admin_reviews`
+
+建议顺序：
+
+1. 在 Supabase SQL Editor 执行 schema 草案
+2. 先跑本地 Excel 清洗脚本，生成 staging 数据
+3. 再做 staging 到 Supabase 的 dry-run 导入
+
+当前已落地的清洗入口：
+
+```bash
+pnpm exec tsx scripts/import-excel-to-staging.ts
+```
+
+输出文件：
+
+- `reports/excel-import/staging-rows.json`
+- `reports/excel-import/staging-summary.json`

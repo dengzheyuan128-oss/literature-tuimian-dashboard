@@ -1,5 +1,5 @@
 import { UserProfile, MatchResult, MatchReport } from "@/types/userProfile";
-import { universities as universitiesData } from "@/lib/dataLoader";
+import { getProgramCards } from "@/lib/programCards";
 import { University } from "@/types/university";
 
 // 院校层级定义（基于学术实力标准）
@@ -324,11 +324,11 @@ export const matchingAlgorithm = {
   },
 
   // 生成匹配报告
-  generateMatchReport: (profile: UserProfile): MatchReport => {
+  generateMatchReport: async (profile: UserProfile): Promise<MatchReport> => {
     const breakdown = matchingAlgorithm.calculateScores(profile);
     const overallScore = matchingAlgorithm.calculateOverallScore(breakdown);
 
-    const universities = universitiesData;
+    const { universities } = await getProgramCards();
 
     // 计算所有院校的匹配度
     const matchScores = universities.map((uni) => ({
