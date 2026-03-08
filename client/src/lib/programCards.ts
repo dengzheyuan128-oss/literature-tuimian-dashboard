@@ -32,6 +32,7 @@ export interface ProgramCardRecord {
 export interface ProgramCardFilters {
   search?: string;
   limit?: number;
+  enabled?: boolean;
 }
 
 export interface ProgramCardDataset {
@@ -45,6 +46,17 @@ export interface ProgramCardDataset {
 }
 
 const ARCHIVED_LAST_UPDATED = 'archived';
+const DEFAULT_BROWSE_LIMIT = 60;
+const DEFAULT_SEARCH_LIMIT = 20;
+const CACHE_TTL_MS = 30_000;
+
+type CacheEntry = {
+  dataset?: ProgramCardDataset;
+  promise?: Promise<ProgramCardDataset>;
+  timestamp: number;
+};
+
+const datasetCache = new Map<string, CacheEntry>();
 
 export function mapProgramCardRecordToUniversity(record: ProgramCardRecord, index: number): University {
   const tier = buildTier(record);
@@ -104,8 +116,49 @@ export async function getProgramCards(filters: ProgramCardFilters = {}): Promise
     return buildArchivedDataset('Supabase env missing');
   }
 
+  const normalizedFilters = normalizeFilters(filters);
+  const cacheKey = buildCacheKey(normalizedFilters);
+  const cached = datasetCache.get(cacheKey);
+  const now = Date.now();
+
+  if (cached?.dataset && now - cached.timestamp < CACHE_TTL_MS) {
+    return cached.dataset;
+  }
+
+  if (cached?.promise) {
+    return cached.promise;
+  }
+
+  const promise = fetchProgramCards(normalizedFilters)
+    .then((dataset) => {
+      datasetCache.set(cacheKey, {
+        dataset,
+        timestamp: Date.now(),
+      });
+      return dataset;
+    })
+    .catch((error) => {
+      datasetCache.delete(cacheKey);
+      throw error;
+    });
+
+  datasetCache.set(cacheKey, { promise, timestamp: now });
+  return promise;
+}
+
+async function fetchProgramCards(filters: Required<Pick<ProgramCardFilters, 'limit'>> & Pick<ProgramCardFilters, 'search'>): Promise<ProgramCardDataset> {
+  const client = supabase;
+  if (!client) {
+    return buildArchivedDataset('Supabase client unavailable');
+  }
+
+  const viewDataset = await queryProgramCardsView(filters);
+  if (viewDataset) {
+    return viewDataset;
+  }
+
   try {
-    let query = supabase
+    let query = client
       .from('program_cards')
       .select(`
         id,
@@ -143,9 +196,7 @@ export async function getProgramCards(filters: ProgramCardFilters = {}): Promise
       .order('published_at_raw', { ascending: false, foreignTable: 'notices' })
       .limit(1, { foreignTable: 'notices' });
 
-    if (filters.limit) {
-      query = query.limit(filters.limit);
-    }
+    query = query.limit(filters.limit);
 
     const { data, error } = await query;
     if (error || !data) {
@@ -208,6 +259,11 @@ export function useProgramCards(filters: ProgramCardFilters = {}) {
     let cancelled = false;
 
     async function load() {
+      if (filters.enabled === false) {
+        setLoading(false);
+        return;
+      }
+
       setLoading(true);
       const nextDataset = await getProgramCards(filters);
       if (!cancelled) {
@@ -221,7 +277,7 @@ export function useProgramCards(filters: ProgramCardFilters = {}) {
     return () => {
       cancelled = true;
     };
-  }, [filters.limit, filters.search]);
+  }, [filters.enabled, filters.limit, filters.search]);
 
   return {
     ...dataset,
@@ -239,6 +295,77 @@ function buildArchivedDataset(error: string | null = null): ProgramCardDataset {
     error,
     supabaseHost: getSupabaseHost(),
   };
+}
+
+async function queryProgramCardsView(
+  filters: Required<Pick<ProgramCardFilters, 'limit'>> & Pick<ProgramCardFilters, 'search'>,
+): Promise<ProgramCardDataset | null> {
+  const client = supabase;
+  if (!client) {
+    return null;
+  }
+
+  try {
+    let query = client
+      .from('public_program_cards')
+      .select(`
+        id,
+        institution_name,
+        department_name,
+        program_name,
+        degree_type,
+        year,
+        primary_stage,
+        specialty_summary,
+        institution_location,
+        institution_is_985,
+        institution_is_211,
+        institution_discipline_grade,
+        latest_notice_url,
+        latest_notice_title,
+        latest_notice_application_start_raw,
+        latest_notice_application_end_raw,
+        latest_notice_published_at_raw,
+        latest_notice_materials_text,
+        latest_notice_ranking_requirement_text,
+        latest_notice_english_requirement_text,
+        latest_notice_application_method
+      `)
+      .order('latest_notice_published_at_raw', { ascending: false, nullsFirst: false })
+      .limit(filters.limit);
+
+    const term = filters.search?.trim();
+    if (term) {
+      const escaped = escapeLike(term);
+      query = query.or([
+        `institution_name.ilike.%${escaped}%`,
+        `department_name.ilike.%${escaped}%`,
+        `program_name.ilike.%${escaped}%`,
+        `specialty_summary.ilike.%${escaped}%`,
+        `primary_stage.ilike.%${escaped}%`,
+      ].join(','));
+    }
+
+    const { data, error } = await query;
+    if (error) {
+      return null;
+    }
+
+    const normalized = (data ?? []).filter((row): row is ProgramCardRecord => Boolean(row?.institution_name));
+    const universities = normalized.map((row, index) => mapProgramCardRecordToUniversity(row, index + 1));
+
+    return {
+      universities,
+      coverageStats: buildCoverageStats(universities),
+      lastUpdated: new Date().toISOString(),
+      source: 'supabase',
+      configured: true,
+      error: null,
+      supabaseHost: getSupabaseHost(),
+    };
+  } catch {
+    return null;
+  }
 }
 
 function buildSupabaseErrorDataset(error: string): ProgramCardDataset {
@@ -298,6 +425,25 @@ function applySearch(records: ProgramCardRecord[], search?: string): ProgramCard
       record.primary_stage,
     ].some((field) => field?.toLowerCase().includes(term));
   });
+}
+
+function normalizeFilters(filters: ProgramCardFilters): Required<Pick<ProgramCardFilters, 'limit'>> & Pick<ProgramCardFilters, 'search'> {
+  const hasSearch = Boolean(filters.search?.trim());
+  return {
+    search: filters.search?.trim() || undefined,
+    limit: filters.limit ?? (hasSearch ? DEFAULT_SEARCH_LIMIT : DEFAULT_BROWSE_LIMIT),
+  };
+}
+
+function buildCacheKey(filters: Required<Pick<ProgramCardFilters, 'limit'>> & Pick<ProgramCardFilters, 'search'>) {
+  return JSON.stringify({
+    search: filters.search ?? '',
+    limit: filters.limit,
+  });
+}
+
+function escapeLike(value: string) {
+  return value.replace(/[,%]/g, '');
 }
 
 function buildTier(record: ProgramCardRecord): string {

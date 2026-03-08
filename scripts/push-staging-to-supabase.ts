@@ -119,6 +119,13 @@ async function main(): Promise<void> {
     })),
   );
 
+  await updateProgramCardLatestNoticeIds(
+    supabase,
+    plan.notices,
+    cardIds,
+    noticeIds,
+  );
+
   await insertInBatches(
     supabase,
     'notice_sources',
@@ -177,6 +184,75 @@ async function insertInBatches(
       throw new Error(`${table} batch ${index / BATCH_SIZE + 1} failed: ${error.message}`);
     }
   }
+}
+
+async function updateProgramCardLatestNoticeIds(
+  supabase: ReturnType<typeof createClient>,
+  notices: Array<{
+    key: string;
+    program_card_key: string;
+    published_at_raw: string;
+    application_end_raw: string;
+  }>,
+  cardIds: Map<string, string>,
+  noticeIds: Map<string, string>,
+) {
+  const latestNoticeByCard = new Map<string, string>();
+  const rankByNoticeKey = new Map<string, number>();
+
+  for (const notice of notices) {
+    rankByNoticeKey.set(notice.key, buildNoticeRank(notice));
+  }
+
+  for (const notice of notices) {
+    const existingNoticeKey = latestNoticeByCard.get(notice.program_card_key);
+    if (!existingNoticeKey) {
+      latestNoticeByCard.set(notice.program_card_key, notice.key);
+      continue;
+    }
+
+    const currentRank = rankByNoticeKey.get(existingNoticeKey) ?? Number.MIN_SAFE_INTEGER;
+    const nextRank = rankByNoticeKey.get(notice.key) ?? Number.MIN_SAFE_INTEGER;
+    if (nextRank >= currentRank) {
+      latestNoticeByCard.set(notice.program_card_key, notice.key);
+    }
+  }
+
+  const updates = Array.from(latestNoticeByCard.entries())
+    .map(([programCardKey, noticeKey]) => ({
+      id: cardIds.get(programCardKey),
+      latest_notice_id: noticeIds.get(noticeKey),
+      updated_at: new Date().toISOString(),
+    }))
+    .filter((row): row is { id: string; latest_notice_id: string; updated_at: string } => Boolean(row.id && row.latest_notice_id));
+
+  for (let index = 0; index < updates.length; index += BATCH_SIZE) {
+    const batch = updates.slice(index, index + BATCH_SIZE);
+    const { error } = await supabase
+      .from('program_cards')
+      .upsert(batch, { onConflict: 'id' });
+
+    if (error) {
+      throw new Error(`program_cards latest_notice_id batch ${index / BATCH_SIZE + 1} failed: ${error.message}`);
+    }
+  }
+}
+
+function buildNoticeRank(notice: {
+  published_at_raw: string;
+  application_end_raw: string;
+}) {
+  const publishedScore = normalizeDateScore(notice.published_at_raw);
+  const applicationEndScore = normalizeDateScore(notice.application_end_raw);
+  return publishedScore * 10_000_000 + applicationEndScore;
+}
+
+function normalizeDateScore(value: string) {
+  const match = value.match(/(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})/);
+  if (!match) return 0;
+
+  const [, year, month, day] = match;
+  return Number(`${year}${month.padStart(2, '0')}${day.padStart(2, '0')}`);
 }
 
 function parseArgs(args: string[]): { dryRun: boolean; limit?: number; reset: boolean } {

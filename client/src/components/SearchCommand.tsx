@@ -22,7 +22,11 @@ interface SearchCommandProps {
 export default function SearchCommand({ onSelect }: SearchCommandProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
-  const { universities, loading, source, error } = useProgramCards({ search, limit: search.trim() ? 20 : 12 });
+  const { universities, loading, source, error } = useProgramCards({
+    search,
+    limit: search.trim() ? 20 : 12,
+    enabled: open,
+  });
 
   // 搜索结果
   const results = useMemo(() => {

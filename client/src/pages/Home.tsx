@@ -71,7 +71,7 @@ export default function Home() {
   const { user } = useAuth();
   const { addToCompare, isInCompare } = useCompare();
   const { addReminder } = useReminders();
-  const { universities, coverageStats, loading, source, error } = useProgramCards();
+  const { universities, coverageStats, loading, source, error } = useProgramCards({ limit: 60 });
   const userIsAdmin = isAdmin(user?.email);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLevel, setSelectedLevel] = useState<SimplifiedTier | null>(null);
@@ -100,7 +100,7 @@ export default function Home() {
 
       return matchesSearch && matchesLevel;
     });
-  }, [searchTerm, selectedLevel]);
+  }, [searchTerm, selectedLevel, universities]);
 
   // 使用简化的5种分类
   const levels = SIMPLIFIED_TIERS;
