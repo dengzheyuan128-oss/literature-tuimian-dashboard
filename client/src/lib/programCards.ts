@@ -39,6 +39,8 @@ export interface ProgramCardDataset {
   coverageStats: ReturnType<typeof buildCoverageStats>;
   lastUpdated: string;
   source: 'supabase' | 'archived-json';
+  configured: boolean;
+  error: string | null;
 }
 
 const ARCHIVED_LAST_UPDATED = 'archived';
@@ -98,7 +100,7 @@ export function buildCoverageStats(universities: University[]) {
 
 export async function getProgramCards(filters: ProgramCardFilters = {}): Promise<ProgramCardDataset> {
   if (!supabase || !isSupabaseConfigured) {
-    return buildArchivedDataset();
+    return buildArchivedDataset('Supabase env missing');
   }
 
   try {
@@ -142,7 +144,7 @@ export async function getProgramCards(filters: ProgramCardFilters = {}): Promise
 
     const { data, error } = await query;
     if (error || !data) {
-      return buildArchivedDataset();
+      return buildArchivedDataset(error?.message ?? 'Supabase query returned no data');
     }
 
     const normalized = data
@@ -157,9 +159,11 @@ export async function getProgramCards(filters: ProgramCardFilters = {}): Promise
       coverageStats: buildCoverageStats(universities),
       lastUpdated: new Date().toISOString(),
       source: 'supabase',
+      configured: true,
+      error: null,
     };
-  } catch {
-    return buildArchivedDataset();
+  } catch (error) {
+    return buildArchivedDataset(error instanceof Error ? error.message : 'Unknown Supabase query error');
   }
 }
 
@@ -184,6 +188,8 @@ export function useProgramCards(filters: ProgramCardFilters = {}) {
     coverageStats: getCoverageStats(),
     lastUpdated: ARCHIVED_LAST_UPDATED,
     source: 'archived-json',
+    configured: isSupabaseConfigured,
+    error: null,
   });
   const [loading, setLoading] = useState(true);
 
@@ -212,12 +218,14 @@ export function useProgramCards(filters: ProgramCardFilters = {}) {
   };
 }
 
-function buildArchivedDataset(): ProgramCardDataset {
+function buildArchivedDataset(error: string | null = null): ProgramCardDataset {
   return {
     universities: archivedUniversities,
     coverageStats: getCoverageStats(),
     lastUpdated: ARCHIVED_LAST_UPDATED,
     source: 'archived-json',
+    configured: isSupabaseConfigured,
+    error,
   };
 }
 
