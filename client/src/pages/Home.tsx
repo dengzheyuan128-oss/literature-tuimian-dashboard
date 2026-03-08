@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
-import { University, DataStatus } from "@/types/university";
-import { useProgramCards } from "@/lib/programCards";
+import { DataStatus } from "@/types/university";
+import type { PublicProgramCard } from "@/types/publicProgramCard";
+import { mapPublicProgramCardToUniversity, usePublicProgramCards } from "@/lib/publicProgramCards";
 import { favoritesStorage, searchHistoryStorage } from "@/lib/storage";
 import { cleanUserInput } from "@/lib/security";
 import { useCompare } from "@/contexts/CompareContext";
@@ -74,15 +75,16 @@ export default function Home() {
   const { addToCompare, isInCompare } = useCompare();
   const { addReminder } = useReminders();
   const [page, setPage] = useState(1);
-  const { universities, coverageStats, loading, source, error, hasMore } = useProgramCards({
+  const { cards, coverageStats, loading, source, error, hasMore } = usePublicProgramCards({
     limit: PAGE_SIZE,
     offset: (page - 1) * PAGE_SIZE,
   });
   const userIsAdmin = isAdmin(user?.email);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLevel, setSelectedLevel] = useState<SimplifiedTier | null>(null);
-  const [selectedUniversity, setSelectedUniversity] = useState<University | null>(null);
+  const [selectedCard, setSelectedCard] = useState<PublicProgramCard | null>(null);
   const [favorites, setFavorites] = useState<number[]>([]);
+  const selectedUniversity = selectedCard ? mapPublicProgramCardToUniversity(selectedCard) : null;
 
   useEffect(() => {
     setPage(1);
@@ -97,11 +99,11 @@ export default function Home() {
   // 过滤大学列表（使用简化分类）
   const filteredUniversities = useMemo(() => {
     const cleanTerm = cleanUserInput(searchTerm.trim().toLowerCase());
-    return universities.filter((uni) => {
+    return cards.filter((uni) => {
       const matchesSearch =
         cleanTerm === '' ||
-        uni.name.toLowerCase().includes(cleanTerm) ||
-        uni.specialty.toLowerCase().includes(cleanTerm);
+        uni.institutionName.toLowerCase().includes(cleanTerm) ||
+        uni.programName.toLowerCase().includes(cleanTerm);
 
       // 使用简化分类进行筛选
       const matchesLevel = selectedLevel
@@ -110,7 +112,7 @@ export default function Home() {
 
       return matchesSearch && matchesLevel;
     });
-  }, [searchTerm, selectedLevel, universities]);
+  }, [searchTerm, selectedLevel, cards]);
 
   // 使用简化的5种分类
   const levels = SIMPLIFIED_TIERS;
@@ -124,31 +126,31 @@ export default function Home() {
   };
 
   // 切换收藏
-  const toggleFavorite = (university: University, e: React.MouseEvent) => {
+  const toggleFavorite = (university: PublicProgramCard, e: React.MouseEvent) => {
     e.stopPropagation(); // 防止触发卡片点击
 
-    if (favorites.includes(university.id)) {
-      favoritesStorage.removeFavorite(String(university.id));
-      setFavorites(prev => prev.filter(id => id !== university.id));
+    if (favorites.includes(university.stableId)) {
+      favoritesStorage.removeFavorite(String(university.stableId));
+      setFavorites(prev => prev.filter(id => id !== university.stableId));
     } else {
       favoritesStorage.addFavorite({
-        universityId: String(university.id),
-        universityName: university.name,
+        universityId: String(university.stableId),
+        universityName: university.institutionName,
         tier: university.tier,
-        specialty: university.specialty,
+        specialty: university.programName,
       });
-      setFavorites(prev => [...prev, university.id]);
+      setFavorites(prev => [...prev, university.stableId]);
     }
   };
 
   // 添加到对比
-  const handleAddToCompare = (university: University, e: React.MouseEvent) => {
+  const handleAddToCompare = (university: PublicProgramCard, e: React.MouseEvent) => {
     e.stopPropagation();
-    addToCompare(university);
+    addToCompare(mapPublicProgramCardToUniversity(university));
   };
 
   // 设置提醒
-  const handleSetReminder = (university: University) => {
+  const handleSetReminder = (university: PublicProgramCard) => {
     try {
       // 解析截止日期
       const deadlineMatch = university.deadline.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
@@ -161,8 +163,8 @@ export default function Home() {
       const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 
       addReminder({
-        universityId: String(university.id),
-        universityName: university.name,
+        universityId: String(university.stableId),
+        universityName: university.institutionName,
         deadline: university.deadline,
         reminderDate: 7, // 默认提前7天
         active: true,
@@ -294,7 +296,7 @@ export default function Home() {
                 <div className="flex-1">
                   <SearchCommand
                     onSelect={(uni) => {
-                      setSelectedUniversity(uni);
+                      setSelectedCard(uni);
                     }}
                   />
                 </div>
@@ -424,14 +426,14 @@ export default function Home() {
                   >
                     <Card
                       className="h-full hover:shadow-lg transition-all duration-300 border-primary/10 bg-card/80 backdrop-blur-sm group cursor-pointer overflow-hidden relative"
-                      onClick={() => setSelectedUniversity(uni)}
+                        onClick={() => setSelectedCard(uni)}
                     >
                       <div className="absolute top-0 left-0 w-1 h-full bg-primary/0 group-hover:bg-primary transition-all duration-300"></div>
                       <CardHeader className="pb-3 relative">
                         <div className="flex justify-between items-start">
                           <div className="flex-1">
                             <CardTitle className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">
-                              {cleanUserInput(uni.name)}
+                              {cleanUserInput(uni.institutionName)}
                             </CardTitle>
                             <CardDescription className="font-sans text-xs flex flex-wrap gap-1 mt-2">
                               <Badge className={`${getTierBadgeClassName(uni.tier)} text-[10px] px-1.5 py-0.5`}>
@@ -463,7 +465,7 @@ export default function Home() {
                               onClick={(e) => toggleFavorite(uni, e)}
                               title="收藏"
                             >
-                              {favorites.includes(uni.id) ? (
+                              {favorites.includes(uni.stableId) ? (
                                 <Heart className="w-5 h-5 fill-current text-red-500" />
                               ) : (
                                 <HeartOff className="w-5 h-5" />
@@ -472,7 +474,7 @@ export default function Home() {
                             <Button
                               variant="ghost"
                               size="icon"
-                              className={`w-8 h-8 transition-colors ${isInCompare(uni.id) ? 'bg-primary/10 text-primary' : 'hover:bg-primary/10'}`}
+                              className={`w-8 h-8 transition-colors ${isInCompare(uni.stableId) ? 'bg-primary/10 text-primary' : 'hover:bg-primary/10'}`}
                               onClick={(e) => handleAddToCompare(uni, e)}
                               title="添加到对比"
                             >
@@ -485,7 +487,7 @@ export default function Home() {
                         <div className="space-y-3">
                           <div className="flex items-start gap-2 text-sm text-muted-foreground">
                             <GraduationCap className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
-                            <span className="line-clamp-2 font-sans">{cleanUserInput(uni.specialty)}</span>
+                              <span className="line-clamp-2 font-sans">{cleanUserInput(uni.programName)}</span>
                           </div>
                           <div className="flex items-start gap-2 text-sm text-muted-foreground">
                             <Calendar className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
@@ -556,7 +558,7 @@ export default function Home() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="absolute inset-0 bg-background/80 backdrop-blur-md"
-              onClick={() => setSelectedUniversity(null)}
+              onClick={() => setSelectedCard(null)}
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -596,7 +598,7 @@ export default function Home() {
                   </div>
                 </div>
                 <button
-                  onClick={() => setSelectedUniversity(null)}
+                  onClick={() => setSelectedCard(null)}
                   className="text-muted-foreground hover:text-foreground transition-colors ml-4"
                 >
                   ✕
@@ -709,7 +711,7 @@ export default function Home() {
                       </a>
                     )}
                     <Button
-                      onClick={() => handleSetReminder(selectedUniversity)}
+                      onClick={() => selectedCard && handleSetReminder(selectedCard)}
                       variant="outline"
                       className="font-sans"
                     >
@@ -719,12 +721,12 @@ export default function Home() {
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
-                        toggleFavorite(selectedUniversity, e as any);
+                        if (selectedCard) toggleFavorite(selectedCard, e as any);
                       }}
                       variant="outline"
                       className="font-sans"
                     >
-                      {favorites.includes(selectedUniversity.id) ? (
+                      {selectedCard && favorites.includes(selectedCard.stableId) ? (
                         <>
                           <Heart className="w-4 h-4 mr-2 fill-current text-red-500" />
                           已收藏
@@ -739,7 +741,7 @@ export default function Home() {
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleAddToCompare(selectedUniversity, e as any);
+                        if (selectedCard) handleAddToCompare(selectedCard, e as any);
                       }}
                       variant="outline"
                       className="font-sans"

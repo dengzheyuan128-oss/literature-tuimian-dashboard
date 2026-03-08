@@ -4,17 +4,17 @@
  * 用于验收数据部署是否成功
  */
 
-import { useProgramCards } from "@/lib/programCards";
+import { usePublicProgramCards } from "@/lib/publicProgramCards";
 
 // 这些全局变量由vite.config.ts在构建时注入
 declare const __BUILD_COMMIT__: string;
 declare const __BUILD_TIME__: string;
 
 export function BuildInfo() {
-  const { universities, lastUpdated, source, configured, error, supabaseHost } = useProgramCards();
+  const { cards, lastUpdated, source, configured, error, supabaseHost } = usePublicProgramCards();
   const buildCommit = typeof __BUILD_COMMIT__ !== "undefined" ? __BUILD_COMMIT__ : "unknown";
   const buildTime = typeof __BUILD_TIME__ !== "undefined" ? __BUILD_TIME__ : "unknown";
-  const universitiesCount = universities.length;
+  const universitiesCount = cards.length;
 
   // 格式化时间
   const formatTime = (isoString: string) => {

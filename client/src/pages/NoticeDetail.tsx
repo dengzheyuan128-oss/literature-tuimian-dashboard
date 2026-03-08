@@ -5,8 +5,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRoute, useLocation } from 'wouter';
-import type { University } from '@/types/university';
-import { getProgramCardById } from '@/lib/programCards';
+import type { PublicProgramCard } from '@/types/publicProgramCard';
+import { getPublicProgramCardById } from '@/lib/publicProgramCards';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -53,7 +53,7 @@ export default function NoticeDetail() {
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [university, setUniversity] = useState<University | null>(null);
+  const [card, setCard] = useState<PublicProgramCard | null>(null);
 
   const universityId = params?.id ?? null;
 
@@ -63,8 +63,8 @@ export default function NoticeDetail() {
     // 并行加载通知原文和附件
     const loadData = async () => {
       try {
-        const loadedUniversity = await getProgramCardById(universityId);
-        setUniversity(loadedUniversity);
+        const loadedCard = await getPublicProgramCardById(universityId);
+        setCard(loadedCard);
 
         // 加载通知内容
         const contentResponse = await fetch(`/data/notices/${universityId}.md`);
@@ -93,7 +93,7 @@ export default function NoticeDetail() {
     loadData();
   }, [universityId]);
 
-  if (!university) {
+  if (!card) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Card className="max-w-md">
@@ -119,8 +119,8 @@ export default function NoticeDetail() {
             返回
           </Button>
           <Separator orientation="vertical" className="h-6" />
-          <span className="font-medium">{university.name}</span>
-          <Badge variant="outline">{university.tier}</Badge>
+          <span className="font-medium">{card.institutionName}</span>
+          <Badge variant="outline">{card.tier}</Badge>
         </div>
       </header>
 
@@ -132,15 +132,15 @@ export default function NoticeDetail() {
               <div>
                 <CardTitle className="text-2xl flex items-center gap-2">
                   <GraduationCap className="w-6 h-6" />
-                  {university.name}
+                  {card.institutionName}
                 </CardTitle>
                 <CardDescription className="mt-2">
-                  {university.specialty}
+                  {card.programName}
                 </CardDescription>
               </div>
-              {university.url && (
+              {card.url && (
                 <Button variant="outline" size="sm" asChild>
-                  <a href={university.url} target="_blank" rel="noopener noreferrer">
+                  <a href={card.url} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-4 h-4 mr-2" />
                     查看原始链接
                   </a>
@@ -153,22 +153,22 @@ export default function NoticeDetail() {
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-muted-foreground" />
                 <span className="text-muted-foreground">截止日期：</span>
-                <span className="font-medium">{university.deadline}</span>
+                <span className="font-medium">{card.deadline}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-muted-foreground" />
                 <span className="text-muted-foreground">申请时间：</span>
-                <span className="font-medium">{university.applicationPeriod}</span>
+                <span className="font-medium">{card.applicationPeriod}</span>
               </div>
               <div className="flex items-center gap-2">
                 <FileText className="w-4 h-4 text-muted-foreground" />
                 <span className="text-muted-foreground">考核形式：</span>
-                <span className="font-medium">{university.examForm}</span>
+                <span className="font-medium">{card.examForm}</span>
               </div>
               <div className="flex items-center gap-2">
                 <GraduationCap className="w-4 h-4 text-muted-foreground" />
                 <span className="text-muted-foreground">学位类型：</span>
-                <span className="font-medium">{university.degreeType}</span>
+                <span className="font-medium">{card.degreeType}</span>
               </div>
             </div>
           </CardContent>

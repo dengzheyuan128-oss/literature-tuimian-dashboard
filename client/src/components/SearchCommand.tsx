@@ -1,8 +1,8 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Command } from 'cmdk';
 import { Search, ExternalLink, GraduationCap, Calendar, BookOpen, Sparkles } from 'lucide-react';
-import { University } from '@/types/university';
-import { useProgramCards } from '@/lib/programCards';
+import type { PublicProgramCard } from '@/types/publicProgramCard';
+import { usePublicProgramCards } from '@/lib/publicProgramCards';
 import { cleanUserInput } from '@/lib/security';
 import { getSimplifiedTier, getTierBadgeClassName } from '@/lib/tierUtils';
 import {
@@ -16,13 +16,13 @@ import {
 import { Badge } from '@/components/ui/badge';
 
 interface SearchCommandProps {
-  onSelect?: (university: University) => void;
+  onSelect?: (card: PublicProgramCard) => void;
 }
 
 export default function SearchCommand({ onSelect }: SearchCommandProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
-  const { universities, loading, source, error } = useProgramCards({
+  const { cards, loading, source, error } = usePublicProgramCards({
     search,
     limit: search.trim() ? 20 : 12,
     enabled: open,
@@ -32,22 +32,22 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
   const results = useMemo(() => {
     if (!search.trim()) {
       // 显示热门推荐（985高校）
-      return universities.filter(uni => uni.tier === '985').slice(0, 6);
+      return cards.filter((card) => card.tier === '985').slice(0, 6);
     }
 
     const cleanSearch = cleanUserInput(search.trim().toLowerCase());
 
-    return universities.filter((uni) => {
-      const nameMatch = uni.name.toLowerCase().includes(cleanSearch);
-      const specialtyMatch = uni.specialty.toLowerCase().includes(cleanSearch);
+    return cards.filter((uni) => {
+      const nameMatch = uni.institutionName.toLowerCase().includes(cleanSearch);
+      const specialtyMatch = uni.programName.toLowerCase().includes(cleanSearch);
       const tierMatch = uni.tier.toLowerCase().includes(cleanSearch);
       const simplifiedTierMatch = getSimplifiedTier(uni.tier).toLowerCase().includes(cleanSearch);
 
       return nameMatch || specialtyMatch || tierMatch || simplifiedTierMatch;
     }).slice(0, 10);
-  }, [search, universities]);
+  }, [search, cards]);
 
-  const handleSelect = (uni: University) => {
+  const handleSelect = (uni: PublicProgramCard) => {
     setOpen(false);
     setSearch('');
     if (onSelect) {
@@ -150,7 +150,7 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
               {!loading && source !== 'supabase-error' && results.map((uni) => (
                 <Command.Item
                   key={uni.id}
-                  value={uni.name}
+                  value={uni.institutionName}
                   onSelect={() => handleSelect(uni)}
                   className="group flex items-center gap-4 px-3 py-3 rounded-lg cursor-pointer hover:bg-accent/50 aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-all my-1"
                 >
@@ -163,7 +163,7 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="font-semibold text-sm truncate">
-                        {cleanUserInput(uni.name)}
+                        {cleanUserInput(uni.institutionName)}
                       </span>
                       <Badge className={`${getTierBadgeClassName(uni.tier)} text-[10px] px-1.5 py-0 shrink-0`}>
                         {getSimplifiedTier(uni.tier)}
@@ -173,7 +173,7 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
                     <div className="flex items-center gap-4 text-xs text-muted-foreground">
                       <div className="flex items-center gap-1 min-w-0">
                         <BookOpen className="h-3 w-3 shrink-0" />
-                        <span className="truncate max-w-[150px]">{cleanUserInput(uni.specialty)}</span>
+                        <span className="truncate max-w-[150px]">{cleanUserInput(uni.programName)}</span>
                       </div>
                       <div className="flex items-center gap-1 shrink-0">
                         <Calendar className="h-3 w-3" />
