@@ -1,365 +1,221 @@
-# 🔄 会话上下文追踪
+# 会话上下文追踪
 
-> **用途**: 记录每次会话的工作内容，确保下次启动能快速接续
-> **更新频率**: 每次会话结束时更新
-> **阅读时间**: 1分钟
-
----
-
-## 📍 当前状态（一句话总结）
-
-**正在进行**: 用户反馈和AI辅助提取功能已实现！代码已提交，等待用户在Supabase创建数据表
-
-**当前分支**: `main`
-
-**最后提交**: `dd58673` - feat: add user feedback button and admin AI extract page
+> 用途：明天继续开发时，优先阅读本文件恢复项目状态。  
+> 更新时间：2026-03-09
 
 ---
 
-## 🎯 下次行动（优先级排序）
+## 当前一句话状态
 
-### 立即执行（P0）
-1. **完成用户反馈功能部署**
-   - 在 Supabase 执行 SQL 创建 `user_feedback` 表
-   - 在 Vercel 配置 `VITE_ADMIN_EMAILS` 和 `VITE_GLM_API_KEY` 环境变量
-   - 测试反馈提交功能
+项目已经从“浏览器直连 Supabase 导致公域卡片不可用”推进到“公域主链路可用，代理已生效，字段展示与标签筛选已显著修复，但仍需继续提升清洗质量与字段丰富度”的阶段。
 
-### 接下来执行（P1）
-2. **完善用户体验**
-   - 添加「忘记密码」功能
-   - 云端同步收藏/提醒/对比列表（Supabase）
-   - 集成微信登录（需企业认证）
+## 当前分支与最新提交
 
-3. **数据质量工作**
-   - 按SOP v2.0处理待补充院校
-   - 985/211双通知覆盖率 ≥80%
+- 当前分支：`main`
+- 最新远端提交：`7d41606`
+- 提交信息：`feat: restore usable card fields and tag filtering`
 
----
+## 当前线上判断基准
 
-## 📜 最近会话记录
+如果线上已经是最新版本，右下角应至少满足：
 
-### 会话 #7 (2026-02-21 - 用户反馈和AI提取功能)
+- `Build: 7d41606`
+- `Source: api`
 
-**做了什么**:
-- ✅ 创建 FeedbackButton 悬浮按钮组件（右下角）
-- ✅ 实现反馈表单：类型选择、院校关联、问题描述
-- ✅ 添加 submitFeedback 函数到 Supabase 库
-- ✅ 创建管理员工具函数 adminUtils.ts
-- ✅ 创建 Jina Reader API 封装 jinaReader.ts
-- ✅ 创建 GLM-4 API 封装 glmApi.ts
-- ✅ 创建 AdminExtract 管理员提取页面 `/admin/extract`
-- ✅ 更新 App.tsx 添加新路由和组件
-- ✅ 更新 .env.example 添加新环境变量
-- ✅ 通过类型检查和构建测试
-- ✅ 提交代码到 Git
-
-**路由结构新增**:
-- `/admin/extract` - AI通知提取（仅管理员）
-
-**新增文件**:
-- `client/src/components/FeedbackButton.tsx` - 反馈悬浮按钮
-- `client/src/lib/adminUtils.ts` - 管理员权限判断
-- `client/src/lib/jinaReader.ts` - Jina Reader API
-- `client/src/lib/glmApi.ts` - GLM-4 API
-- `client/src/pages/AdminExtract.tsx` - 管理员提取页面
-
-**待用户操作**:
-1. 在 Supabase Dashboard 执行 SQL 创建 `user_feedback` 表
-2. 在 Vercel 配置环境变量：
-   - `VITE_GLM_API_KEY` - 智谱 AI API Key
-   - `VITE_ADMIN_EMAILS` - 管理员邮箱列表（逗号分隔）
-
-**设计文档**:
-- `docs/plans/2026-02-21-feedback-and-ai-extract-design.md`
-- `docs/plans/2026-02-21-feedback-and-ai-extract-implementation.md`
+如果不是这两个值，先不要判断功能是否已修好，先确认 Vercel 是否部署到了最新提交。
 
 ---
 
-### 会话 #6 (2026-02-21 - 完整前端体验)
+## 今天已经解决的根因
 
-**做了什么**:
-- ✅ 创建独立登录页面 (`/login`)，支持邮箱登录/注册
-- ✅ 创建 ProtectedRoute 组件，实现路由保护
-- ✅ 创建 Landing 介绍页 (`/`)，展示平台功能和特色
-- ✅ 创建 Profile 个人资料页 (`/profile`)
-- ✅ 添加百度统计组件（通过环境变量配置）
-- ✅ 添加 PWA 支持（manifest.json + Service Worker）
-- ✅ 移除 GitHub/Google OAuth，添加微信登录占位
-- ✅ 配置 Supabase 环境变量到 Vercel
-- ✅ 部署到线上环境
+### 1. 大陆浏览器直连 Supabase 超时
 
-**路由结构**:
-- `/` - Landing 介绍页（公开）
-- `/login` - 登录/注册页（公开）
-- `/dashboard` - 院校列表（需登录）
-- `/profile` - 个人资料（需登录）
-- `/matcher` - 智能匹配（需登录）
-- `/compare` - 院校对比（需登录）
-- `/reminders` - 申请提醒（需登录）
-- `/analytics` - 数据分析（需登录）
+根因已经确认：不是数据库慢，也不是 SQL 视图本身坏，而是浏览器从中国大陆直连 `*.supabase.co` 不稳定。
 
-**新增文件**:
-- `client/src/pages/Landing.tsx` - 介绍页
-- `client/src/pages/Profile.tsx` - 个人资料页
-- `client/src/components/BaiduAnalytics.tsx` - 百度统计组件
-- `client/public/manifest.json` - PWA 配置
-- `client/public/sw.js` - Service Worker
-- `client/public/favicon.svg` - 网站图标
+已落地方案：
 
-**本次会话成果**:
-- ✅ 完整前端体验：介绍页 → 登录 → 功能页面
-- ✅ 个人资料编辑功能
-- ✅ PWA 支持（可安装到桌面）
-- ✅ 百度统计准备就绪
+- 前端公域读取改走 Vercel 服务端代理
+- 服务端代理再访问 Supabase
+- 前端不再直接把公域主读链路绑在浏览器直连 Supabase 上
 
-**下次应该做什么**:
-1. 集成微信登录（需企业认证）
-2. 添加用户反馈功能
-3. 实现收藏/提醒的云端同步
-4. 添加「忘记密码」功能
+关键提交：
 
----
+- `b945b47` `feat: proxy public program card reads through api`
 
-### 会话 #5 (2026-02-07 - SOP v2.0和Schema v1.2)
+### 2. 首页统计口径误导
 
-**做了什么**:
-- ✅ 基于Kimi SOP 5.0更新LINK_VERIFICATION_SOP.md到v2.0
-- ✅ 更新SCHEMA.md到v1.2，新增noticeType和sourceChannel字段
-- ✅ 设计高效搜索策略：合并关键词一次捕获两种通知类型
-- ✅ 更新待补充院校名单，反映双通知类型要求
-- ✅ 提交并推送所有更改
+之前“共收录 24 所高校”只是当前页数量，不是全库数量。
 
-**核心变更**:
-- **双通知类型**：每所院校需同时收集夏令营和预推免两种通知
-- **时效性优先**：公众号时效性强可接受为A级（来源权威性降低）
-- **单校时限**：≤5分钟/校，超时则标记待查
-- **强制标注**：所有链接必须标注noticeType和sourceChannel
+已修复：
 
-**新增字段**:
-- `noticeType`: "夏令营" | "预推免" | "综合" | "未找到"
-- `sourceChannel`: "官网原文" | "公众号原文" | "第三方平台" | "搜索引擎" | "待查"
+- API 返回 `totalCount`
+- 首页改为“当前页 X 条，共 Y 所高校”
+- 诊断框中的 `Universities` 也优先显示总数，不再把探针请求当全局统计
 
-**本次会话成果**:
-- ✅ SOP v2.0发布（支持双通知类型和多渠道验证）
-- ✅ Schema v1.2发布（新增noticeType和sourceChannel字段）
-- ✅ 高效搜索策略确立（合并关键词减少重复搜索）
+### 3. 详情页仍依赖旧静态 markdown
 
-**下次应该做什么**:
-1. 按SOP v2.0处理20所待补充院校
-2. 更新现有130所院校的noticeType标注
-3. 实现双通知覆盖率统计
+之前详情页还会读旧的 `/data/notices/{id}.md` 和 `attachments.json`，导致数据库卡片与详情页链路不一致。
 
----
+已修复：
 
-### 会话 #4 (2026-02-07 - 修复tier字段)
+- 详情页改为直接读取数据库卡片读模型
+- 详情页显示结构化字段
+- 保留官方通知外链入口
 
-**做了什么**:
-- ✅ 识别56所院校tier字段为空（导致前端显示"待补充"）
-- ✅ 分析现有tier与disciplineGrade的对应规则
-- ✅ 创建并执行修复脚本
-- ✅ 按学科评估等级分配tier：
-  - 第三梯队: 17所 (A-/B+/B)
-  - 第四梯队: 17所 (B-/C+)
-  - 第五梯队: 22所 (C/C-)
-- ✅ 运行数据质量检查，全部通过
-- ✅ 清理临时脚本
+### 4. 院校标签体系在新读模型中丢失
 
-**核心发现**:
-- 📊 数据健康度: 100%
-- 📊 D级链接: 0所
-- 📊 第一梯队A级占比: 100%
-- ⚠️ 17所通知yearStatus为unverified（10.2%）
+旧框架本来支持：
 
-**本次会话成果**:
-- ✅ 56所院校tier字段已补充
-- ✅ 前端不再显示"待补充"
-- ✅ 总院校数: 118所，全部有tier
+- `985`
+- `211`
+- `双一流`
+- `省属重点师范`
 
-**下次应该做什么**:
-1. 提交更改到git
-2. 决定是否核验yearStatus
-3. 或进入PR-4阶段
+但新数据库读模型只剩单一 `tier`，导致：
+
+- 标签不能重合
+- 筛选不准
+- 字段展示看起来“不完整”
+
+已修复：
+
+- 旧静态院校数据只作为“标签字典”使用，不再作为公域运行时数据源
+- 新读模型新增 `institutionTags[]`
+- 首页与搜索都改为基于 `institutionTags[]` 筛选与匹配
+- 详情页也显示多标签
+
+关键提交：
+
+- `7d41606` `feat: restore usable card fields and tag filtering`
+
+### 5. 完整度判定过硬
+
+之前 `dataStatus` 只看少数几个字段，导致大量卡片被误判为 `PARTIAL`。
+
+已改善：
+
+- 放宽完整度规则
+- 将 `examForm`、`englishRequirement` 等字段纳入判断
+- 明显减少因旧规则过硬造成的误判
+
+### 6. 搜索体验和诊断浮层
+
+已改善：
+
+- 搜索支持“加载更多结果”
+- 右下角诊断框可拖动，不再固定挡住翻页按钮
 
 ---
 
-### 会话 #3 (2026-02-06 - 创建SOP + 生成链接质量报告)
+## 当前仍未完全解决的问题
 
-**做了什么**:
-- ✅ 阅读并分析了Kimi SOP 4.0（时效性强制核查版）
-- ✅ 使用Plan agent深度分析SOP适配方案
-- ✅ 创建了LINK_VERIFICATION_SOP.md（链接质量检验标准操作流程）
-- ✅ 更新了00-INDEX.md（添加SOP导航）
-- ✅ 创建了analyze-link-quality.cjs脚本
-- ✅ 运行脚本生成了完整的链接质量分析报告
-- ✅ 生成了桌面报告（链接质量完整报告_2026-02-06.md）
+### 1. 字段还不算“完整”
 
-**核心发现**:
-- 📊 **PR-3三项停损线全部达标**：
-  - D级链接 = 0所 ✅
-  - 整体健康度 = 100% ✅（超标！）
-  - 第一梯队A级占比 = 100% ✅
-- ⚠️ **新发现的问题**：79所院校（66.9%）yearStatus为unverified
-  - 其中14所为第一二梯队（需优先处理）
-- 💡 **关键洞察**：SOP 4.0的yearStatus机制正是D-003决策的完美实施方案
+现在是“比之前明显好”，但还没到“字段完整可全面检索”的程度。
 
-**技术成果**:
-- 新增脚本：scripts/analyze-link-quality.cjs（可重复使用）
-- 新增文档：docs/02-Data/LINK_VERIFICATION_SOP.md（约600行）
-- 新增报告：C:\Users\86191\Desktop\链接质量完整报告_2026-02-06.md
-- 新增报告：C:\Users\86191\Desktop\SOP适配总结.md
+主要原因：
 
-**遇到的问题**:
-- ❌ 无重大问题
+- Excel 清洗仍只结构化了部分字段
+- 一些已有信息还停留在原始文本，没有被提升为稳定字段
+- 详情页和卡片展示仍受当前清洗结果上限约束
 
-**本次会话成果**:
-- ✅ 建立了标准化的链接质量检验SOP
-- ✅ 完成了全量数据质量分析
-- ✅ 发现PR-3已达标（超预期）
-- ✅ 识别出yearStatus核验是下一步重点
+### 2. 链接体验仍需继续核对
 
-**下次应该做什么**:
-1. 用户审核链接质量报告
-2. 决定是否核验第一二梯队14所院校的yearStatus
-3. 或决定PR-3已完成，进入PR-4阶段
+已确认一条重要事实：
+
+- 抽样检查原始 Excel 后，`通知官网链接` 在样本中是明文 URL，不是隐藏超链接对象
+
+所以后续若仍有链接不可点或不好用，优先排查：
+
+1. 清洗是否保留到读表
+2. 读表是否回写到卡片字段
+3. 前端是否对该字段提供了明确的点击入口
+
+### 3. 搜索与筛选还不算“充分检索”
+
+虽然现在已经能搜索、能加载更多，也能按多标签筛选，但还没做到“字段充分结构化后的完整检索”。
+
+后续重点应放在：
+
+- 增强清洗映射
+- 提升结构化字段覆盖
+- 再决定是否把更多搜索能力下沉到数据库或服务端
 
 ---
 
-### 会话 #2 (2026-02-06 - 推送仓库到GitHub)
+## 当前推荐的继续顺序
 
-**做了什么**:
-- ✅ 检查了本地仓库状态（`fix/hydration-and-docs`分支领先3个提交）
-- ✅ 切换到main分支
-- ✅ 从远程拉取最新更新（fast-forward合并）
-- ✅ 验证本地与远程完全同步
-- ✅ 全面探索了仓库结构和文档组织
-- ✅ 创建了会话记忆系统文件结构
+明天继续时，不要再回头排查连通性问题。优先顺序应是：
 
-**发现**:
-- 远程仓库已包含fix/hydration-and-docs分支的所有更改（通过PR #3, #4, #5合并）
-- 文档已重新组织到/docs目录，结构清晰
-- 项目有完善的决策记录（DECISIONS.md）和状态追踪（PROJECT_STATUS.md）
-- 缺少SESSION_CONTEXT.md、QUICK_START.md等会话连续性文件
-
-**遇到的问题**:
-- ❌ 无：推送过程顺利
-
-**本次会话成果**:
-- ✅ 本地main分支与远程origin/main完全同步
-- ✅ 创建了QUICK_START.md（快速上手指南）
-- ✅ 创建了SESSION_CONTEXT.md（本文件）
-- 🔄 正在创建METRICS_DASHBOARD.md和BLOCKERS.md
-
-**下次应该做什么**:
-1. 完成会话记忆系统的剩余文件创建
-2. 开始PR-3的D级链接修复任务
+1. 增强 Excel 清洗映射
+2. 补齐卡片和详情页缺失字段
+3. 核对链接字段在清洗、入库、展示三层是否一致
+4. 继续提升搜索与筛选完整度
+5. 如果需要，再把 `institutionTags[]` 正式下沉到数据库读表，而不是只在前端回接
 
 ---
 
-### 会话 #1 (2026-01-16 - PR-0和PR-2完成)
+## 不要再走回去的旧路
 
-**做了什么**:
-- ✅ 完成PR-0: Schema锁定和统一（1.5小时）
-- ✅ 完成PR-2: 实现最小多通知结构（2.5小时）
-- ✅ 创建dataLoader.ts实现v1/v1.1自动兼容
-- ✅ 更新Home.tsx使用dataLoader
-- ✅ 文档重组到/docs目录
+### 不要做的事
 
-**发现**:
-- v1.1嵌套结构实施成功
-- dataLoader.ts的自动展平功能运行良好
-- 文档组织清晰，决策记录完整
+- 不要再把公域主链路改回浏览器直连 Supabase
+- 不要把旧 `universities.json` 重新当运行时主数据源
+- 不要看到 `Universities: 1 所` 就误判成全库只有 1 所
+  - 这只是诊断探针
+- 不要把“字段不完整”直接归因于 UI
+  - 要先区分源数据、清洗、读模型、展示四层
 
-**遇到的问题**:
-- ❌ 无重大问题
+### 推荐的排查顺序
 
-**下次应该做什么**:
-- 开始PR-3: 链接分级与修复
+遇到字段或检索问题时，统一按这四层排查：
 
----
-
-## 🔍 重要发现与决策
-
-### 技术发现
-- **dataLoader.ts的Schema检测机制**: 通过`schemaVersion`字段自动识别v1/v1.1，无需手动配置
-- **v1.1展平逻辑**: 支持向后兼容，前端组件无需修改即可使用新数据结构
-- **链接质量分级**: A/B/C/D四级分类已实施，check-data-quality.js可自动检测
-
-### 业务决策
-- **停损线原则**: D级=0，健康度≥90%，第一梯队A级=100%，达标即停
-- **不做全量B→A转换**: 聚焦第一梯队，非头部学校B级可接受
-- **Year保护规则**: 未核验年份的通知不得评为A级
-
-### 流程决策
-- **先计划后执行**: 超过3文件/300行的改动必须先写计划并获得用户确认
-- **数据检查门禁**: 每次提交前必须运行`pnpm check:data`
+1. 原始 Excel 有没有这个信息
+2. 清洗脚本有没有保留
+3. 读模型/读表有没有承接
+4. 前端有没有真正展示或用于筛选
 
 ---
 
-## 🚧 当前工作区状态
+## 关键文件
 
-### 文件修改状态
-```
-工作区: 干净（无未提交更改）
-当前分支: main
-追踪关系: origin/main
-同步状态: 完全同步
-```
+### 当前主链路
 
-### 待修复的数据问题
-- **D级链接**: 2所（武汉大学、厦门大学）
-- **第一梯队C级**: 6所待升级为A级
-- **缺少yearStatus字段**: 所有notice待添加
+- [api/program-cards.ts](./../api/program-cards.ts)
+- [client/src/lib/programCards.ts](./../client/src/lib/programCards.ts)
+- [client/src/lib/publicProgramCards.ts](./../client/src/lib/publicProgramCards.ts)
+- [client/src/lib/programCardProxy.ts](./../client/src/lib/programCardProxy.ts)
+- [client/src/pages/Home.tsx](./../client/src/pages/Home.tsx)
+- [client/src/components/SearchCommand.tsx](./../client/src/components/SearchCommand.tsx)
+- [client/src/pages/NoticeDetail.tsx](./../client/src/pages/NoticeDetail.tsx)
+- [client/src/components/BuildInfo.tsx](./../client/src/components/BuildInfo.tsx)
 
-### 待创建/更新的文档
-- [ ] NOTICE_GRADE_RULES.md（若尚未创建）
-- [ ] CHANGELOG.md（PR-4阶段创建）
-- [x] QUICK_START.md（已创建）
-- [x] SESSION_CONTEXT.md（本文件）
-- [ ] METRICS_DASHBOARD.md（创建中）
-- [ ] BLOCKERS.md（创建中）
+### 今天新增/关键修复
+
+- [client/src/lib/institutionTags.ts](./../client/src/lib/institutionTags.ts)
+- [client/src/lib/institutionTags.test.ts](./../client/src/lib/institutionTags.test.ts)
 
 ---
 
-## 📝 会话模板（复制粘贴使用）
+## 已完成验证
 
-```markdown
-### 会话 #X (YYYY-MM-DD - 会话主题)
+- `pnpm check`
+- `pnpm build`
+- `pnpm exec vitest run client/src/lib/institutionTags.test.ts client/src/lib/programCards.test.ts client/src/lib/programCardProxy.test.ts`
 
-**做了什么**:
-- ✅ 完成任务1
-- ✅ 完成任务2
-- 🔄 进行中任务3
+说明：
 
-**发现**:
-- 发现1
-- 发现2
-
-**遇到的问题**:
-- ❌ 问题描述
-  - 尝试方案：...
-  - 结果：...
-
-**本次会话成果**:
-- ✅ 成果1
-- ✅ 成果2
-
-**下次应该做什么**:
-1. 任务1
-2. 任务2
-```
+- 测试在沙箱内会遇到 `esbuild spawn EPERM`
+- 已在非沙箱环境复跑通过
 
 ---
 
-## 🔗 相关文档链接
+## 明天如果让我继续，最短指令
 
-- [QUICK_START.md](./QUICK_START.md) - 快速上手指南
-- [METRICS_DASHBOARD.md](./METRICS_DASHBOARD.md) - 关键指标看板
-- [BLOCKERS.md](./BLOCKERS.md) - 当前阻塞问题
-- [PROJECT_STATUS.md](./01-Project/PROJECT_STATUS.md) - 项目状态
-- [TODO.md](./03-Plans/TODO.md) - 任务清单
+你可以直接说：
 
----
+- “读 `docs/SESSION_CONTEXT.md` 继续”
+- “按 `SESSION_CONTEXT` 继续补字段完整性”
+- “继续做清洗映射和字段展示”
 
-**维护者**: Claude Code + 用户
-**最后更新**: 2026-02-07
-**版本**: v1.1
+这样就不需要再重复回顾今天的上下文。
