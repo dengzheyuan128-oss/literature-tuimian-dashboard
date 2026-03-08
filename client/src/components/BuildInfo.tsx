@@ -11,7 +11,7 @@ declare const __BUILD_COMMIT__: string;
 declare const __BUILD_TIME__: string;
 
 export function BuildInfo() {
-  const { cards, lastUpdated, source, configured, error, supabaseHost } = usePublicProgramCards();
+  const { cards, lastUpdated, source, configured, error, supabaseHost } = usePublicProgramCards({ limit: 1 });
   const buildCommit = typeof __BUILD_COMMIT__ !== "undefined" ? __BUILD_COMMIT__ : "unknown";
   const buildTime = typeof __BUILD_TIME__ !== "undefined" ? __BUILD_TIME__ : "unknown";
   const universitiesCount = cards.length;

@@ -51,6 +51,7 @@ const ARCHIVED_LAST_UPDATED = 'archived';
 const DEFAULT_BROWSE_LIMIT = 60;
 const DEFAULT_SEARCH_LIMIT = 20;
 const CACHE_TTL_MS = 30_000;
+const QUERY_TIMEOUT_MS = 8_000;
 
 type CacheEntry = {
   dataset?: ProgramCardDataset;
@@ -156,9 +157,19 @@ async function fetchProgramCards(
     return buildArchivedDataset('Supabase client unavailable');
   }
 
-  const viewDataset = await queryProgramCardsView(filters);
-  if (viewDataset) {
-    return viewDataset;
+  try {
+    const viewDataset = await withTimeout(
+      queryProgramCardsView(filters),
+      QUERY_TIMEOUT_MS,
+      'public_program_cards query timed out',
+    );
+    if (viewDataset) {
+      return viewDataset;
+    }
+  } catch (error) {
+    return buildSupabaseErrorDataset(
+      error instanceof Error ? error.message : 'public_program_cards query timed out',
+    );
   }
 
   try {
@@ -202,21 +213,25 @@ async function fetchProgramCards(
 
     query = query.limit(filters.offset + filters.limit + 1);
 
-    const { data, error } = await query;
+    const { data, error } = await withTimeout<any>(
+      query.then((result) => result),
+      QUERY_TIMEOUT_MS,
+      'program_cards relational query timed out',
+    );
     if (error || !data) {
       return buildArchivedDataset(error?.message ?? 'Supabase query returned no data');
     }
 
     const normalized = data
       .map((row: any) => mapSupabaseRowToProgramCardRecord(row))
-      .filter((row): row is ProgramCardRecord => Boolean(row));
+      .filter((row: ProgramCardRecord | null): row is ProgramCardRecord => Boolean(row));
 
     const searched = applySearch(normalized, filters.search);
     const pageRows = searched.slice(filters.offset, filters.offset + filters.limit + 1);
     const hasMore = pageRows.length > filters.limit;
     const universities = pageRows
       .slice(0, filters.limit)
-      .map((row, index) => mapProgramCardRecordToUniversity(row, filters.offset + index + 1));
+      .map((row: ProgramCardRecord, index) => mapProgramCardRecordToUniversity(row, filters.offset + index + 1));
 
     return {
       universities,
@@ -362,7 +377,7 @@ async function queryProgramCardsView(
       return null;
     }
 
-    const normalized = (data ?? []).filter((row): row is ProgramCardRecord => Boolean(row?.institution_name));
+    const normalized = (data ?? []).filter((row: any): row is ProgramCardRecord => Boolean(row?.institution_name));
     const hasMore = normalized.length > filters.limit;
     const universities = normalized
       .slice(0, filters.limit)
@@ -466,6 +481,15 @@ function buildCacheKey(
 
 function escapeLike(value: string) {
   return value.replace(/[,%]/g, '');
+}
+
+async function withTimeout<T>(promise: PromiseLike<T>, timeoutMs: number, message: string): Promise<T> {
+  return await Promise.race([
+    promise,
+    new Promise<T>((_, reject) => {
+      window.setTimeout(() => reject(new Error(message)), timeoutMs);
+    }),
+  ]);
 }
 
 function buildTier(record: ProgramCardRecord): string {
