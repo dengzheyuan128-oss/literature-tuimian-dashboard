@@ -19,6 +19,29 @@ export const supabase = isConfigured
 
 // 导出配置状态，供其他组件检查
 export const isSupabaseConfigured = isConfigured;
+const PROGRAM_CARD_READ_SELECT = `
+  id,
+  institution_name,
+  department_name,
+  program_name,
+  degree_type,
+  year,
+  primary_stage,
+  specialty_summary,
+  institution_location,
+  institution_is_985,
+  institution_is_211,
+  institution_discipline_grade,
+  latest_notice_url,
+  latest_notice_title,
+  latest_notice_application_start_raw,
+  latest_notice_application_end_raw,
+  latest_notice_published_at_raw,
+  latest_notice_materials_text,
+  latest_notice_ranking_requirement_text,
+  latest_notice_english_requirement_text,
+  latest_notice_application_method
+`;
 
 // ============ 类型定义 ============
 
@@ -561,6 +584,12 @@ export async function approveSubmissionNotice(
     })
     .eq('id', approval.program_card_id);
 
+  const synced = await syncPublicProgramCardReadRow(approval.program_card_id, reviewedAt);
+  if (!synced) {
+    console.error('Error syncing public program card read row after approval');
+    return false;
+  }
+
   return true;
 }
 
@@ -600,6 +629,35 @@ export async function rejectSubmissionNotice(
 
   if (reviewError) {
     console.error('Error inserting rejection review log:', reviewError);
+    return false;
+  }
+
+  return true;
+}
+
+async function syncPublicProgramCardReadRow(programCardId: string, updatedAt: string): Promise<boolean> {
+  if (!supabase) return false;
+
+  const { data, error } = await supabase
+    .from('public_program_cards')
+    .select(PROGRAM_CARD_READ_SELECT)
+    .eq('id', programCardId)
+    .maybeSingle();
+
+  if (error || !data) {
+    console.error('Error resolving public program card row:', error);
+    return false;
+  }
+
+  const { error: upsertError } = await supabase
+    .from('public_program_card_reads')
+    .upsert({
+      ...data,
+      updated_at: updatedAt,
+    }, { onConflict: 'id' });
+
+  if (upsertError) {
+    console.error('Error upserting public program card read row:', upsertError);
     return false;
   }
 

@@ -52,6 +52,29 @@ const DEFAULT_BROWSE_LIMIT = 60;
 const DEFAULT_SEARCH_LIMIT = 20;
 const CACHE_TTL_MS = 30_000;
 const QUERY_TIMEOUT_MS = 8_000;
+const PROGRAM_CARD_READ_SELECT = `
+  id,
+  institution_name,
+  department_name,
+  program_name,
+  degree_type,
+  year,
+  primary_stage,
+  specialty_summary,
+  institution_location,
+  institution_is_985,
+  institution_is_211,
+  institution_discipline_grade,
+  latest_notice_url,
+  latest_notice_title,
+  latest_notice_application_start_raw,
+  latest_notice_application_end_raw,
+  latest_notice_published_at_raw,
+  latest_notice_materials_text,
+  latest_notice_ranking_requirement_text,
+  latest_notice_english_requirement_text,
+  latest_notice_application_method
+`;
 
 type CacheEntry = {
   dataset?: ProgramCardDataset;
@@ -158,6 +181,31 @@ async function fetchProgramCards(
   }
 
   try {
+    const readTableDataset = await withTimeout(
+      queryProgramCardReads(filters),
+      QUERY_TIMEOUT_MS,
+      'public_program_card_reads query timed out',
+    );
+    if (readTableDataset) {
+      return readTableDataset;
+    }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'public_program_card_reads query timed out';
+    try {
+      const fallbackViewDataset = await withTimeout(
+        queryProgramCardsView(filters),
+        QUERY_TIMEOUT_MS,
+        'public_program_cards query timed out',
+      );
+      if (fallbackViewDataset) {
+        return fallbackViewDataset;
+      }
+    } catch {
+      return buildSupabaseErrorDataset(message);
+    }
+  }
+
+  try {
     const viewDataset = await withTimeout(
       queryProgramCardsView(filters),
       QUERY_TIMEOUT_MS,
@@ -251,9 +299,21 @@ async function fetchProgramCards(
 }
 
 export async function getProgramCardById(id: string | number): Promise<University | null> {
-  const dataset = await getProgramCards();
   const target = String(id);
-  return dataset.universities.find((u) => String(u.sourceCardId ?? u.id) === target) ?? null;
+
+  if (supabase && isSupabaseConfigured) {
+    const record = await queryProgramCardReadById(target);
+    if (record) {
+      return mapProgramCardRecordToUniversity(record, 1);
+    }
+
+    const viewRecord = await queryProgramCardViewById(target);
+    if (viewRecord) {
+      return mapProgramCardRecordToUniversity(viewRecord, 1);
+    }
+  }
+
+  return (archivedUniversities as University[]).find((u) => String(u.sourceCardId ?? u.id) === target) ?? null;
 }
 
 export async function getFilterFacets() {
@@ -334,29 +394,7 @@ async function queryProgramCardsView(
   try {
     let query = client
       .from('public_program_cards')
-      .select(`
-        id,
-        institution_name,
-        department_name,
-        program_name,
-        degree_type,
-        year,
-        primary_stage,
-        specialty_summary,
-        institution_location,
-        institution_is_985,
-        institution_is_211,
-        institution_discipline_grade,
-        latest_notice_url,
-        latest_notice_title,
-        latest_notice_application_start_raw,
-        latest_notice_application_end_raw,
-        latest_notice_published_at_raw,
-        latest_notice_materials_text,
-        latest_notice_ranking_requirement_text,
-        latest_notice_english_requirement_text,
-        latest_notice_application_method
-      `)
+      .select(PROGRAM_CARD_READ_SELECT)
       .order('latest_notice_published_at_raw', { ascending: false, nullsFirst: false })
       .range(filters.offset, filters.offset + filters.limit);
 
@@ -398,6 +436,98 @@ async function queryProgramCardsView(
   }
 }
 
+async function queryProgramCardReads(
+  filters: Required<Pick<ProgramCardFilters, 'limit' | 'offset'>> & Pick<ProgramCardFilters, 'search'>,
+): Promise<ProgramCardDataset | null> {
+  const client = supabase;
+  if (!client) {
+    return null;
+  }
+
+  try {
+    let query = client
+      .from('public_program_card_reads')
+      .select(PROGRAM_CARD_READ_SELECT)
+      .order('updated_at', { ascending: false })
+      .range(filters.offset, filters.offset + filters.limit);
+
+    const term = filters.search?.trim();
+    if (term) {
+      const escaped = escapeLike(term);
+      query = query.or([
+        `institution_name.ilike.%${escaped}%`,
+        `department_name.ilike.%${escaped}%`,
+        `program_name.ilike.%${escaped}%`,
+        `specialty_summary.ilike.%${escaped}%`,
+        `primary_stage.ilike.%${escaped}%`,
+      ].join(','));
+    }
+
+    const { data, error } = await query;
+    if (error) {
+      return null;
+    }
+
+    return buildSupabaseDatasetFromRecords((data ?? []) as ProgramCardRecord[], filters.offset, filters.limit);
+  } catch {
+    return null;
+  }
+}
+
+async function queryProgramCardReadById(id: string): Promise<ProgramCardRecord | null> {
+  const client = supabase;
+  if (!client) {
+    return null;
+  }
+
+  try {
+    const { data, error } = await withTimeout(
+      client
+        .from('public_program_card_reads')
+        .select(PROGRAM_CARD_READ_SELECT)
+        .eq('id', id)
+        .maybeSingle(),
+      QUERY_TIMEOUT_MS,
+      'public_program_card_reads detail query timed out',
+    );
+
+    if (error || !data) {
+      return null;
+    }
+
+    return data as ProgramCardRecord;
+  } catch {
+    return null;
+  }
+}
+
+async function queryProgramCardViewById(id: string): Promise<ProgramCardRecord | null> {
+  const client = supabase;
+  if (!client) {
+    return null;
+  }
+
+  try {
+    const { data, error } = await withTimeout(
+      client
+        .from('public_program_cards')
+        .select(PROGRAM_CARD_READ_SELECT)
+        .eq('id', id)
+        .maybeSingle(),
+      QUERY_TIMEOUT_MS,
+      'public_program_cards detail query timed out',
+    );
+
+    if (error || !data) {
+      return null;
+    }
+
+    return data as ProgramCardRecord;
+  } catch {
+    return null;
+  }
+}
+
 function buildSupabaseErrorDataset(error: string): ProgramCardDataset {
   return {
     universities: [],
@@ -408,6 +538,25 @@ function buildSupabaseErrorDataset(error: string): ProgramCardDataset {
     error,
     supabaseHost: getSupabaseHost(),
     hasMore: false,
+  };
+}
+
+function buildSupabaseDatasetFromRecords(records: ProgramCardRecord[], offset: number, limit: number): ProgramCardDataset {
+  const normalized = records.filter((row): row is ProgramCardRecord => Boolean(row?.institution_name));
+  const hasMore = normalized.length > limit;
+  const universities = normalized
+    .slice(0, limit)
+    .map((row, index) => mapProgramCardRecordToUniversity(row, offset + index + 1));
+
+  return {
+    universities,
+    coverageStats: buildCoverageStats(universities),
+    lastUpdated: new Date().toISOString(),
+    source: 'supabase',
+    configured: true,
+    error: null,
+    supabaseHost: getSupabaseHost(),
+    hasMore,
   };
 }
 

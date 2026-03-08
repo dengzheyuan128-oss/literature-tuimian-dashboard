@@ -5,6 +5,7 @@ import path from 'node:path';
 import { createClient } from '@supabase/supabase-js';
 
 import type { StagingRow } from '../shared/excelImport';
+import { buildLatestNoticeByCardKey, buildProgramCardReadRows } from '../shared/programCardReads';
 import { buildImportPlan } from '../shared/stagingImport';
 
 const projectRoot = path.resolve(import.meta.dirname, '..');
@@ -119,12 +120,22 @@ async function main(): Promise<void> {
     })),
   );
 
-  await updateProgramCardLatestNoticeIds(
-    supabase,
-    plan.notices,
+  await updateProgramCardLatestNoticeIds(supabase, plan.notices, cardIds, noticeIds);
+
+  const updatedAt = new Date().toISOString();
+  const latestNoticeByCardKey = buildLatestNoticeByCardKey(plan.notices);
+  const readRows = buildProgramCardReadRows({
+    institutions: plan.institutions,
+    departments: plan.departments,
+    programCards: plan.programCards,
+    notices: plan.notices,
+    institutionMetadataById: new Map(),
     cardIds,
-    noticeIds,
-  );
+    latestNoticeByCardKey,
+    updatedAt,
+  });
+
+  await upsertInBatches(supabase, 'public_program_card_reads', readRows, 'id');
 
   await insertInBatches(
     supabase,
@@ -147,6 +158,7 @@ async function main(): Promise<void> {
         reset: args.reset,
         limit: args.limit ?? null,
         stats: plan.stats,
+        readRows: readRows.length,
       },
       null,
       2,
@@ -157,6 +169,7 @@ async function main(): Promise<void> {
 async function resetImportTables(supabase: ReturnType<typeof createClient>) {
   const tables: Array<{ name: string; matchColumn: string }> = [
     { name: 'notice_sources', matchColumn: 'id' },
+    { name: 'public_program_card_reads', matchColumn: 'id' },
     { name: 'notices', matchColumn: 'id' },
     { name: 'program_card_tags', matchColumn: 'program_card_id' },
     { name: 'program_cards', matchColumn: 'id' },
@@ -186,6 +199,21 @@ async function insertInBatches(
   }
 }
 
+async function upsertInBatches(
+  supabase: ReturnType<typeof createClient>,
+  table: string,
+  rows: Record<string, unknown>[],
+  onConflict: string,
+) {
+  for (let index = 0; index < rows.length; index += BATCH_SIZE) {
+    const batch = rows.slice(index, index + BATCH_SIZE);
+    const { error } = await supabase.from(table).upsert(batch, { onConflict });
+    if (error) {
+      throw new Error(`${table} batch ${index / BATCH_SIZE + 1} failed: ${error.message}`);
+    }
+  }
+}
+
 async function updateProgramCardLatestNoticeIds(
   supabase: ReturnType<typeof createClient>,
   notices: Array<{
@@ -197,27 +225,7 @@ async function updateProgramCardLatestNoticeIds(
   cardIds: Map<string, string>,
   noticeIds: Map<string, string>,
 ) {
-  const latestNoticeByCard = new Map<string, string>();
-  const rankByNoticeKey = new Map<string, number>();
-
-  for (const notice of notices) {
-    rankByNoticeKey.set(notice.key, buildNoticeRank(notice));
-  }
-
-  for (const notice of notices) {
-    const existingNoticeKey = latestNoticeByCard.get(notice.program_card_key);
-    if (!existingNoticeKey) {
-      latestNoticeByCard.set(notice.program_card_key, notice.key);
-      continue;
-    }
-
-    const currentRank = rankByNoticeKey.get(existingNoticeKey) ?? Number.MIN_SAFE_INTEGER;
-    const nextRank = rankByNoticeKey.get(notice.key) ?? Number.MIN_SAFE_INTEGER;
-    if (nextRank >= currentRank) {
-      latestNoticeByCard.set(notice.program_card_key, notice.key);
-    }
-  }
-
+  const latestNoticeByCard = buildLatestNoticeByCardKey(notices);
   const updates = Array.from(latestNoticeByCard.entries())
     .map(([programCardKey, noticeKey]) => ({
       id: cardIds.get(programCardKey),
@@ -228,31 +236,12 @@ async function updateProgramCardLatestNoticeIds(
 
   for (let index = 0; index < updates.length; index += BATCH_SIZE) {
     const batch = updates.slice(index, index + BATCH_SIZE);
-    const { error } = await supabase
-      .from('program_cards')
-      .upsert(batch, { onConflict: 'id' });
+    const { error } = await supabase.from('program_cards').upsert(batch, { onConflict: 'id' });
 
     if (error) {
       throw new Error(`program_cards latest_notice_id batch ${index / BATCH_SIZE + 1} failed: ${error.message}`);
     }
   }
-}
-
-function buildNoticeRank(notice: {
-  published_at_raw: string;
-  application_end_raw: string;
-}) {
-  const publishedScore = normalizeDateScore(notice.published_at_raw);
-  const applicationEndScore = normalizeDateScore(notice.application_end_raw);
-  return publishedScore * 10_000_000 + applicationEndScore;
-}
-
-function normalizeDateScore(value: string) {
-  const match = value.match(/(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})/);
-  if (!match) return 0;
-
-  const [, year, month, day] = match;
-  return Number(`${year}${month.padStart(2, '0')}${day.padStart(2, '0')}`);
 }
 
 function parseArgs(args: string[]): { dryRun: boolean; limit?: number; reset: boolean } {
