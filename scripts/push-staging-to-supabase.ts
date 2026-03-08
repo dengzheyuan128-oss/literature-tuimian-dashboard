@@ -1,19 +1,15 @@
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 
 import type { StagingRow } from '../shared/excelImport';
-import {
-  buildImportPlan,
-  type ImportDepartment,
-  type ImportInstitution,
-  type ImportNotice,
-  type ImportProgramCard,
-} from '../shared/stagingImport';
+import { buildImportPlan } from '../shared/stagingImport';
 
 const projectRoot = path.resolve(import.meta.dirname, '..');
 const stagingPath = path.join(projectRoot, 'reports', 'excel-import', 'staging-rows.json');
+const BATCH_SIZE = 500;
 
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
@@ -22,17 +18,23 @@ async function main(): Promise<void> {
   const plan = buildImportPlan(limitedRows);
 
   if (args.dryRun) {
-    console.log(JSON.stringify({
-      mode: 'dry-run',
-      limit: args.limit ?? null,
-      stats: plan.stats,
-      sample: {
-        institution: plan.institutions[0] ?? null,
-        department: plan.departments[0] ?? null,
-        programCard: plan.programCards[0] ?? null,
-        notice: plan.notices[0] ?? null,
-      },
-    }, null, 2));
+    console.log(
+      JSON.stringify(
+        {
+          mode: 'dry-run',
+          limit: args.limit ?? null,
+          stats: plan.stats,
+          sample: {
+            institution: plan.institutions[0] ?? null,
+            department: plan.departments[0] ?? null,
+            programCard: plan.programCards[0] ?? null,
+            notice: plan.notices[0] ?? null,
+          },
+        },
+        null,
+        2,
+      ),
+    );
     return;
   }
 
@@ -47,199 +49,145 @@ async function main(): Promise<void> {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 
-  const institutionIds = new Map<string, string>();
-  const departmentIds = new Map<string, string>();
-  const cardIds = new Map<string, string>();
-  const noticeIds = new Map<string, string>();
-
-  for (const institution of plan.institutions) {
-    institutionIds.set(institution.key, await upsertInstitution(supabase, institution));
+  if (args.reset) {
+    await resetImportTables(supabase);
   }
 
-  for (const department of plan.departments) {
-    departmentIds.set(department.key, await upsertDepartment(supabase, department, institutionIds));
-  }
+  const institutionIds = new Map(plan.institutions.map((item) => [item.key, crypto.randomUUID()]));
+  const departmentIds = new Map(plan.departments.map((item) => [item.key, crypto.randomUUID()]));
+  const cardIds = new Map(plan.programCards.map((item) => [item.key, crypto.randomUUID()]));
+  const noticeIds = new Map(plan.notices.map((item) => [item.key, crypto.randomUUID()]));
 
-  for (const card of plan.programCards) {
-    cardIds.set(card.key, await upsertProgramCard(supabase, card, institutionIds, departmentIds));
-  }
+  await insertInBatches(
+    supabase,
+    'institutions',
+    plan.institutions.map((item) => ({
+      id: institutionIds.get(item.key),
+      name: item.name,
+      normalized_name: item.normalized_name,
+    })),
+  );
 
-  for (const notice of plan.notices) {
-    noticeIds.set(notice.key, await upsertNotice(supabase, notice, cardIds));
-  }
+  await insertInBatches(
+    supabase,
+    'departments',
+    plan.departments.map((item) => ({
+      id: departmentIds.get(item.key),
+      institution_id: institutionIds.get(item.institution_key),
+      name: item.name,
+      normalized_name: item.normalized_name,
+    })),
+  );
 
-  for (const source of plan.noticeSources) {
-    const noticeId = noticeIds.get(source.notice_key);
-    if (!noticeId) continue;
+  await insertInBatches(
+    supabase,
+    'program_cards',
+    plan.programCards.map((item) => ({
+      id: cardIds.get(item.key),
+      institution_id: institutionIds.get(item.institution_key),
+      department_id: departmentIds.get(item.department_key) ?? null,
+      program_name: item.program_name,
+      normalized_program_name: item.normalized_program_name,
+      specialty_summary: item.specialty_summary,
+      degree_type: item.degree_type,
+      year: item.year,
+      primary_stage: item.primary_stage,
+      card_status: 'published',
+    })),
+  );
 
-    const { error } = await supabase
-      .from('notice_sources')
-      .insert({
-        notice_id: noticeId,
-        source_url: source.source_url,
-        source_file: source.source_file,
-        source_sheet: source.source_sheet,
-        source_row: source.source_row,
-        raw_payload: source.raw_payload,
-      });
+  await insertInBatches(
+    supabase,
+    'notices',
+    plan.notices.map((item) => ({
+      id: noticeIds.get(item.key),
+      program_card_id: cardIds.get(item.program_card_key),
+      title: item.title,
+      notice_url: item.notice_url,
+      published_at_raw: item.published_at_raw,
+      stage: item.stage,
+      application_start_raw: item.application_start_raw,
+      application_end_raw: item.application_end_raw,
+      requirement_text: item.requirement_text,
+      ranking_requirement_text: item.ranking_requirement_text,
+      english_requirement_text: item.english_requirement_text,
+      materials_text: item.materials_text,
+      application_method: item.application_method,
+      source_channel: item.source_channel,
+      source_type: 'official',
+      review_status: 'approved',
+    })),
+  );
 
+  await insertInBatches(
+    supabase,
+    'notice_sources',
+    plan.noticeSources.map((item) => ({
+      id: crypto.randomUUID(),
+      notice_id: noticeIds.get(item.notice_key),
+      source_url: item.source_url,
+      source_file: item.source_file,
+      source_sheet: item.source_sheet,
+      source_row: item.source_row,
+      raw_payload: item.raw_payload,
+    })),
+  );
+
+  console.log(
+    JSON.stringify(
+      {
+        mode: 'import',
+        reset: args.reset,
+        limit: args.limit ?? null,
+        stats: plan.stats,
+      },
+      null,
+      2,
+    ),
+  );
+}
+
+async function resetImportTables(supabase: ReturnType<typeof createClient>) {
+  const tables: Array<{ name: string; matchColumn: string }> = [
+    { name: 'notice_sources', matchColumn: 'id' },
+    { name: 'notices', matchColumn: 'id' },
+    { name: 'program_card_tags', matchColumn: 'program_card_id' },
+    { name: 'program_cards', matchColumn: 'id' },
+    { name: 'departments', matchColumn: 'id' },
+    { name: 'institutions', matchColumn: 'id' },
+  ];
+
+  for (const table of tables) {
+    const { error } = await supabase.from(table.name).delete().not(table.matchColumn, 'is', null);
     if (error) {
       throw error;
     }
   }
-
-  console.log(JSON.stringify({
-    mode: 'import',
-    limit: args.limit ?? null,
-    stats: plan.stats,
-  }, null, 2));
 }
 
-async function upsertInstitution(client: SupabaseClient, institution: ImportInstitution): Promise<string> {
-  const existing = await client
-    .from('institutions')
-    .select('id')
-    .eq('normalized_name', institution.normalized_name)
-    .maybeSingle();
-
-  if (existing.error) throw existing.error;
-  if (existing.data?.id) return existing.data.id;
-
-  const created = await client
-    .from('institutions')
-    .insert({
-      name: institution.name,
-      normalized_name: institution.normalized_name,
-    })
-    .select('id')
-    .single();
-
-  if (created.error) throw created.error;
-  return created.data.id;
+async function insertInBatches(
+  supabase: ReturnType<typeof createClient>,
+  table: string,
+  rows: Record<string, unknown>[],
+) {
+  for (let index = 0; index < rows.length; index += BATCH_SIZE) {
+    const batch = rows.slice(index, index + BATCH_SIZE);
+    const { error } = await supabase.from(table).insert(batch);
+    if (error) {
+      throw new Error(`${table} batch ${index / BATCH_SIZE + 1} failed: ${error.message}`);
+    }
+  }
 }
 
-async function upsertDepartment(
-  client: SupabaseClient,
-  department: ImportDepartment,
-  institutionIds: Map<string, string>,
-): Promise<string> {
-  const institutionId = institutionIds.get(department.institution_key);
-  if (!institutionId) throw new Error(`Missing institution for department ${department.key}`);
-
-  const existing = await client
-    .from('departments')
-    .select('id')
-    .eq('institution_id', institutionId)
-    .eq('normalized_name', department.normalized_name)
-    .maybeSingle();
-
-  if (existing.error) throw existing.error;
-  if (existing.data?.id) return existing.data.id;
-
-  const created = await client
-    .from('departments')
-    .insert({
-      institution_id: institutionId,
-      name: department.name,
-      normalized_name: department.normalized_name,
-    })
-    .select('id')
-    .single();
-
-  if (created.error) throw created.error;
-  return created.data.id;
-}
-
-async function upsertProgramCard(
-  client: SupabaseClient,
-  card: ImportProgramCard,
-  institutionIds: Map<string, string>,
-  departmentIds: Map<string, string>,
-): Promise<string> {
-  const institutionId = institutionIds.get(card.institution_key);
-  const departmentId = departmentIds.get(card.department_key) ?? null;
-  if (!institutionId) throw new Error(`Missing institution for program card ${card.key}`);
-
-  const existing = await client
-    .from('program_cards')
-    .select('id')
-    .eq('institution_id', institutionId)
-    .eq('department_id', departmentId)
-    .eq('normalized_program_name', card.normalized_program_name)
-    .eq('primary_stage', card.primary_stage)
-    .eq('year', card.year)
-    .maybeSingle();
-
-  if (existing.error) throw existing.error;
-  if (existing.data?.id) return existing.data.id;
-
-  const created = await client
-    .from('program_cards')
-    .insert({
-      institution_id: institutionId,
-      department_id: departmentId,
-      program_name: card.program_name,
-      normalized_program_name: card.normalized_program_name,
-      specialty_summary: card.specialty_summary,
-      degree_type: card.degree_type,
-      year: card.year,
-      primary_stage: card.primary_stage,
-    })
-    .select('id')
-    .single();
-
-  if (created.error) throw created.error;
-  return created.data.id;
-}
-
-async function upsertNotice(
-  client: SupabaseClient,
-  notice: ImportNotice,
-  cardIds: Map<string, string>,
-): Promise<string> {
-  const cardId = cardIds.get(notice.program_card_key);
-  if (!cardId) throw new Error(`Missing program card for notice ${notice.key}`);
-
-  const existing = await client
-    .from('notices')
-    .select('id')
-    .eq('program_card_id', cardId)
-    .eq('notice_url', notice.notice_url)
-    .maybeSingle();
-
-  if (existing.error) throw existing.error;
-  if (existing.data?.id) return existing.data.id;
-
-  const created = await client
-    .from('notices')
-    .insert({
-      program_card_id: cardId,
-      title: notice.title,
-      notice_url: notice.notice_url,
-      published_at_raw: notice.published_at_raw,
-      stage: notice.stage,
-      application_start_raw: notice.application_start_raw,
-      application_end_raw: notice.application_end_raw,
-      requirement_text: notice.requirement_text,
-      ranking_requirement_text: notice.ranking_requirement_text,
-      english_requirement_text: notice.english_requirement_text,
-      materials_text: notice.materials_text,
-      application_method: notice.application_method,
-      source_channel: notice.source_channel,
-    })
-    .select('id')
-    .single();
-
-  if (created.error) throw created.error;
-  return created.data.id;
-}
-
-function parseArgs(args: string[]): { dryRun: boolean; limit?: number } {
+function parseArgs(args: string[]): { dryRun: boolean; limit?: number; reset: boolean } {
   const dryRun = args.includes('--dry-run');
+  const reset = args.includes('--reset');
   const limitIndex = args.indexOf('--limit');
   const limit = limitIndex >= 0 ? Number(args[limitIndex + 1]) : undefined;
+
   return {
     dryRun,
+    reset,
     limit: Number.isFinite(limit) ? limit : undefined,
   };
 }

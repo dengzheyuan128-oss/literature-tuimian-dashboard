@@ -73,9 +73,20 @@ create table if not exists public.notices (
 create unique index if not exists notices_program_url_idx
   on public.notices (program_card_id, notice_url);
 
-alter table public.program_cards
-  add constraint if not exists program_cards_latest_notice_fk
-  foreign key (latest_notice_id) references public.notices(id) on delete set null;
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'program_cards_latest_notice_fk'
+  ) then
+    alter table public.program_cards
+      add constraint program_cards_latest_notice_fk
+      foreign key (latest_notice_id)
+      references public.notices(id)
+      on delete set null;
+  end if;
+end $$;
 
 create table if not exists public.notice_sources (
   id uuid primary key default gen_random_uuid(),
@@ -140,26 +151,114 @@ alter table public.program_card_tags enable row level security;
 alter table public.submission_queue enable row level security;
 alter table public.admin_reviews enable row level security;
 
-create policy if not exists "Public can read institutions"
-  on public.institutions for select using (true);
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'institutions'
+      and policyname = 'Public can read institutions'
+  ) then
+    create policy "Public can read institutions"
+      on public.institutions for select using (true);
+  end if;
+end $$;
 
-create policy if not exists "Public can read departments"
-  on public.departments for select using (true);
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'departments'
+      and policyname = 'Public can read departments'
+  ) then
+    create policy "Public can read departments"
+      on public.departments for select using (true);
+  end if;
+end $$;
 
-create policy if not exists "Public can read published cards"
-  on public.program_cards for select using (card_status = 'published');
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'program_cards'
+      and policyname = 'Public can read published cards'
+  ) then
+    create policy "Public can read published cards"
+      on public.program_cards for select using (card_status = 'published');
+  end if;
+end $$;
 
-create policy if not exists "Public can read approved notices"
-  on public.notices for select using (review_status = 'approved');
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'notices'
+      and policyname = 'Public can read approved notices'
+  ) then
+    create policy "Public can read approved notices"
+      on public.notices for select using (review_status = 'approved');
+  end if;
+end $$;
 
-create policy if not exists "Public can read tags"
-  on public.tags for select using (true);
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'tags'
+      and policyname = 'Public can read tags'
+  ) then
+    create policy "Public can read tags"
+      on public.tags for select using (true);
+  end if;
+end $$;
 
-create policy if not exists "Public can read card tags"
-  on public.program_card_tags for select using (true);
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'program_card_tags'
+      and policyname = 'Public can read card tags'
+  ) then
+    create policy "Public can read card tags"
+      on public.program_card_tags for select using (true);
+  end if;
+end $$;
 
-create policy if not exists "Users can submit links"
-  on public.submission_queue for insert with check (auth.uid() = submitted_by);
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'submission_queue'
+      and policyname = 'Users can submit links'
+  ) then
+    create policy "Users can submit links"
+      on public.submission_queue for insert with check (auth.uid() = submitted_by);
+  end if;
+end $$;
 
-create policy if not exists "Users can view own submissions"
-  on public.submission_queue for select using (auth.uid() = submitted_by);
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'submission_queue'
+      and policyname = 'Users can view own submissions'
+  ) then
+    create policy "Users can view own submissions"
+      on public.submission_queue for select using (auth.uid() = submitted_by);
+  end if;
+end $$;
