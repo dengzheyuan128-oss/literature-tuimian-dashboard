@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { University, DataStatus } from "@/types/university";
 import { useProgramCards } from "@/lib/programCards";
 import { favoritesStorage, searchHistoryStorage } from "@/lib/storage";
@@ -66,17 +66,27 @@ const STATUS_CONFIG: Record<DataStatus, { label: string; className: string }> = 
   },
 };
 
+const PAGE_SIZE = 24;
+
 export default function Home() {
   const [, setLocation] = useLocation();
   const { user } = useAuth();
   const { addToCompare, isInCompare } = useCompare();
   const { addReminder } = useReminders();
-  const { universities, coverageStats, loading, source, error } = useProgramCards({ limit: 60 });
+  const [page, setPage] = useState(1);
+  const { universities, coverageStats, loading, source, error, hasMore } = useProgramCards({
+    limit: PAGE_SIZE,
+    offset: (page - 1) * PAGE_SIZE,
+  });
   const userIsAdmin = isAdmin(user?.email);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLevel, setSelectedLevel] = useState<SimplifiedTier | null>(null);
   const [selectedUniversity, setSelectedUniversity] = useState<University | null>(null);
   const [favorites, setFavorites] = useState<number[]>([]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [selectedLevel]);
 
   // 加载收藏列表
   useState(() => {
@@ -507,6 +517,30 @@ export default function Home() {
                 >
                   清除筛选条件
                 </Button>
+              </div>
+            )}
+
+            {!loading && source !== 'supabase-error' && filteredUniversities.length > 0 && (
+              <div className="mt-8 flex items-center justify-between gap-4 border-t border-border/30 pt-6">
+                <div className="text-sm text-muted-foreground font-sans">
+                  第 {page} 页，每页 {PAGE_SIZE} 条
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => setPage((current) => Math.max(1, current - 1))}
+                    disabled={page === 1}
+                  >
+                    上一页
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => setPage((current) => current + 1)}
+                    disabled={!hasMore}
+                  >
+                    下一页
+                  </Button>
+                </div>
               </div>
             )}
           </div>

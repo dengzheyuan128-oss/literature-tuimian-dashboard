@@ -32,6 +32,7 @@ export interface ProgramCardRecord {
 export interface ProgramCardFilters {
   search?: string;
   limit?: number;
+  offset?: number;
   enabled?: boolean;
 }
 
@@ -43,6 +44,7 @@ export interface ProgramCardDataset {
   configured: boolean;
   error: string | null;
   supabaseHost: string | null;
+  hasMore: boolean;
 }
 
 const ARCHIVED_LAST_UPDATED = 'archived';
@@ -146,7 +148,9 @@ export async function getProgramCards(filters: ProgramCardFilters = {}): Promise
   return promise;
 }
 
-async function fetchProgramCards(filters: Required<Pick<ProgramCardFilters, 'limit'>> & Pick<ProgramCardFilters, 'search'>): Promise<ProgramCardDataset> {
+async function fetchProgramCards(
+  filters: Required<Pick<ProgramCardFilters, 'limit' | 'offset'>> & Pick<ProgramCardFilters, 'search'>,
+): Promise<ProgramCardDataset> {
   const client = supabase;
   if (!client) {
     return buildArchivedDataset('Supabase client unavailable');
@@ -196,7 +200,7 @@ async function fetchProgramCards(filters: Required<Pick<ProgramCardFilters, 'lim
       .order('published_at_raw', { ascending: false, foreignTable: 'notices' })
       .limit(1, { foreignTable: 'notices' });
 
-    query = query.limit(filters.limit);
+    query = query.limit(filters.offset + filters.limit + 1);
 
     const { data, error } = await query;
     if (error || !data) {
@@ -208,7 +212,11 @@ async function fetchProgramCards(filters: Required<Pick<ProgramCardFilters, 'lim
       .filter((row): row is ProgramCardRecord => Boolean(row));
 
     const searched = applySearch(normalized, filters.search);
-    const universities = searched.map((row, index) => mapProgramCardRecordToUniversity(row, index + 1));
+    const pageRows = searched.slice(filters.offset, filters.offset + filters.limit + 1);
+    const hasMore = pageRows.length > filters.limit;
+    const universities = pageRows
+      .slice(0, filters.limit)
+      .map((row, index) => mapProgramCardRecordToUniversity(row, filters.offset + index + 1));
 
     return {
       universities,
@@ -218,6 +226,7 @@ async function fetchProgramCards(filters: Required<Pick<ProgramCardFilters, 'lim
       configured: true,
       error: null,
       supabaseHost: getSupabaseHost(),
+      hasMore,
     };
   } catch (error) {
     return buildSupabaseErrorDataset(
@@ -252,6 +261,7 @@ export function useProgramCards(filters: ProgramCardFilters = {}) {
     configured: isSupabaseConfigured,
     error: null,
     supabaseHost: getSupabaseHost(),
+    hasMore: false,
   });
   const [loading, setLoading] = useState(true);
 
@@ -277,7 +287,7 @@ export function useProgramCards(filters: ProgramCardFilters = {}) {
     return () => {
       cancelled = true;
     };
-  }, [filters.enabled, filters.limit, filters.search]);
+  }, [filters.enabled, filters.limit, filters.offset, filters.search]);
 
   return {
     ...dataset,
@@ -294,11 +304,12 @@ function buildArchivedDataset(error: string | null = null): ProgramCardDataset {
     configured: isSupabaseConfigured,
     error,
     supabaseHost: getSupabaseHost(),
+    hasMore: false,
   };
 }
 
 async function queryProgramCardsView(
-  filters: Required<Pick<ProgramCardFilters, 'limit'>> & Pick<ProgramCardFilters, 'search'>,
+  filters: Required<Pick<ProgramCardFilters, 'limit' | 'offset'>> & Pick<ProgramCardFilters, 'search'>,
 ): Promise<ProgramCardDataset | null> {
   const client = supabase;
   if (!client) {
@@ -332,7 +343,7 @@ async function queryProgramCardsView(
         latest_notice_application_method
       `)
       .order('latest_notice_published_at_raw', { ascending: false, nullsFirst: false })
-      .limit(filters.limit);
+      .range(filters.offset, filters.offset + filters.limit);
 
     const term = filters.search?.trim();
     if (term) {
@@ -352,7 +363,10 @@ async function queryProgramCardsView(
     }
 
     const normalized = (data ?? []).filter((row): row is ProgramCardRecord => Boolean(row?.institution_name));
-    const universities = normalized.map((row, index) => mapProgramCardRecordToUniversity(row, index + 1));
+    const hasMore = normalized.length > filters.limit;
+    const universities = normalized
+      .slice(0, filters.limit)
+      .map((row, index) => mapProgramCardRecordToUniversity(row, filters.offset + index + 1));
 
     return {
       universities,
@@ -362,6 +376,7 @@ async function queryProgramCardsView(
       configured: true,
       error: null,
       supabaseHost: getSupabaseHost(),
+      hasMore,
     };
   } catch {
     return null;
@@ -377,6 +392,7 @@ function buildSupabaseErrorDataset(error: string): ProgramCardDataset {
     configured: true,
     error,
     supabaseHost: getSupabaseHost(),
+    hasMore: false,
   };
 }
 
@@ -427,18 +443,24 @@ function applySearch(records: ProgramCardRecord[], search?: string): ProgramCard
   });
 }
 
-function normalizeFilters(filters: ProgramCardFilters): Required<Pick<ProgramCardFilters, 'limit'>> & Pick<ProgramCardFilters, 'search'> {
+function normalizeFilters(
+  filters: ProgramCardFilters,
+): Required<Pick<ProgramCardFilters, 'limit' | 'offset'>> & Pick<ProgramCardFilters, 'search'> {
   const hasSearch = Boolean(filters.search?.trim());
   return {
     search: filters.search?.trim() || undefined,
     limit: filters.limit ?? (hasSearch ? DEFAULT_SEARCH_LIMIT : DEFAULT_BROWSE_LIMIT),
+    offset: filters.offset ?? 0,
   };
 }
 
-function buildCacheKey(filters: Required<Pick<ProgramCardFilters, 'limit'>> & Pick<ProgramCardFilters, 'search'>) {
+function buildCacheKey(
+  filters: Required<Pick<ProgramCardFilters, 'limit' | 'offset'>> & Pick<ProgramCardFilters, 'search'>,
+) {
   return JSON.stringify({
     search: filters.search ?? '',
     limit: filters.limit,
+    offset: filters.offset,
   });
 }
 
