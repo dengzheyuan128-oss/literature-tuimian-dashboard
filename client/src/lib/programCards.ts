@@ -40,7 +40,7 @@ export interface ProgramCardDataset {
   universities: University[];
   coverageStats: ReturnType<typeof buildCoverageStats>;
   lastUpdated: string;
-  source: 'supabase' | 'archived-json' | 'supabase-loading' | 'supabase-error';
+  source: 'api' | 'supabase' | 'archived-json' | 'supabase-loading' | 'supabase-error';
   configured: boolean;
   error: string | null;
   supabaseHost: string | null;
@@ -175,6 +175,10 @@ export async function getProgramCards(filters: ProgramCardFilters = {}): Promise
 async function fetchProgramCards(
   filters: Required<Pick<ProgramCardFilters, 'limit' | 'offset'>> & Pick<ProgramCardFilters, 'search'>,
 ): Promise<ProgramCardDataset> {
+  if (shouldUseProgramCardProxy()) {
+    return fetchProgramCardsViaApi(filters);
+  }
+
   const client = supabase;
   if (!client) {
     return buildArchivedDataset('Supabase client unavailable');
@@ -300,6 +304,13 @@ async function fetchProgramCards(
 
 export async function getProgramCardById(id: string | number): Promise<University | null> {
   const target = String(id);
+
+  if (shouldUseProgramCardProxy()) {
+    const proxyRecord = await fetchProgramCardByIdViaApi(target);
+    if (proxyRecord) {
+      return mapProgramCardRecordToUniversity(proxyRecord, 1);
+    }
+  }
 
   if (supabase && isSupabaseConfigured) {
     const record = await queryProgramCardReadById(target);
@@ -541,6 +552,45 @@ function buildSupabaseErrorDataset(error: string): ProgramCardDataset {
   };
 }
 
+async function fetchProgramCardsViaApi(
+  filters: Required<Pick<ProgramCardFilters, 'limit' | 'offset'>> & Pick<ProgramCardFilters, 'search'>,
+): Promise<ProgramCardDataset> {
+  try {
+    const response = await fetchWithTimeout(buildProgramCardApiUrl(filters), QUERY_TIMEOUT_MS);
+    if (!response.ok) {
+      return buildSupabaseErrorDataset(`program card api ${response.status}`);
+    }
+
+    const payload = await response.json() as {
+      records: ProgramCardRecord[];
+      hasMore: boolean;
+      configured: boolean;
+      source: 'api' | 'supabase-error';
+      error: string | null;
+      lastUpdated: string;
+      supabaseHost: string | null;
+    };
+
+    return buildProxyDataset(payload, filters.offset, filters.limit);
+  } catch (error) {
+    return buildSupabaseErrorDataset(error instanceof Error ? error.message : 'program card api query timed out');
+  }
+}
+
+async function fetchProgramCardByIdViaApi(id: string): Promise<ProgramCardRecord | null> {
+  try {
+    const response = await fetchWithTimeout(buildProgramCardApiUrl({ id }), QUERY_TIMEOUT_MS);
+    if (!response.ok) {
+      return null;
+    }
+
+    const payload = await response.json() as { records: ProgramCardRecord[] };
+    return payload.records?.[0] ?? null;
+  } catch {
+    return null;
+  }
+}
+
 function buildSupabaseDatasetFromRecords(records: ProgramCardRecord[], offset: number, limit: number): ProgramCardDataset {
   const normalized = records.filter((row): row is ProgramCardRecord => Boolean(row?.institution_name));
   const hasMore = normalized.length > limit;
@@ -557,6 +607,35 @@ function buildSupabaseDatasetFromRecords(records: ProgramCardRecord[], offset: n
     error: null,
     supabaseHost: getSupabaseHost(),
     hasMore,
+  };
+}
+
+function buildProxyDataset(
+  payload: {
+    records: ProgramCardRecord[];
+    hasMore: boolean;
+    configured: boolean;
+    source: 'api' | 'supabase-error';
+    error: string | null;
+    lastUpdated: string;
+    supabaseHost: string | null;
+  },
+  offset: number,
+  limit: number,
+): ProgramCardDataset {
+  const universities = payload.records
+    .slice(0, limit)
+    .map((row, index) => mapProgramCardRecordToUniversity(row, offset + index + 1));
+
+  return {
+    universities,
+    coverageStats: buildCoverageStats(universities),
+    lastUpdated: payload.lastUpdated,
+    source: payload.source,
+    configured: payload.configured,
+    error: payload.error,
+    supabaseHost: payload.supabaseHost,
+    hasMore: payload.hasMore,
   };
 }
 
@@ -639,6 +718,37 @@ async function withTimeout<T>(promise: PromiseLike<T>, timeoutMs: number, messag
       window.setTimeout(() => reject(new Error(message)), timeoutMs);
     }),
   ]);
+}
+
+async function fetchWithTimeout(input: RequestInfo | URL, timeoutMs: number) {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(input, { signal: controller.signal });
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      throw new Error('program card api query timed out');
+    }
+    throw error;
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
+function buildProgramCardApiUrl(filters: { limit?: number; offset?: number; search?: string; id?: string | number }) {
+  const params = new URLSearchParams();
+  if (filters.limit !== undefined) params.set('limit', String(filters.limit));
+  if (filters.offset !== undefined) params.set('offset', String(filters.offset));
+  if (filters.search?.trim()) params.set('search', filters.search.trim());
+  if (filters.id !== undefined) params.set('id', String(filters.id));
+  const query = params.toString();
+  return query ? `/api/program-cards?${query}` : '/api/program-cards';
+}
+
+function shouldUseProgramCardProxy() {
+  if (typeof window === 'undefined') return false;
+  const hostname = window.location.hostname;
+  return hostname !== 'localhost' && hostname !== '127.0.0.1';
 }
 
 function buildTier(record: ProgramCardRecord): string {

@@ -36,7 +36,7 @@ export interface PublicProgramCardDataset {
     completeRate: number;
   };
   lastUpdated: string;
-  source: 'supabase' | 'archived-json' | 'supabase-loading' | 'supabase-error';
+  source: 'api' | 'supabase' | 'archived-json' | 'supabase-loading' | 'supabase-error';
   configured: boolean;
   error: string | null;
   supabaseHost: string | null;
