@@ -38,9 +38,10 @@ export interface ProgramCardDataset {
   universities: University[];
   coverageStats: ReturnType<typeof buildCoverageStats>;
   lastUpdated: string;
-  source: 'supabase' | 'archived-json';
+  source: 'supabase' | 'archived-json' | 'supabase-loading' | 'supabase-error';
   configured: boolean;
   error: string | null;
+  supabaseHost: string | null;
 }
 
 const ARCHIVED_LAST_UPDATED = 'archived';
@@ -161,9 +162,12 @@ export async function getProgramCards(filters: ProgramCardFilters = {}): Promise
       source: 'supabase',
       configured: true,
       error: null,
+      supabaseHost: getSupabaseHost(),
     };
   } catch (error) {
-    return buildArchivedDataset(error instanceof Error ? error.message : 'Unknown Supabase query error');
+    return buildSupabaseErrorDataset(
+      error instanceof Error ? error.message : 'Unknown Supabase query error',
+    );
   }
 }
 
@@ -184,12 +188,15 @@ export async function getFilterFacets() {
 
 export function useProgramCards(filters: ProgramCardFilters = {}) {
   const [dataset, setDataset] = useState<ProgramCardDataset>({
-    universities: archivedUniversities,
-    coverageStats: getCoverageStats(),
-    lastUpdated: ARCHIVED_LAST_UPDATED,
-    source: 'archived-json',
+    universities: isSupabaseConfigured ? [] : archivedUniversities,
+    coverageStats: isSupabaseConfigured
+      ? buildCoverageStats([])
+      : getCoverageStats(),
+    lastUpdated: isSupabaseConfigured ? 'loading' : ARCHIVED_LAST_UPDATED,
+    source: isSupabaseConfigured ? 'supabase-loading' : 'archived-json',
     configured: isSupabaseConfigured,
     error: null,
+    supabaseHost: getSupabaseHost(),
   });
   const [loading, setLoading] = useState(true);
 
@@ -226,6 +233,19 @@ function buildArchivedDataset(error: string | null = null): ProgramCardDataset {
     source: 'archived-json',
     configured: isSupabaseConfigured,
     error,
+    supabaseHost: getSupabaseHost(),
+  };
+}
+
+function buildSupabaseErrorDataset(error: string): ProgramCardDataset {
+  return {
+    universities: [],
+    coverageStats: buildCoverageStats([]),
+    lastUpdated: 'error',
+    source: 'supabase-error',
+    configured: true,
+    error,
+    supabaseHost: getSupabaseHost(),
   };
 }
 
@@ -320,4 +340,15 @@ function createStableUniversityId(sourceCardId: string, fallbackIndex: number): 
 
   const normalized = hash % 2147483647;
   return normalized > 0 ? normalized : fallbackIndex;
+}
+
+function getSupabaseHost(): string | null {
+  const url = import.meta.env.VITE_SUPABASE_URL;
+  if (!url) return null;
+
+  try {
+    return new URL(url).host;
+  } catch {
+    return null;
+  }
 }

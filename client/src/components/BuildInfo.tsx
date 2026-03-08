@@ -11,7 +11,7 @@ declare const __BUILD_COMMIT__: string;
 declare const __BUILD_TIME__: string;
 
 export function BuildInfo() {
-  const { universities, lastUpdated, source, configured, error } = useProgramCards();
+  const { universities, lastUpdated, source, configured, error, supabaseHost } = useProgramCards();
   const buildCommit = typeof __BUILD_COMMIT__ !== "undefined" ? __BUILD_COMMIT__ : "unknown";
   const buildTime = typeof __BUILD_TIME__ !== "undefined" ? __BUILD_TIME__ : "unknown";
   const universitiesCount = universities.length;
@@ -42,6 +42,11 @@ export function BuildInfo() {
       <div className="flex items-center gap-2">
         <span className="text-xs text-muted-foreground/70">Supabase: {configured ? "configured" : "missing-env"}</span>
       </div>
+      {supabaseHost ? (
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-muted-foreground/70">Host: {supabaseHost}</span>
+        </div>
+      ) : null}
       {error ? (
         <div className="flex items-center gap-2">
           <span className="max-w-[240px] break-words text-[11px] text-destructive">Error: {error}</span>
