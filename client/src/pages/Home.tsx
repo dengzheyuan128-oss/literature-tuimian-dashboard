@@ -71,7 +71,7 @@ export default function Home() {
   const { user } = useAuth();
   const { addToCompare, isInCompare } = useCompare();
   const { addReminder } = useReminders();
-  const { universities, coverageStats } = useProgramCards();
+  const { universities, coverageStats, loading, source, error } = useProgramCards();
   const userIsAdmin = isAdmin(user?.email);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLevel, setSelectedLevel] = useState<SimplifiedTier | null>(null);
@@ -363,6 +363,44 @@ export default function Home() {
               </div>
             </div>
 
+            {loading && source === 'supabase-loading' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <Card
+                    key={`loading-card-${index}`}
+                    className="h-full border-primary/10 bg-card/70 backdrop-blur-sm overflow-hidden"
+                  >
+                    <CardHeader className="space-y-3">
+                      <div className="h-6 w-2/3 rounded bg-muted animate-pulse" />
+                      <div className="flex gap-2">
+                        <div className="h-5 w-14 rounded-full bg-muted animate-pulse" />
+                        <div className="h-5 w-20 rounded-full bg-muted animate-pulse" />
+                        <div className="h-5 w-16 rounded-full bg-muted animate-pulse" />
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <div className="h-4 w-full rounded bg-muted animate-pulse" />
+                      <div className="h-4 w-5/6 rounded bg-muted animate-pulse" />
+                    </CardContent>
+                    <CardFooter>
+                      <div className="h-4 w-1/3 rounded bg-muted animate-pulse" />
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            )}
+
+            {source === 'supabase-error' && (
+              <div className="text-center py-20 text-muted-foreground">
+                <div className="mb-4 inline-flex items-center justify-center w-16 h-16 rounded-full bg-destructive/10 text-destructive">
+                  <Inbox className="w-8 h-8" />
+                </div>
+                <p className="text-lg text-foreground">Supabase 数据加载失败</p>
+                <p className="mt-2 max-w-2xl mx-auto text-sm font-sans break-words">{error || "请检查数据库查询或部署环境变量。"}</p>
+              </div>
+            )}
+
+            {!loading && source !== 'supabase-error' && (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               <AnimatePresence mode="popLayout">
                 {filteredUniversities.map((uni, index) => (
@@ -456,8 +494,9 @@ export default function Home() {
                 ))}
               </AnimatePresence>
             </div>
+            )}
 
-            {filteredUniversities.length === 0 && (
+            {!loading && source !== 'supabase-error' && filteredUniversities.length === 0 && (
               <div className="text-center py-20 text-muted-foreground">
                 <div className="mb-4 text-6xl opacity-20">🈳</div>
                 <p className="text-lg">未找到符合条件的高校</p>

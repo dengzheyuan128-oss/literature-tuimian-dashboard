@@ -139,6 +139,10 @@ export async function getProgramCards(filters: ProgramCardFilters = {}): Promise
       .eq('card_status', 'published')
       .order('updated_at', { ascending: false });
 
+    query = query
+      .order('published_at_raw', { ascending: false, foreignTable: 'notices' })
+      .limit(1, { foreignTable: 'notices' });
+
     if (filters.limit) {
       query = query.limit(filters.limit);
     }

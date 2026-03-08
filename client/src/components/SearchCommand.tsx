@@ -22,7 +22,7 @@ interface SearchCommandProps {
 export default function SearchCommand({ onSelect }: SearchCommandProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
-  const { universities } = useProgramCards({ search });
+  const { universities, loading, source, error } = useProgramCards({ search, limit: search.trim() ? 20 : 12 });
 
   // 搜索结果
   const results = useMemo(() => {
@@ -41,7 +41,7 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
 
       return nameMatch || specialtyMatch || tierMatch || simplifiedTierMatch;
     }).slice(0, 10);
-  }, [search]);
+  }, [search, universities]);
 
   const handleSelect = (uni: University) => {
     setOpen(false);
@@ -109,7 +109,19 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
           </div>
 
           <Command.List className="max-h-[400px] overflow-y-auto p-3">
-            {results.length === 0 && search && (
+            {loading && source === 'supabase-loading' && (
+              <div className="px-2 py-10 text-center text-sm text-muted-foreground">
+                正在加载可检索卡片...
+              </div>
+            )}
+
+            {source === 'supabase-error' && (
+              <div className="px-2 py-10 text-center text-sm text-destructive">
+                {error || '搜索数据加载失败'}
+              </div>
+            )}
+
+            {!loading && source !== 'supabase-error' && results.length === 0 && search && (
               <Command.Empty className="py-12 text-center">
                 <div className="flex flex-col items-center gap-3 text-muted-foreground">
                   <div className="w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center">
@@ -131,7 +143,7 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
                 </div>
               }
             >
-              {results.map((uni) => (
+              {!loading && source !== 'supabase-error' && results.map((uni) => (
                 <Command.Item
                   key={uni.id}
                   value={uni.name}
