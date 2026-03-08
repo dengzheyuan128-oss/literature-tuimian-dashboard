@@ -1,56 +1,26 @@
-/**
- * 通知原文详情页
- * 展示提取的通知完整内容
- */
-
-import { useState, useEffect } from 'react';
-import { useRoute, useLocation } from 'wouter';
-import type { PublicProgramCard } from '@/types/publicProgramCard';
-import { getPublicProgramCardById } from '@/lib/publicProgramCards';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { useEffect, useState } from 'react';
+import { useLocation, useRoute } from 'wouter';
 import {
+  AlertCircle,
   ArrowLeft,
-  ExternalLink,
   Calendar,
-  GraduationCap,
-  Clock,
+  ExternalLink,
   FileText,
+  GraduationCap,
   Loader2,
-  Download,
-  FileSpreadsheet,
-  File,
 } from 'lucide-react';
 
-// 附件类型定义
-interface Attachment {
-  title: string;
-  url: string;
-  type: 'pdf' | 'word' | 'excel' | 'document' | 'archive';
-}
-
-// 获取文件类型图标
-function getFileIcon(type: string) {
-  switch (type) {
-    case 'pdf':
-      return <FileText className="w-4 h-4 text-red-500" />;
-    case 'word':
-      return <FileText className="w-4 h-4 text-blue-500" />;
-    case 'excel':
-      return <FileSpreadsheet className="w-4 h-4 text-green-500" />;
-    default:
-      return <File className="w-4 h-4 text-gray-500" />;
-  }
-}
+import type { PublicProgramCard } from '@/types/publicProgramCard';
+import { getPublicProgramCardById } from '@/lib/publicProgramCards';
+import { getTierBadgeClassName } from '@/lib/tierUtils';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 
 export default function NoticeDetail() {
   const [, params] = useRoute('/notice/:id');
   const [, setLocation] = useLocation();
-  const [content, setContent] = useState<string | null>(null);
-  const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [card, setCard] = useState<PublicProgramCard | null>(null);
@@ -60,46 +30,31 @@ export default function NoticeDetail() {
   useEffect(() => {
     if (!universityId) return;
 
-    // 并行加载通知原文和附件
     const loadData = async () => {
       try {
         const loadedCard = await getPublicProgramCardById(universityId);
-        setCard(loadedCard);
-
-        // 加载通知内容
-        const contentResponse = await fetch(`/data/notices/${universityId}.md`);
-        if (contentResponse.ok) {
-          const text = await contentResponse.text();
-          const contentWithoutFrontmatter = text.replace(/^---[\s\S]*?---\n*/, '');
-          setContent(contentWithoutFrontmatter);
+        if (!loadedCard) {
+          setError('未找到卡片详情');
         } else {
-          setError('暂无通知原文');
+          setCard(loadedCard);
         }
-
-        // 加载附件列表
-        const attachmentsResponse = await fetch('/data/attachments.json');
-        if (attachmentsResponse.ok) {
-          const allAttachments = await attachmentsResponse.json();
-          const schoolAttachments = allAttachments[String(universityId)] || [];
-          setAttachments(schoolAttachments);
-        }
-      } catch (err) {
-        setError('加载失败');
+      } catch {
+        setError('加载详情失败');
       } finally {
         setLoading(false);
       }
     };
 
-    loadData();
+    void loadData();
   }, [universityId]);
 
-  if (!card) {
+  if (!loading && !card) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Card className="max-w-md">
           <CardHeader>
             <CardTitle>未找到院校</CardTitle>
-            <CardDescription>请检查链接是否正确</CardDescription>
+            <CardDescription>{error || '请检查链接是否正确'}</CardDescription>
           </CardHeader>
           <CardContent>
             <Button onClick={() => setLocation('/dashboard')}>返回首页</Button>
@@ -111,7 +66,6 @@ export default function NoticeDetail() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
-      {/* 顶部导航 */}
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur">
         <div className="container mx-auto px-4 h-14 flex items-center gap-4">
           <Button variant="ghost" size="sm" onClick={() => setLocation('/dashboard')}>
@@ -119,132 +73,125 @@ export default function NoticeDetail() {
             返回
           </Button>
           <Separator orientation="vertical" className="h-6" />
-          <span className="font-medium">{card.institutionName}</span>
-          <Badge variant="outline">{card.tier}</Badge>
+          <span className="font-medium">{card?.institutionName ?? '卡片详情'}</span>
+          <div className="flex flex-wrap gap-2">
+            {card?.institutionTags.map((tag) => (
+              <Badge key={`header-${tag}`} className={getTierBadgeClassName(tag)}>
+                {tag}
+              </Badge>
+            ))}
+          </div>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* 院校信息卡片 */}
         <Card className="mb-6">
           <CardHeader>
-            <div className="flex items-start justify-between">
+            <div className="flex items-start justify-between gap-4">
               <div>
                 <CardTitle className="text-2xl flex items-center gap-2">
                   <GraduationCap className="w-6 h-6" />
-                  {card.institutionName}
+                  {card?.institutionName ?? '加载中'}
                 </CardTitle>
                 <CardDescription className="mt-2">
-                  {card.programName}
+                  {card?.programName || '待补充'}
                 </CardDescription>
               </div>
-              {card.url && (
+              {card?.url ? (
                 <Button variant="outline" size="sm" asChild>
                   <a href={card.url} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-4 h-4 mr-2" />
-                    查看原始链接
+                    官方通知
                   </a>
                 </Button>
-              )}
+              ) : null}
             </div>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-muted-foreground" />
-                <span className="text-muted-foreground">截止日期：</span>
-                <span className="font-medium">{card.deadline}</span>
+                <span className="text-muted-foreground">截止时间</span>
+                <span className="font-medium">{card?.deadline || '待补充'}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-muted-foreground" />
-                <span className="text-muted-foreground">申请时间：</span>
-                <span className="font-medium">{card.applicationPeriod}</span>
+                <Calendar className="w-4 h-4 text-muted-foreground" />
+                <span className="text-muted-foreground">申请时间</span>
+                <span className="font-medium">{card?.applicationPeriod || '待补充'}</span>
               </div>
               <div className="flex items-center gap-2">
                 <FileText className="w-4 h-4 text-muted-foreground" />
-                <span className="text-muted-foreground">考核形式：</span>
-                <span className="font-medium">{card.examForm}</span>
+                <span className="text-muted-foreground">考核方式</span>
+                <span className="font-medium">{card?.examForm || '待补充'}</span>
               </div>
               <div className="flex items-center gap-2">
                 <GraduationCap className="w-4 h-4 text-muted-foreground" />
-                <span className="text-muted-foreground">学位类型：</span>
-                <span className="font-medium">{card.degreeType}</span>
+                <span className="text-muted-foreground">学位类型</span>
+                <span className="font-medium">{card?.degreeType || '待补充'}</span>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* 附件下载 */}
-        {attachments.length > 0 && (
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Download className="w-5 h-5" />
-                附件下载
-              </CardTitle>
-              <CardDescription>
-                共 {attachments.length} 个附件，点击可直接下载
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-2">
-                {attachments.map((attachment, index) => (
-                  <a
-                    key={index}
-                    href={attachment.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors group"
-                  >
-                    {getFileIcon(attachment.type)}
-                    <span className="flex-1 text-sm truncate group-hover:text-primary">
-                      {attachment.title}
-                    </span>
-                    <Badge variant="secondary" className="text-xs">
-                      {attachment.type.toUpperCase()}
-                    </Badge>
-                    <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* 通知原文 */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <FileText className="w-5 h-5" />
-              通知原文
+              结构化详情
             </CardTitle>
             <CardDescription>
-              以下内容由 AI 从官方通知页面提取，仅供参考，请以官方原文为准
+              当前页面展示的是数据库中的结构化字段，具体要求仍请以官方通知原文为准。
             </CardDescription>
           </CardHeader>
           <CardContent>
             {loading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+              <div className="flex items-center justify-center py-16 text-muted-foreground">
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                加载中...
               </div>
             ) : error ? (
-              <div className="text-center py-12 text-muted-foreground">
-                <FileText className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>{error}</p>
-                <p className="text-sm mt-2">请点击上方"查看原始链接"查看官方通知</p>
-              </div>
-            ) : (
-              <ScrollArea className="h-[600px] pr-4">
-                <div className="prose prose-sm dark:prose-invert max-w-none">
-                  <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed">
-                    {content}
-                  </pre>
+              <div className="flex items-center justify-center py-12 text-muted-foreground">
+                <div className="text-center">
+                  <AlertCircle className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                  <p>{error}</p>
                 </div>
-              </ScrollArea>
-            )}
+              </div>
+            ) : card ? (
+              <div className="space-y-6 text-sm font-sans">
+                <Field label="院校" value={card.institutionName} />
+                <Field label="项目/专业" value={card.programName} />
+                <Field label="院校层次" value={card.institutionTags.join(' / ') || card.tier || '其他'} />
+                <Field label="地区" value={card.location || '待补充'} />
+                <Field label="英语要求" value={card.englishRequirement || '待补充'} />
+                <Field label="申请时间" value={card.applicationPeriod || '待补充'} />
+                <Field label="截止时间" value={card.deadline || '待补充'} />
+                <Field label="考核方式" value={card.examForm || '待补充'} />
+                {card.url ? (
+                  <div className="pt-2">
+                    <Button asChild>
+                      <a href={card.url} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        打开官方通知链接
+                      </a>
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="text-muted-foreground">当前卡片未提取到可用官网链接</div>
+                )}
+              </div>
+            ) : null}
           </CardContent>
         </Card>
       </main>
+    </div>
+  );
+}
+
+function Field({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <div className="text-muted-foreground mb-1">{label}</div>
+      <div className="text-base">{value}</div>
     </div>
   );
 }

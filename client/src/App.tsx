@@ -96,9 +96,7 @@ function App() {
                 <FeedbackButton />
                 <div className="relative">
                   <Router />
-                  <div className="fixed bottom-4 right-4 z-40 bg-card/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg">
-                    <BuildInfo />
-                  </div>
+                  <BuildInfo />
                 </div>
               </TooltipProvider>
             </ReminderProvider>

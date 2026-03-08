@@ -45,10 +45,12 @@ describe('programCardProxy', () => {
       error: null,
       lastUpdated: '2026-03-08T12:00:00.000Z',
       supabaseHost: 'example.supabase.co',
+      totalCount: 10702,
     }, 0, 24);
 
     expect(dataset.source).toBe('api');
     expect(dataset.hasMore).toBe(true);
+    expect(dataset.totalCount).toBe(10702);
     expect(dataset.universities[0]?.sourceCardId).toBe('card-1');
     expect(dataset.universities[0]?.name).toBe('Peking University');
   });

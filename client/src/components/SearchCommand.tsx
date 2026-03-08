@@ -1,10 +1,11 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Command } from 'cmdk';
-import { Search, ExternalLink, GraduationCap, Calendar, BookOpen, Sparkles } from 'lucide-react';
+import { BookOpen, Calendar, ExternalLink, GraduationCap, Search, Sparkles } from 'lucide-react';
+
 import type { PublicProgramCard } from '@/types/publicProgramCard';
 import { usePublicProgramCards } from '@/lib/publicProgramCards';
 import { cleanUserInput } from '@/lib/security';
-import { getSimplifiedTier, getTierBadgeClassName } from '@/lib/tierUtils';
+import { getTierBadgeClassName } from '@/lib/tierUtils';
 import {
   Dialog,
   DialogContent,
@@ -22,16 +23,15 @@ interface SearchCommandProps {
 export default function SearchCommand({ onSelect }: SearchCommandProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
-  const { cards, loading, source, error } = usePublicProgramCards({
+  const [visibleCount, setVisibleCount] = useState(20);
+  const { cards, loading, source, error, hasMore } = usePublicProgramCards({
     search,
-    limit: search.trim() ? 20 : 12,
+    limit: search.trim() ? visibleCount : 12,
     enabled: open,
   });
 
-  // 搜索结果
   const results = useMemo(() => {
     if (!search.trim()) {
-      // 显示热门推荐（985高校）
       return cards.filter((card) => card.tier === '985').slice(0, 6);
     }
 
@@ -41,21 +41,16 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
       const nameMatch = uni.institutionName.toLowerCase().includes(cleanSearch);
       const specialtyMatch = uni.programName.toLowerCase().includes(cleanSearch);
       const tierMatch = uni.tier.toLowerCase().includes(cleanSearch);
-      const simplifiedTierMatch = getSimplifiedTier(uni.tier).toLowerCase().includes(cleanSearch);
+      const institutionTagMatch = uni.institutionTags.some((tag) => tag.toLowerCase().includes(cleanSearch));
 
-      return nameMatch || specialtyMatch || tierMatch || simplifiedTierMatch;
-    }).slice(0, 10);
+      return nameMatch || specialtyMatch || tierMatch || institutionTagMatch;
+    });
   }, [search, cards]);
 
-  const handleSelect = (uni: PublicProgramCard) => {
-    setOpen(false);
-    setSearch('');
-    if (onSelect) {
-      onSelect(uni);
-    }
-  };
+  useEffect(() => {
+    setVisibleCount(20);
+  }, [search, open]);
 
-  // 全局键盘监听
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -68,12 +63,18 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const handleSelect = (uni: PublicProgramCard) => {
+    setOpen(false);
+    setSearch('');
+    if (onSelect) {
+      onSelect(uni);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button
-          className="group flex items-center gap-3 w-full h-12 px-5 rounded-lg border border-border/50 hover:border-primary/50 bg-card/50 hover:bg-card transition-all text-left"
-        >
+        <button className="group flex items-center gap-3 w-full h-12 px-5 rounded-lg border border-border/50 hover:border-primary/50 bg-card/50 hover:bg-card transition-all text-left">
           <Search className="w-4 h-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
           <span className="flex-1 text-sm text-muted-foreground group-hover:text-foreground transition-colors truncate">
             搜索高校、专业...
@@ -87,13 +88,10 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
       <DialogContent className="p-0 max-w-2xl overflow-hidden border-border/50 shadow-2xl">
         <DialogHeader className="sr-only">
           <DialogTitle>搜索高校</DialogTitle>
-          <DialogDescription>
-            使用快捷键 ⌘K 打开搜索，搜索高校和专业
-          </DialogDescription>
+          <DialogDescription>使用快捷键打开搜索，搜索高校和专业</DialogDescription>
         </DialogHeader>
 
         <Command className="rounded-lg border-0">
-          {/* 搜索输入区域 */}
           <div className="flex items-center border-b border-border/50 px-4 bg-gradient-to-r from-muted/30 to-muted/10">
             <Search className="mr-3 h-5 w-5 shrink-0 text-primary" />
             <Command.Input
@@ -103,10 +101,7 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
               className="flex h-14 w-full rounded-md bg-transparent py-3 text-base outline-none placeholder:text-muted-foreground/70 disabled:cursor-not-allowed disabled:opacity-50"
             />
             {search && (
-              <button
-                onClick={() => setSearch('')}
-                className="ml-2 p-1 rounded-md hover:bg-muted transition-colors"
-              >
+              <button onClick={() => setSearch('')} className="ml-2 p-1 rounded-md hover:bg-muted transition-colors">
                 <span className="text-xs text-muted-foreground">清除</span>
               </button>
             )}
@@ -152,22 +147,22 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
                   key={uni.id}
                   value={uni.institutionName}
                   onSelect={() => handleSelect(uni)}
-                  className="group flex items-center gap-4 px-3 py-3 rounded-lg cursor-pointer hover:bg-accent/50 aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-all my-1"
+                  className="group flex items-center gap-4 px-3 py-3 rounded-lg cursor-pointer hover:bg-accent/50 aria-selected:bg-accent aria-selected:text-accent-foreground transition-all my-1"
                 >
-                  {/* 院校图标 */}
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 group-aria-selected:bg-primary/20 flex items-center justify-center transition-colors">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center transition-colors">
                     <GraduationCap className="h-5 w-5 text-primary" />
                   </div>
 
-                  {/* 院校信息 */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-semibold text-sm truncate">
-                        {cleanUserInput(uni.institutionName)}
-                      </span>
-                      <Badge className={`${getTierBadgeClassName(uni.tier)} text-[10px] px-1.5 py-0 shrink-0`}>
-                        {getSimplifiedTier(uni.tier)}
-                      </Badge>
+                      <span className="font-semibold text-sm truncate">{cleanUserInput(uni.institutionName)}</span>
+                      <div className="flex flex-wrap gap-1 shrink-0">
+                        {uni.institutionTags.map((tag) => (
+                          <Badge key={`${uni.id}-${tag}`} className={`${getTierBadgeClassName(tag)} text-[10px] px-1.5 py-0 shrink-0`}>
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
 
                     <div className="flex items-center gap-4 text-xs text-muted-foreground">
@@ -182,7 +177,6 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
                     </div>
                   </div>
 
-                  {/* 外链按钮 */}
                   {uni.url && uni.url !== '' && (
                     <a
                       href={cleanUserInput(uni.url)}
@@ -199,7 +193,18 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
               ))}
             </Command.Group>
 
-            {/* 底部提示 */}
+            {!loading && source !== 'supabase-error' && search && hasMore && (
+              <div className="px-2 pb-2">
+                <button
+                  type="button"
+                  onClick={() => setVisibleCount((count) => count + 20)}
+                  className="w-full rounded-lg border border-border/50 px-3 py-2 text-sm text-muted-foreground hover:bg-accent/40 hover:text-foreground transition-colors"
+                >
+                  加载更多结果
+                </button>
+              </div>
+            )}
+
             <div className="border-t border-border/30 mt-2 pt-3 px-2">
               <div className="flex items-center justify-between text-xs text-muted-foreground">
                 <div className="flex items-center gap-4">

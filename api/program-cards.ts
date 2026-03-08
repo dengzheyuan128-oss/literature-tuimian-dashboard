@@ -59,7 +59,7 @@ export default async function handler(req: any, res: any) {
 
     let query = supabase
       .from('public_program_card_reads')
-      .select(PROGRAM_CARD_READ_SELECT)
+      .select(PROGRAM_CARD_READ_SELECT, { count: 'exact' })
       .order('updated_at', { ascending: false });
 
     if (id) {
@@ -79,7 +79,7 @@ export default async function handler(req: any, res: any) {
       ].join(','));
     }
 
-    const { data, error } = await query;
+    const { data, error, count } = await query;
 
     if (error) {
       res.status(502).json({
@@ -103,6 +103,7 @@ export default async function handler(req: any, res: any) {
       error: null,
       lastUpdated: new Date().toISOString(),
       supabaseHost,
+      totalCount: id ? records.length : count ?? records.length,
     });
   } catch (error) {
     res.status(500).json({

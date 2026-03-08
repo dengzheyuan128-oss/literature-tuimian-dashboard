@@ -9,12 +9,14 @@ export type NoticeScope = 'general' | 'specific';
 
 // 网站状态
 export type WebsiteStatus = 'normal' | 'maintenance' | 'unavailable';
+export type InstitutionTag = '985' | '211' | '双一流' | '四非' | '省属重点师范' | '其他';
 
 export interface University {
   id: number;
   sourceCardId?: string;
   name: string;
   tier: string;
+  institutionTags?: InstitutionTag[];
   location?: string;
   is985?: boolean;
   is211?: boolean;

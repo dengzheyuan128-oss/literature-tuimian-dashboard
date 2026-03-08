@@ -8,7 +8,6 @@ import { useCompare } from "@/contexts/CompareContext";
 import { useReminders } from "@/contexts/ReminderContext";
 import {
   SIMPLIFIED_TIERS,
-  getSimplifiedTier,
   getTierBadgeClassName,
   getTierConfig,
   SimplifiedTier
@@ -75,7 +74,7 @@ export default function Home() {
   const { addToCompare, isInCompare } = useCompare();
   const { addReminder } = useReminders();
   const [page, setPage] = useState(1);
-  const { cards, coverageStats, loading, source, error, hasMore } = usePublicProgramCards({
+  const { cards, coverageStats, loading, source, error, hasMore, totalCount } = usePublicProgramCards({
     limit: PAGE_SIZE,
     offset: (page - 1) * PAGE_SIZE,
   });
@@ -103,11 +102,12 @@ export default function Home() {
       const matchesSearch =
         cleanTerm === '' ||
         uni.institutionName.toLowerCase().includes(cleanTerm) ||
-        uni.programName.toLowerCase().includes(cleanTerm);
+        uni.programName.toLowerCase().includes(cleanTerm) ||
+        uni.institutionTags.some((tag) => tag.toLowerCase().includes(cleanTerm));
 
-      // 使用简化分类进行筛选
+      // 使用院校多标签进行筛选
       const matchesLevel = selectedLevel
-        ? getSimplifiedTier(uni.tier) === selectedLevel
+        ? uni.institutionTags.includes(selectedLevel)
         : true;
 
       return matchesSearch && matchesLevel;
@@ -340,7 +340,7 @@ export default function Home() {
                 <BookOpen className="w-6 h-6 text-primary" />
                 <span>院校名录</span>
                 <span className="text-sm font-normal text-muted-foreground ml-2 font-sans">
-                  共收录 {filteredUniversities.length} 所高校
+                  当前页 {filteredUniversities.length} 条，共 {totalCount ?? filteredUniversities.length} 所高校
                 </span>
               </h2>
               <div className="flex items-center gap-2">
@@ -370,7 +370,7 @@ export default function Home() {
                   </span>
                 </div>
                 <div className="text-sm font-sans text-muted-foreground">
-                  数据覆盖率: <strong className="text-foreground">{coverageStats.completeRate}%</strong>
+                  当前页覆盖率: <strong className="text-foreground">{coverageStats.completeRate}%</strong>
                 </div>
               </div>
             </div>
@@ -436,9 +436,11 @@ export default function Home() {
                               {cleanUserInput(uni.institutionName)}
                             </CardTitle>
                             <CardDescription className="font-sans text-xs flex flex-wrap gap-1 mt-2">
-                              <Badge className={`${getTierBadgeClassName(uni.tier)} text-[10px] px-1.5 py-0.5`}>
-                                {getSimplifiedTier(uni.tier)}
-                              </Badge>
+                              {uni.institutionTags.map((tag) => (
+                                <Badge key={`${uni.id}-${tag}`} className={`${getTierBadgeClassName(tag)} text-[10px] px-1.5 py-0.5`}>
+                                  {tag}
+                                </Badge>
+                              ))}
                               <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground border-0 text-[10px] px-1.5 py-0.5">
                                 {cleanUserInput(uni.degreeType)}
                               </Badge>
@@ -570,7 +572,9 @@ export default function Home() {
                 <div className="flex-1">
                   <h2 className="text-3xl font-bold mb-2">{cleanUserInput(selectedUniversity.name)}</h2>
                   <div className="flex flex-wrap gap-2">
-                    <Badge className={getTierBadgeClassName(selectedUniversity.tier)}>{getSimplifiedTier(selectedUniversity.tier)}</Badge>
+                    {selectedCard?.institutionTags.map((tag) => (
+                      <Badge key={`detail-${tag}`} className={getTierBadgeClassName(tag)}>{tag}</Badge>
+                    ))}
                     <Badge className="bg-primary/20 text-primary border-0">{cleanUserInput(selectedUniversity.degreeType)}</Badge>
                     {selectedUniversity.noticeType && (
                       <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 border-0">

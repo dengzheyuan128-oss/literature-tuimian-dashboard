@@ -1,4 +1,5 @@
 import type { DataStatus, NoticeType, NoticeScope, WebsiteStatus } from '@/types/university';
+import type { SimplifiedTier } from '@/lib/tierUtils';
 
 export interface PublicProgramCard {
   id: string;
@@ -8,6 +9,7 @@ export interface PublicProgramCard {
   programName: string;
   specialtySummary?: string;
   tier: string;
+  institutionTags: SimplifiedTier[];
   location?: string;
   is985?: boolean;
   is211?: boolean;
@@ -41,4 +43,5 @@ export interface PublicProgramCardDataset {
   error: string | null;
   supabaseHost: string | null;
   hasMore: boolean;
+  totalCount?: number;
 }

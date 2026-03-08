@@ -34,6 +34,8 @@ describe('programCards', () => {
     expect(result).toMatchObject<Partial<University & { sourceCardId: string }>>({
       sourceCardId: 'card-1',
       name: 'SYSU',
+      tier: '985',
+      institutionTags: ['985', '211', '双一流'],
       specialty: 'Chinese History',
       degreeType: 'Academic',
       applicationPeriod: '2024-09-01 - 2024-09-10',
@@ -88,5 +90,37 @@ describe('programCards', () => {
       pendingManual: 0,
       completeRate: 50,
     });
+  });
+
+  it('treats cards with exam form and english requirement as complete even if one legacy field is missing', () => {
+    const input = {
+      id: 'card-2',
+      institution_name: 'BNU',
+      department_name: 'Chinese Department',
+      program_name: 'Chinese Language and Literature',
+      degree_type: 'Academic',
+      year: 2026,
+      primary_stage: 'Summer Camp',
+      specialty_summary: 'Related majors accepted',
+      institution_location: 'Beijing',
+      institution_is_985: false,
+      institution_is_211: true,
+      institution_discipline_grade: 'A',
+      latest_notice_url: '',
+      latest_notice_title: 'Notice',
+      latest_notice_application_start_raw: '2026-06-01',
+      latest_notice_application_end_raw: '2026-06-10',
+      latest_notice_published_at_raw: '2026-06-02',
+      latest_notice_materials_text: 'CV',
+      latest_notice_ranking_requirement_text: 'Top 10%',
+      latest_notice_english_requirement_text: 'CET6 550+',
+      latest_notice_application_method: 'Interview',
+    } as const;
+
+    const result = mapProgramCardRecordToUniversity(input, 2);
+
+    expect(result.dataStatus).toBe('COMPLETE');
+    expect(result.institutionTags).toContain('211');
+    expect(result.institutionTags).toContain('双一流');
   });
 });

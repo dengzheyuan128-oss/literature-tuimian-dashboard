@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import type { University, DataStatus } from '@/types/university';
 
 import { getCoverageStats, universities as archivedUniversities } from '@/lib/dataLoader';
+import { getInstitutionTags, getPrimaryInstitutionTier } from '@/lib/institutionTags';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 
 export interface ProgramCardRecord {
@@ -45,6 +46,7 @@ export interface ProgramCardDataset {
   error: string | null;
   supabaseHost: string | null;
   hasMore: boolean;
+  totalCount?: number;
 }
 
 const ARCHIVED_LAST_UPDATED = 'archived';
@@ -85,7 +87,12 @@ type CacheEntry = {
 const datasetCache = new Map<string, CacheEntry>();
 
 export function mapProgramCardRecordToUniversity(record: ProgramCardRecord, index: number): University {
-  const tier = buildTier(record);
+  const institutionTags = getInstitutionTags(record.institution_name, {
+    tier: buildTier(record),
+    is985: Boolean(record.institution_is_985),
+    is211: Boolean(record.institution_is_211),
+  });
+  const tier = getPrimaryInstitutionTier(institutionTags, buildTier(record));
   const specialty = record.program_name || record.specialty_summary || record.department_name || '待补充';
   const deadline = record.latest_notice_application_end_raw || '待补充';
   const applicationPeriod = formatApplicationPeriod(
@@ -96,13 +103,22 @@ export function mapProgramCardRecordToUniversity(record: ProgramCardRecord, inde
   const examForm = record.latest_notice_application_method || '待补充';
   const url = record.latest_notice_url || '';
   const degreeType = record.degree_type || '待补充';
-  const dataStatus = inferDataStatus({ specialty, deadline, url, degreeType, applicationPeriod });
+  const dataStatus = inferDataStatus({
+    specialty,
+    deadline,
+    url,
+    degreeType,
+    applicationPeriod,
+    examForm,
+    englishRequirement,
+  });
 
   return {
     id: createStableUniversityId(record.id, index),
     sourceCardId: record.id,
     name: record.institution_name,
     tier,
+    institutionTags,
     location: record.institution_location || undefined,
     is985: record.institution_is_985 ?? undefined,
     is211: record.institution_is_211 ?? undefined,
@@ -391,6 +407,7 @@ function buildArchivedDataset(error: string | null = null): ProgramCardDataset {
     error,
     supabaseHost: getSupabaseHost(),
     hasMore: false,
+    totalCount: archivedUniversities.length,
   };
 }
 
@@ -549,6 +566,7 @@ function buildSupabaseErrorDataset(error: string): ProgramCardDataset {
     error,
     supabaseHost: getSupabaseHost(),
     hasMore: false,
+    totalCount: 0,
   };
 }
 
@@ -607,6 +625,7 @@ function buildSupabaseDatasetFromRecords(records: ProgramCardRecord[], offset: n
     error: null,
     supabaseHost: getSupabaseHost(),
     hasMore,
+    totalCount: normalized.length,
   };
 }
 
@@ -619,6 +638,7 @@ function buildProxyDataset(
     error: string | null;
     lastUpdated: string;
     supabaseHost: string | null;
+    totalCount?: number;
   },
   offset: number,
   limit: number,
@@ -636,6 +656,7 @@ function buildProxyDataset(
     error: payload.error,
     supabaseHost: payload.supabaseHost,
     hasMore: payload.hasMore,
+    totalCount: payload.totalCount,
   };
 }
 
@@ -777,12 +798,22 @@ function inferDataStatus(input: {
   url: string;
   degreeType: string;
   applicationPeriod: string;
+  examForm?: string;
+  englishRequirement?: string;
 }): DataStatus {
-  const fields = [input.specialty, input.deadline, input.url, input.degreeType, input.applicationPeriod];
+  const fields = [
+    input.specialty,
+    input.deadline,
+    input.url,
+    input.degreeType,
+    input.applicationPeriod,
+    input.examForm,
+    input.englishRequirement,
+  ];
   const filled = fields.filter((value) => value && value !== '待补充').length;
 
   if (filled >= 5) return 'COMPLETE';
-  if (filled >= 2) return 'PARTIAL';
+  if (filled >= 3) return 'PARTIAL';
   return 'PENDING_MANUAL';
 }
 

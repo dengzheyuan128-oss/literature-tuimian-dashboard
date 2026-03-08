@@ -4,6 +4,7 @@ import type { University } from '@/types/university';
 import type { PublicProgramCard, PublicProgramCardDataset } from '@/types/publicProgramCard';
 
 import type { ProgramCardFilters } from '@/lib/programCards';
+import { getInstitutionTags, getPrimaryInstitutionTier } from '@/lib/institutionTags';
 import { getProgramCardById, useProgramCards } from '@/lib/programCards';
 
 export { ProgramCardFilters };
@@ -23,18 +24,22 @@ export function usePublicProgramCards(filters: ProgramCardFilters = {}) {
       error: dataset.error,
       supabaseHost: dataset.supabaseHost,
       hasMore: dataset.hasMore,
+      totalCount: dataset.totalCount,
       loading: dataset.loading,
     };
   }, [dataset]);
 }
 
 export function mapUniversityToPublicProgramCard(university: University): PublicProgramCard {
+  const institutionTags = university.institutionTags ?? getInstitutionTags(university.name, university);
+
   return {
     id: String(university.sourceCardId ?? university.id),
     stableId: university.id,
     institutionName: university.name,
     programName: university.specialty,
-    tier: university.tier,
+    tier: getPrimaryInstitutionTier(institutionTags, university.tier),
+    institutionTags,
     location: university.location,
     is985: university.is985,
     is211: university.is211,
@@ -60,6 +65,7 @@ export function mapPublicProgramCardToUniversity(card: PublicProgramCard): Unive
     sourceCardId: card.id,
     name: card.institutionName,
     tier: card.tier,
+    institutionTags: card.institutionTags,
     location: card.location,
     is985: card.is985,
     is211: card.is211,
