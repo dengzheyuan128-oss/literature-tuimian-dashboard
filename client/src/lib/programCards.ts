@@ -121,7 +121,7 @@ export async function getProgramCards(filters: ProgramCardFilters = {}): Promise
         departments:department_id (
           name
         ),
-        notices (
+        notices:notices!notices_program_card_id_fkey (
           notice_url,
           title,
           application_start_raw,
