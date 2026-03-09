@@ -6,10 +6,11 @@ declare const __BUILD_COMMIT__: string;
 declare const __BUILD_TIME__: string;
 
 export function BuildInfo() {
-  const { cards, lastUpdated, source, configured, error, supabaseHost, totalCount } = usePublicProgramCards({ limit: 1 });
+  const { cards, lastUpdated, source, configured, error, supabaseHost, totalCount, institutionCount } =
+    usePublicProgramCards({ limit: 1 });
   const buildCommit = typeof __BUILD_COMMIT__ !== 'undefined' ? __BUILD_COMMIT__ : 'unknown';
   const buildTime = typeof __BUILD_TIME__ !== 'undefined' ? __BUILD_TIME__ : 'unknown';
-  const universitiesCount = totalCount ?? cards.length;
+  const entriesCount = totalCount ?? cards.length;
   const [position, setPosition] = useState({ x: 16, y: 16 });
   const dragOffset = useRef({ x: 0, y: 0 });
 
@@ -64,8 +65,13 @@ export function BuildInfo() {
           <span className="font-mono bg-secondary px-2 py-1 rounded">Build: {buildCommit}</span>
         </div>
         <div className="flex items-center gap-2">
-          <span>Universities: {universitiesCount} 所</span>
+          <span>Entries: {entriesCount}</span>
         </div>
+        {institutionCount ? (
+          <div className="flex items-center gap-2">
+            <span>Institutions: {institutionCount}</span>
+          </div>
+        ) : null}
         <div className="flex items-center gap-2">
           <span>Data Updated: {lastUpdated}</span>
         </div>

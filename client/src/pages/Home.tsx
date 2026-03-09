@@ -31,19 +31,19 @@ import UserMenu from "@/components/UserMenu";
 import { useAuth } from "@/contexts/AuthContext";
 import { isAdmin } from "@/lib/adminUtils";
 
-// 通用/待核实数据的占位值
+// 通用占位值，用于提示用户优先查看原文
 const GENERIC_VALUES = {
   specialty: ['汉语言文学、语言学等', '中国语言文学', '待确认', '待补充'],
   examForm: ['材料审核、复试', '面试、笔试', '待确认', '待补充', '综合面试'],
   englishRequirement: ['CET-6或同等', 'CET-4或同等', '待确认', '待补充', '无硬性要求'],
 };
 
-// 判断字段是否为通用/待核实值
+// 判断字段是否为通用占位值
 function isGenericValue(field: keyof typeof GENERIC_VALUES, value: string): boolean {
   return GENERIC_VALUES[field]?.includes(value) ?? false;
 }
 
-// 显示值（如果是通用值且未核实，显示提示）
+// 未核实时，通用占位值统一引导回原文
 function displayValue(value: string, field: keyof typeof GENERIC_VALUES, dataVerified: boolean): string {
   if (!dataVerified && isGenericValue(field, value)) {
     return '请查看通知原文';
@@ -52,17 +52,20 @@ function displayValue(value: string, field: keyof typeof GENERIC_VALUES, dataVer
 }
 
 // 数据状态标签配置
-const STATUS_CONFIG: Record<DataStatus, { label: string; className: string }> = {
+const STATUS_CONFIG: Record<DataStatus, { label: string; description: string; className: string }> = {
   COMPLETE: {
-    label: '完整',
+    label: '信息较全',
+    description: '关键字段已基本齐全',
     className: 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300'
   },
   PARTIAL: {
-    label: '部分',
+    label: '仍需核对',
+    description: '已有主要信息，部分字段待确认',
     className: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300'
   },
   PENDING_MANUAL: {
-    label: '待补',
+    label: '待补字段',
+    description: '原文存在，但关键展示字段还未补齐',
     className: 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300'
   },
 };
@@ -88,7 +91,7 @@ export default function Home() {
   const { addToCompare, isInCompare } = useCompare();
   const { addReminder } = useReminders();
   const [page, setPage] = useState(1);
-  const { cards, coverageStats, loading, source, error, hasMore, totalCount } = usePublicProgramCards({
+  const { cards, coverageStats, loading, source, error, hasMore, totalCount, institutionCount } = usePublicProgramCards({
     limit: PAGE_SIZE,
     offset: (page - 1) * PAGE_SIZE,
   });
@@ -98,10 +101,18 @@ export default function Home() {
   const [selectedCard, setSelectedCard] = useState<PublicProgramCard | null>(null);
   const [favorites, setFavorites] = useState<number[]>([]);
   const selectedUniversity = selectedCard ? mapPublicProgramCardToUniversity(selectedCard) : null;
+  const totalEntries = totalCount ?? cards.length;
+  const totalPages = Math.max(1, Math.ceil(totalEntries / PAGE_SIZE));
 
   useEffect(() => {
     setPage(1);
   }, [selectedLevel]);
+
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
 
   // 加载收藏列表
   useState(() => {
@@ -354,7 +365,8 @@ export default function Home() {
                 <BookOpen className="w-6 h-6 text-primary" />
                 <span>院校名录</span>
                 <span className="text-sm font-normal text-muted-foreground ml-2 font-sans">
-                  当前页 {filteredUniversities.length} 条，共 {totalCount ?? filteredUniversities.length} 所高校
+                  当前页 {filteredUniversities.length} 条，共 {totalEntries} 个条目
+                  {typeof institutionCount === "number" && ` · ${institutionCount} 所高校`}
                 </span>
               </h2>
               <div className="flex items-center gap-2">
@@ -370,22 +382,25 @@ export default function Home() {
             <div className="mb-8 p-4 bg-muted/30 rounded-lg border border-border/30">
               <div className="flex flex-wrap gap-4 items-center justify-between">
                 <div className="flex gap-6 text-sm font-sans">
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-1.5" title={STATUS_CONFIG.COMPLETE.description}>
                     <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                    完整 <strong>{coverageStats.complete}</strong>
+                    信息较全 <strong>{coverageStats.complete}</strong>
                   </span>
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-1.5" title={STATUS_CONFIG.PARTIAL.description}>
                     <span className="w-2 h-2 rounded-full bg-yellow-500"></span>
-                    部分 <strong>{coverageStats.partial}</strong>
+                    仍需核对 <strong>{coverageStats.partial}</strong>
                   </span>
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-1.5" title={STATUS_CONFIG.PENDING_MANUAL.description}>
                     <span className="w-2 h-2 rounded-full bg-red-500"></span>
-                    待补 <strong>{coverageStats.pendingManual}</strong>
+                    待补字段 <strong>{coverageStats.pendingManual}</strong>
                   </span>
                 </div>
                 <div className="text-sm font-sans text-muted-foreground">
                   当前页覆盖率: <strong className="text-foreground">{coverageStats.completeRate}%</strong>
                 </div>
+              </div>
+              <div className="mt-3 text-xs text-muted-foreground font-sans">
+                “待补字段”不等于项目无效，通常只是截止时间、来源链接或要求摘要还没完全结构化；请优先查看原文确认。
               </div>
             </div>
 
@@ -466,7 +481,10 @@ export default function Home() {
                                   {cleanUserInput(uni.noticeType)}
                                 </Badge>
                               )}
-                              <Badge className={`border-0 text-[10px] px-1.5 py-0.5 ${STATUS_CONFIG[uni.dataStatus].className}`}>
+                              <Badge
+                                title={STATUS_CONFIG[uni.dataStatus].description}
+                                className={`border-0 text-[10px] px-1.5 py-0.5 ${STATUS_CONFIG[uni.dataStatus].className}`}
+                              >
                                 {STATUS_CONFIG[uni.dataStatus].label}
                               </Badge>
                               {uni.noticeScope === 'general' && (
@@ -598,11 +616,29 @@ export default function Home() {
             )}
 
             {!loading && source !== 'supabase-error' && filteredUniversities.length > 0 && (
-              <div className="mt-8 flex items-center justify-between gap-4 border-t border-border/30 pt-6">
+              <div className="mt-8 flex flex-col gap-4 border-t border-border/30 pt-6 md:flex-row md:items-center md:justify-between">
                 <div className="text-sm text-muted-foreground font-sans">
-                  第 {page} 页，每页 {PAGE_SIZE} 条
+                  第 {page} / {totalPages} 页，每页 {PAGE_SIZE} 条
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <label className="text-sm text-muted-foreground font-sans" htmlFor="page-jump">
+                    跳转到
+                  </label>
+                  <Input
+                    id="page-jump"
+                    type="number"
+                    min={1}
+                    max={totalPages}
+                    value={page}
+                    onChange={(event) => {
+                      const nextPage = Number(event.target.value);
+                      if (Number.isNaN(nextPage)) {
+                        return;
+                      }
+                      setPage(Math.min(totalPages, Math.max(1, nextPage)));
+                    }}
+                    className="h-9 w-24 font-sans"
+                  />
                   <Button
                     variant="outline"
                     onClick={() => setPage((current) => Math.max(1, current - 1))}
@@ -613,7 +649,7 @@ export default function Home() {
                   <Button
                     variant="outline"
                     onClick={() => setPage((current) => current + 1)}
-                    disabled={!hasMore}
+                    disabled={!hasMore || page >= totalPages}
                   >
                     下一页
                   </Button>

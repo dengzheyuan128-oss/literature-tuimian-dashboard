@@ -10,6 +10,7 @@ export interface ProgramCardProxyPayload {
   lastUpdated: string;
   supabaseHost: string | null;
   totalCount?: number;
+  institutionCount?: number;
 }
 
 export function buildProgramCardApiUrl(filters: {
@@ -46,5 +47,6 @@ export function mapProxyPayloadToDataset(
     supabaseHost: payload.supabaseHost,
     hasMore: payload.hasMore,
     totalCount: payload.totalCount,
+    institutionCount: payload.institutionCount,
   };
 }

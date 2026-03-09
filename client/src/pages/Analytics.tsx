@@ -186,11 +186,11 @@ export default function Analytics() {
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b">
         <div className="container max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setLocation("/")}
-            >
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setLocation("/dashboard")}
+              >
               <ArrowLeft className="w-5 h-5" />
             </Button>
             <div>

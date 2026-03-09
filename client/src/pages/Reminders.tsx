@@ -147,7 +147,7 @@ export default function Reminders() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setLocation("/")}
+                onClick={() => setLocation("/dashboard")}
               >
                 <ArrowLeft className="w-5 h-5" />
               </Button>

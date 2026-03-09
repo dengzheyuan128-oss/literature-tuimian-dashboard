@@ -48,7 +48,7 @@ export default function Compare() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setLocation("/")}
+                onClick={() => setLocation("/dashboard")}
               >
                 <ArrowLeft className="w-5 h-5" />
               </Button>
@@ -90,7 +90,7 @@ export default function Compare() {
               <p className="text-muted-foreground mb-6 text-center max-w-md">
                 请在首页选择院校添加到对比列表，最多可同时对比4所院校
               </p>
-              <Button onClick={() => setLocation("/")}>
+              <Button onClick={() => setLocation("/dashboard")}>
                 <Plus className="w-4 h-4 mr-2" />
                 添加院校
               </Button>

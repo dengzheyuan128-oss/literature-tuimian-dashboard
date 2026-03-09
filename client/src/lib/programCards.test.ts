@@ -123,4 +123,39 @@ describe('programCards', () => {
     expect(result.institutionTags).toContain('211');
     expect(result.institutionTags).toContain('双一流');
   });
+  it('backfills key display fields from v1 read-model columns before marking a card as pending', () => {
+    const input = {
+      id: 'card-3',
+      institution_name: 'PKU',
+      department_name: '中文系',
+      program_name: '',
+      deadline: '2026-09-20',
+      source_url: 'https://example.com/pku',
+      eligibility_summary: '汉语言文学及相关专业可申请',
+      degree_type: 'Academic',
+      year: 2026,
+      primary_stage: 'Pre-Admission',
+      specialty_summary: '',
+      institution_location: 'Beijing',
+      institution_is_985: true,
+      institution_is_211: true,
+      institution_discipline_grade: 'A+',
+      latest_notice_url: '',
+      latest_notice_title: 'Notice',
+      latest_notice_application_start_raw: '',
+      latest_notice_application_end_raw: '',
+      latest_notice_published_at_raw: '2026-09-01',
+      latest_notice_materials_text: '',
+      latest_notice_ranking_requirement_text: '',
+      latest_notice_english_requirement_text: '',
+      latest_notice_application_method: '',
+    } as const;
+
+    const result = mapProgramCardRecordToUniversity(input, 3);
+
+    expect(result.specialty).toBe('汉语言文学及相关专业可申请');
+    expect(result.deadline).toBe('2026-09-20');
+    expect(result.url).toBe('https://example.com/pku');
+    expect(result.dataStatus).toBe('COMPLETE');
+  });
 });

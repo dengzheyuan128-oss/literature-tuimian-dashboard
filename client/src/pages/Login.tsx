@@ -20,6 +20,7 @@ export default function Login() {
   const {
     signInWithEmail,
     signUpWithEmail,
+    resetPassword,
     signInWithOAuth,
     user,
     loading: authLoading,
@@ -114,6 +115,30 @@ export default function Login() {
       const { error } = await signInWithOAuth(provider);
       if (error) {
         setError(getAuthErrorMessage(error));
+      }
+    } catch (err) {
+      setError(getAuthErrorMessage(err));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    setError(null);
+    setSuccess(null);
+
+    if (!loginEmail.trim()) {
+      setError('请先输入登录邮箱，再发送重置邮件。');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const { error } = await resetPassword(loginEmail.trim());
+      if (error) {
+        setError(getAuthErrorMessage(error));
+      } else {
+        setSuccess('重置密码邮件已发送，请检查邮箱。');
       }
     } catch (err) {
       setError(getAuthErrorMessage(err));
@@ -250,6 +275,15 @@ export default function Login() {
                     ) : (
                       '登录'
                     )}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="link"
+                    className="h-auto w-full px-0 text-sm"
+                    onClick={handleForgotPassword}
+                    disabled={isLoading || authReachable === false}
+                  >
+                    忘记密码
                   </Button>
                 </form>
               </TabsContent>

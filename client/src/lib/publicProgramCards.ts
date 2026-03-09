@@ -25,6 +25,7 @@ export function usePublicProgramCards(filters: ProgramCardFilters = {}) {
       supabaseHost: dataset.supabaseHost,
       hasMore: dataset.hasMore,
       totalCount: dataset.totalCount,
+      institutionCount: dataset.institutionCount,
       loading: dataset.loading,
     };
   }, [dataset]);

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
 
 import { checkAuthServiceHealth, getAuthErrorMessage } from '@/lib/authFlow';
@@ -14,6 +14,7 @@ interface AuthContextType {
   authReachable: boolean | null;
   signInWithEmail: (email: string, password: string) => Promise<{ error: string | null }>;
   signUpWithEmail: (email: string, password: string) => Promise<{ error: string | null }>;
+  resetPassword: (email: string) => Promise<{ error: string | null }>;
   signInWithOAuth: (provider: 'github' | 'google' | 'wechat') => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
@@ -23,6 +24,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || '';
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const AUTH_NOT_CONFIGURED_MESSAGE = '认证服务未配置，请检查 Supabase 环境变量。';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -31,22 +33,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [authIssue, setAuthIssue] = useState<string | null>(null);
   const [authReachable, setAuthReachable] = useState<boolean | null>(null);
+  const lastProfileUserIdRef = useRef<string | null>(null);
 
-  const loadProfile = async (userId: string) => {
+  const loadProfile = async (userId: string, options?: { force?: boolean }) => {
+    if (!options?.force && lastProfileUserIdRef.current === userId) {
+      return;
+    }
+
+    lastProfileUserIdRef.current = userId;
     const userProfile = await getUserProfile(userId);
     setProfile(userProfile);
   };
 
   const refreshProfile = async () => {
     if (user) {
-      await loadProfile(user.id);
+      await loadProfile(user.id, { force: true });
     }
   };
 
   useEffect(() => {
     if (!supabase) {
       setAuthReachable(false);
-      setAuthIssue('认证服务未配置，请检查 Supabase 环境变量。');
+      setAuthIssue(AUTH_NOT_CONFIGURED_MESSAGE);
       setLoading(false);
       return;
     }
@@ -70,13 +78,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     supabase.auth
       .getSession()
-      .then(({ data: { session } }) => {
+      .then(({ data: { session: nextSession } }) => {
         if (cancelled) return;
         clearTimeout(timeoutId);
-        setSession(session);
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          void loadProfile(session.user.id);
+        setSession(nextSession);
+        setUser(nextSession?.user ?? null);
+        if (nextSession?.user) {
+          void loadProfile(nextSession.user.id);
         }
         setLoading(false);
       })
@@ -89,13 +97,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+    } = supabase.auth.onAuthStateChange((event, nextSession) => {
+      if (event === 'INITIAL_SESSION') {
+        return;
+      }
 
-      if (session?.user) {
-        await loadProfile(session.user.id);
+      setSession(nextSession);
+      setUser(nextSession?.user ?? null);
+
+      if (nextSession?.user) {
+        void loadProfile(nextSession.user.id);
       } else {
+        lastProfileUserIdRef.current = null;
         setProfile(null);
       }
     });
@@ -108,7 +121,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signInWithEmail = async (email: string, password: string) => {
-    if (!supabase) return { error: '认证服务未配置。' };
+    if (!supabase) return { error: AUTH_NOT_CONFIGURED_MESSAGE };
     if (authReachable === false && authIssue) return { error: authIssue };
 
     try {
@@ -124,7 +137,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signUpWithEmail = async (email: string, password: string) => {
-    if (!supabase) return { error: '认证服务未配置。' };
+    if (!supabase) return { error: AUTH_NOT_CONFIGURED_MESSAGE };
     if (authReachable === false && authIssue) return { error: authIssue };
 
     try {
@@ -139,8 +152,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const resetPassword = async (email: string) => {
+    if (!supabase) return { error: AUTH_NOT_CONFIGURED_MESSAGE };
+    if (authReachable === false && authIssue) return { error: authIssue };
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/login`,
+      });
+
+      return {
+        error: error ? getAuthErrorMessage(error.message, { supabaseUrl: SUPABASE_URL }) : null,
+      };
+    } catch (error) {
+      return {
+        error: getAuthErrorMessage(error, { supabaseUrl: SUPABASE_URL }),
+      };
+    }
+  };
+
   const signInWithOAuth = async (provider: 'github' | 'google' | 'wechat') => {
-    if (!supabase) return { error: '认证服务未配置。' };
+    if (!supabase) return { error: AUTH_NOT_CONFIGURED_MESSAGE };
     if (authReachable === false && authIssue) return { error: authIssue };
 
     try {
@@ -164,6 +196,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signOut = async () => {
     if (!supabase) return;
     await supabase.auth.signOut();
+    lastProfileUserIdRef.current = null;
     setUser(null);
     setProfile(null);
     setSession(null);
@@ -181,6 +214,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         authReachable,
         signInWithEmail,
         signUpWithEmail,
+        resetPassword,
         signInWithOAuth,
         signOut,
         refreshProfile,

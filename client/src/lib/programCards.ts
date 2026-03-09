@@ -57,7 +57,10 @@ export interface ProgramCardDataset {
   supabaseHost: string | null;
   hasMore: boolean;
   totalCount?: number;
+  institutionCount?: number;
 }
+
+const PLACEHOLDER_TEXT = '???';
 
 const ARCHIVED_LAST_UPDATED = 'archived';
 const DEFAULT_BROWSE_LIMIT = 60;
@@ -113,16 +116,18 @@ export function mapProgramCardRecordToUniversity(record: ProgramCardRecord, inde
     is211: Boolean(record.institution_is_211),
   });
   const tier = getPrimaryInstitutionTier(institutionTags, buildTier(record));
-  const specialty = record.program_name || record.specialty_summary || record.department_name || '待补充';
-  const deadline = record.latest_notice_application_end_raw || '待补充';
+  const specialty =
+    firstPresent(record.program_name, record.specialty_summary, record.eligibility_summary, record.department_name) ||
+    PLACEHOLDER_TEXT;
+  const deadline = firstPresent(record.deadline, record.latest_notice_application_end_raw) || PLACEHOLDER_TEXT;
   const applicationPeriod = formatApplicationPeriod(
     record.latest_notice_application_start_raw,
-    record.latest_notice_application_end_raw,
+    record.latest_notice_application_end_raw || record.deadline,
   );
-  const englishRequirement = record.latest_notice_english_requirement_text || '待补充';
-  const examForm = record.latest_notice_application_method || '待补充';
-  const url = record.latest_notice_url || '';
-  const degreeType = record.degree_type || '待补充';
+  const englishRequirement = firstPresent(record.latest_notice_english_requirement_text) || PLACEHOLDER_TEXT;
+  const examForm = firstPresent(record.latest_notice_application_method) || PLACEHOLDER_TEXT;
+  const url = firstPresent(record.source_url, record.latest_notice_url) || '';
+  const degreeType = firstPresent(record.degree_type) || PLACEHOLDER_TEXT;
   const dataStatus = inferDataStatus({
     specialty,
     deadline,
@@ -830,11 +835,22 @@ function inferDataStatus(input: {
     input.examForm,
     input.englishRequirement,
   ];
-  const filled = fields.filter((value) => value && value !== '待补充').length;
+  const filled = fields.filter(isFilledValue).length;
 
   if (filled >= 5) return 'COMPLETE';
   if (filled >= 3) return 'PARTIAL';
   return 'PENDING_MANUAL';
+}
+
+function firstPresent(...values: Array<string | null | undefined>) {
+  return values.find((value) => typeof value === 'string' && value.trim().length > 0)?.trim();
+}
+
+function isFilledValue(value: string | undefined) {
+  if (!value) return false;
+  const normalized = value.trim();
+  if (!normalized) return false;
+  return ![PLACEHOLDER_TEXT, '???', 'TBD', 'Unknown', '??'].includes(normalized);
 }
 
 function createStableUniversityId(sourceCardId: string, fallbackIndex: number): number {

@@ -44,4 +44,5 @@ export interface PublicProgramCardDataset {
   supabaseHost: string | null;
   hasMore: boolean;
   totalCount?: number;
+  institutionCount?: number;
 }
