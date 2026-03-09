@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { ImportNotice, ImportProgramCard } from '../../../shared/stagingImport';
-import { buildProgramCardReadRows } from '../../../shared/programCardReads';
+import { buildLatestNoticeByCardKey, buildProgramCardReadRows } from '../../../shared/programCardReads';
 
 describe('programCardReads', () => {
   it('builds denormalized read rows using each card latest notice', () => {
@@ -83,9 +83,19 @@ describe('programCardReads', () => {
     expect(rows).toEqual([
       {
         id: 'card-1',
+        stable_id: 'inst::dept',
         institution_name: 'Peking University',
         department_name: 'School of Chinese Language and Literature',
         program_name: 'Chinese Literature',
+        notice_type: 'summer_camp',
+        application_stage: 'Summer Camp',
+        published_at: '2026-06-03',
+        deadline: '2026-06-12',
+        availability_status: null,
+        eligibility_summary: 'Relevant majors accepted',
+        source_url: 'https://example.com/latest',
+        verification_status: null,
+        last_verified_at: null,
         degree_type: 'Academic',
         year: 2026,
         primary_stage: 'Summer Camp',
@@ -106,5 +116,42 @@ describe('programCardReads', () => {
         updated_at: '2026-03-08T08:00:00.000Z',
       },
     ]);
+  });
+
+  it('prefers newer year, newer published date, and higher normalized stage priority', () => {
+    const latest = buildLatestNoticeByCardKey([
+      {
+        key: 'summer-2026',
+        program_card_key: 'card-a',
+        published_at_raw: '2026-06-10',
+        application_end_raw: '',
+        year: 2026,
+        stage_normalized: 'summer_camp',
+        source_file: '2026.xlsx',
+        source_row: 4,
+      },
+      {
+        key: 'pre-2026',
+        program_card_key: 'card-a',
+        published_at_raw: '2026-06-10',
+        application_end_raw: '',
+        year: 2026,
+        stage_normalized: 'pre_admission',
+        source_file: '2026.xlsx',
+        source_row: 5,
+      },
+      {
+        key: 'pre-2025',
+        program_card_key: 'card-a',
+        published_at_raw: '2025-09-10',
+        application_end_raw: '',
+        year: 2025,
+        stage_normalized: 'pre_admission',
+        source_file: '2025.xlsx',
+        source_row: 30,
+      },
+    ]);
+
+    expect(latest.get('card-a')).toBe('pre-2026');
   });
 });

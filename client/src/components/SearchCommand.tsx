@@ -5,6 +5,7 @@ import { BookOpen, Calendar, ExternalLink, GraduationCap, Search, Sparkles } fro
 import type { PublicProgramCard } from '@/types/publicProgramCard';
 import { usePublicProgramCards } from '@/lib/publicProgramCards';
 import { cleanUserInput } from '@/lib/security';
+import { getDeadlinePresentation, getNextActionLabel } from '@/lib/publicCardPresentation';
 import { getTierBadgeClassName } from '@/lib/tierUtils';
 import {
   Dialog,
@@ -66,9 +67,7 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
   const handleSelect = (uni: PublicProgramCard) => {
     setOpen(false);
     setSearch('');
-    if (onSelect) {
-      onSelect(uni);
-    }
+    onSelect?.(uni);
   };
 
   return (
@@ -77,7 +76,7 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
         <button className="group flex items-center gap-3 w-full h-12 px-5 rounded-lg border border-border/50 hover:border-primary/50 bg-card/50 hover:bg-card transition-all text-left">
           <Search className="w-4 h-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
           <span className="flex-1 text-sm text-muted-foreground group-hover:text-foreground transition-colors truncate">
-            搜索高校、专业...
+            搜索学校、项目方向或层级
           </span>
           <kbd className="shrink-0 px-2 py-1 rounded bg-muted text-[10px] font-mono text-muted-foreground">
             {navigator.platform.includes('Mac') ? '⌘K' : 'Ctrl+K'}
@@ -87,15 +86,15 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
 
       <DialogContent className="p-0 max-w-2xl overflow-hidden border-border/50 shadow-2xl">
         <DialogHeader className="sr-only">
-          <DialogTitle>搜索高校</DialogTitle>
-          <DialogDescription>使用快捷键打开搜索，搜索高校和专业</DialogDescription>
+          <DialogTitle>搜索保研机会</DialogTitle>
+          <DialogDescription>快速定位学校、项目和当前更值得优先查看的机会</DialogDescription>
         </DialogHeader>
 
         <Command className="rounded-lg border-0">
           <div className="flex items-center border-b border-border/50 px-4 bg-gradient-to-r from-muted/30 to-muted/10">
             <Search className="mr-3 h-5 w-5 shrink-0 text-primary" />
             <Command.Input
-              placeholder="输入高校名称、专业方向或分类..."
+              placeholder="输入学校、项目方向、项目类型或层级..."
               value={search}
               onValueChange={setSearch}
               className="flex h-14 w-full rounded-md bg-transparent py-3 text-base outline-none placeholder:text-muted-foreground/70 disabled:cursor-not-allowed disabled:opacity-50"
@@ -110,7 +109,7 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
           <Command.List className="max-h-[400px] overflow-y-auto p-3">
             {loading && source === 'supabase-loading' && (
               <div className="px-2 py-10 text-center text-sm text-muted-foreground">
-                正在加载可检索卡片...
+                正在加载可搜索卡片...
               </div>
             )}
 
@@ -127,8 +126,8 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
                     <Search className="h-8 w-8 opacity-40" />
                   </div>
                   <div>
-                    <p className="font-medium">未找到相关高校</p>
-                    <p className="text-sm mt-1">尝试其他关键词</p>
+                    <p className="font-medium">没有找到相关项目</p>
+                    <p className="text-sm mt-1">试试学校简称、项目类型或专业方向</p>
                   </div>
                 </div>
               </Command.Empty>
@@ -138,59 +137,71 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
               heading={
                 <div className="flex items-center gap-2 px-2 py-1.5 text-xs font-medium text-muted-foreground">
                   <Sparkles className="w-3.5 h-3.5" />
-                  {search ? '搜索结果' : '热门推荐'}
+                  {search ? '搜索结果' : '优先推荐'}
                 </div>
               }
             >
-              {!loading && source !== 'supabase-error' && results.map((uni) => (
-                <Command.Item
-                  key={uni.id}
-                  value={uni.institutionName}
-                  onSelect={() => handleSelect(uni)}
-                  className="group flex items-center gap-4 px-3 py-3 rounded-lg cursor-pointer hover:bg-accent/50 aria-selected:bg-accent aria-selected:text-accent-foreground transition-all my-1"
-                >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center transition-colors">
-                    <GraduationCap className="h-5 w-5 text-primary" />
-                  </div>
+              {!loading && source !== 'supabase-error' && results.map((uni) => {
+                const deadlineMeta = getDeadlinePresentation(uni.deadline);
+                const nextAction = getNextActionLabel(uni);
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-semibold text-sm truncate">{cleanUserInput(uni.institutionName)}</span>
-                      <div className="flex flex-wrap gap-1 shrink-0">
-                        {uni.institutionTags.map((tag) => (
-                          <Badge key={`${uni.id}-${tag}`} className={`${getTierBadgeClassName(tag)} text-[10px] px-1.5 py-0 shrink-0`}>
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
+                return (
+                  <Command.Item
+                    key={uni.id}
+                    value={`${uni.institutionName} ${uni.programName}`}
+                    onSelect={() => handleSelect(uni)}
+                    className="group flex items-start gap-4 px-3 py-3 rounded-lg cursor-pointer hover:bg-accent/50 aria-selected:bg-accent aria-selected:text-accent-foreground transition-all my-1"
+                  >
+                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center transition-colors">
+                      <GraduationCap className="h-5 w-5 text-primary" />
                     </div>
 
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                      <div className="flex items-center gap-1 min-w-0">
-                        <BookOpen className="h-3 w-3 shrink-0" />
-                        <span className="truncate max-w-[150px]">{cleanUserInput(uni.programName)}</span>
+                    <div className="flex-1 min-w-0 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-sm truncate">{cleanUserInput(uni.institutionName)}</span>
+                        <div className="flex flex-wrap gap-1 shrink-0">
+                          {uni.institutionTags.map((tag) => (
+                            <Badge key={`${uni.id}-${tag}`} className={`${getTierBadgeClassName(tag)} text-[10px] px-1.5 py-0 shrink-0`}>
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1 shrink-0">
-                        <Calendar className="h-3 w-3" />
-                        <span>{cleanUserInput(uni.deadline)}</span>
-                      </div>
-                    </div>
-                  </div>
 
-                  {uni.url && uni.url !== '' && (
-                    <a
-                      href={cleanUserInput(uni.url)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="flex-shrink-0 p-2 rounded-lg hover:bg-primary/10 transition-colors opacity-0 group-hover:opacity-100"
-                      title="查看官方通知"
-                    >
-                      <ExternalLink className="h-4 w-4 text-muted-foreground hover:text-primary" />
-                    </a>
-                  )}
-                </Command.Item>
-              ))}
+                      <div className="flex items-center gap-2 text-sm text-foreground/80 min-w-0">
+                        <BookOpen className="h-3.5 w-3.5 shrink-0 text-primary/70" />
+                        <span className="truncate">{cleanUserInput(uni.programName)}</span>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="h-3 w-3" />
+                          {cleanUserInput(uni.deadline) || '截止待确认'}
+                        </span>
+                        <Badge variant="outline" className="text-[10px]">
+                          {deadlineMeta.label}
+                        </Badge>
+                        <span>{uni.url ? '官方来源可查看' : '待补官方来源'}</span>
+                      </div>
+
+                      <p className="text-xs text-primary line-clamp-1">下一步：{nextAction}</p>
+                    </div>
+
+                    {uni.url && (
+                      <a
+                        href={cleanUserInput(uni.url)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex-shrink-0 p-2 rounded-lg hover:bg-primary/10 transition-colors opacity-0 group-hover:opacity-100"
+                        title="查看原文"
+                      >
+                        <ExternalLink className="h-4 w-4 text-muted-foreground hover:text-primary" />
+                      </a>
+                    )}
+                  </Command.Item>
+                );
+              })}
             </Command.Group>
 
             {!loading && source !== 'supabase-error' && search && hasMore && (

@@ -7,9 +7,19 @@ import type {
 
 export interface ProgramCardReadRow {
   id: string;
+  stable_id: string;
   institution_name: string;
   department_name: string | null;
   program_name: string;
+  notice_type: string | null;
+  application_stage: string | null;
+  published_at: string | null;
+  deadline: string | null;
+  availability_status: string | null;
+  eligibility_summary: string | null;
+  source_url: string | null;
+  verification_status: string | null;
+  last_verified_at: string | null;
   degree_type: string | null;
   year: number | null;
   primary_stage: string | null;
@@ -66,9 +76,22 @@ export function buildProgramCardReadRows(input: {
 
     rows.push({
       id: cardId,
+      stable_id: card.department_key,
       institution_name: institution.name,
       department_name: department?.name ?? null,
       program_name: card.program_name,
+      notice_type:
+        latestNotice?.stage_normalized ??
+        card.stage_normalized ??
+        normalizeNoticeType(latestNotice?.stage ?? card.primary_stage ?? null),
+      application_stage: card.primary_stage ?? null,
+      published_at: latestNotice?.published_at_raw ?? null,
+      deadline: latestNotice?.application_end_raw ?? null,
+      availability_status: null,
+      eligibility_summary: card.specialty_summary ?? null,
+      source_url: latestNotice?.notice_url ?? null,
+      verification_status: null,
+      last_verified_at: null,
       degree_type: card.degree_type ?? null,
       year: card.year ?? null,
       primary_stage: card.primary_stage ?? null,
@@ -99,6 +122,10 @@ export function buildLatestNoticeByCardKey(
     program_card_key: string;
     published_at_raw: string;
     application_end_raw: string;
+    year?: number | null;
+    stage_normalized?: 'pre_admission' | 'summer_camp' | 'winter_camp' | 'other' | 'unknown';
+    source_file?: string;
+    source_row?: number;
   }>,
 ): Map<string, string> {
   const latestNoticeByCard = new Map<string, string>();
@@ -128,10 +155,26 @@ export function buildLatestNoticeByCardKey(
 function buildNoticeRank(notice: {
   published_at_raw: string;
   application_end_raw: string;
+  year?: number | null;
+  stage_normalized?: 'pre_admission' | 'summer_camp' | 'winter_camp' | 'other' | 'unknown';
+  source_file?: string;
+  source_row?: number;
 }) {
+  const yearScore = notice.year ?? 0;
   const publishedScore = normalizeDateScore(notice.published_at_raw);
   const applicationEndScore = normalizeDateScore(notice.application_end_raw);
-  return publishedScore * 10_000_000 + applicationEndScore;
+  const stageScore = normalizeStagePriority(notice.stage_normalized);
+  const rowScore = notice.source_row ?? 0;
+  const fileScore = notice.source_file ? hashText(notice.source_file) : 0;
+
+  return (
+    yearScore * 10_000_000_000_000 +
+    publishedScore * 100_000 +
+    stageScore * 10_000 +
+    applicationEndScore * 10 +
+    Math.min(rowScore, 9) +
+    fileScore / 10_000_000
+  );
 }
 
 function normalizeDateScore(value: string) {
@@ -141,4 +184,40 @@ function normalizeDateScore(value: string) {
 
   const [, year, month, day] = match;
   return Number(`${year}${month.padStart(2, '0')}${day.padStart(2, '0')}`);
+}
+
+function normalizeStagePriority(
+  stage: 'pre_admission' | 'summer_camp' | 'winter_camp' | 'other' | 'unknown' | undefined,
+) {
+  switch (stage) {
+    case 'pre_admission':
+      return 5;
+    case 'summer_camp':
+      return 4;
+    case 'winter_camp':
+      return 3;
+    case 'other':
+      return 2;
+    case 'unknown':
+      return 1;
+    default:
+      return 0;
+  }
+}
+
+function hashText(value: string) {
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) % 10_000_000;
+  }
+  return hash;
+}
+
+function normalizeNoticeType(stage: string | null) {
+  if (!stage) return null;
+  const value = stage.toLowerCase();
+  if (value.includes('预推') || value.includes('推免')) return 'pre_admission';
+  if (value.includes('summer') || value.includes('夏令')) return 'summer_camp';
+  if (value.includes('winter') || value.includes('冬令')) return 'winter_camp';
+  return 'unknown';
 }

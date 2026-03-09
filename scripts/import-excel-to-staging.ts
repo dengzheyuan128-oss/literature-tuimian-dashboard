@@ -10,6 +10,7 @@ import {
   normalizeRow,
   type StagingRow,
 } from '../shared/excelImport';
+import { buildImportPlan } from '../shared/stagingImport';
 
 interface FileSummary {
   file: string;
@@ -25,6 +26,10 @@ const projectRoot = path.resolve(import.meta.dirname, '..');
 const excelDir = path.join(projectRoot, 'excel');
 const reportsDir = path.join(projectRoot, 'reports', 'excel-import');
 const stagingPath = path.join(reportsDir, 'staging-rows.json');
+const rawRowsPath = path.join(reportsDir, 'raw-excel-rows.json');
+const normalizedNoticesPath = path.join(reportsDir, 'normalized-notices.json');
+const departmentEntitiesPath = path.join(reportsDir, 'department-entities.json');
+const departmentCardsPath = path.join(reportsDir, 'department-cards.json');
 const summaryPath = path.join(reportsDir, 'staging-summary.json');
 
 function main(): void {
@@ -84,15 +89,33 @@ function main(): void {
     });
   }
 
+  const plan = buildImportPlan(allRows);
+
   fs.writeFileSync(stagingPath, JSON.stringify(allRows, null, 2));
-  fs.writeFileSync(summaryPath, JSON.stringify({
-    generatedAt: new Date().toISOString(),
-    totalFiles: fileSummaries.length,
-    totalRows: allRows.length,
-    files: fileSummaries,
-  }, null, 2));
+  fs.writeFileSync(rawRowsPath, JSON.stringify(plan.rawExcelRows, null, 2));
+  fs.writeFileSync(normalizedNoticesPath, JSON.stringify(plan.normalizedNotices, null, 2));
+  fs.writeFileSync(departmentEntitiesPath, JSON.stringify(plan.departmentEntities, null, 2));
+  fs.writeFileSync(departmentCardsPath, JSON.stringify(plan.departmentCards, null, 2));
+  fs.writeFileSync(
+    summaryPath,
+    JSON.stringify(
+      {
+        generatedAt: new Date().toISOString(),
+        totalFiles: fileSummaries.length,
+        totalRows: allRows.length,
+        files: fileSummaries,
+        planStats: plan.stats,
+      },
+      null,
+      2,
+    ),
+  );
 
   console.log(`Wrote ${allRows.length} staging rows to ${stagingPath}`);
+  console.log(`Wrote ${plan.rawExcelRows.length} raw rows to ${rawRowsPath}`);
+  console.log(`Wrote ${plan.normalizedNotices.length} normalized notices to ${normalizedNoticesPath}`);
+  console.log(`Wrote ${plan.departmentEntities.length} department entities to ${departmentEntitiesPath}`);
+  console.log(`Wrote ${plan.departmentCards.length} department cards to ${departmentCardsPath}`);
   console.log(`Wrote summary to ${summaryPath}`);
 }
 

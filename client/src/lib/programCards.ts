@@ -8,9 +8,19 @@ import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 
 export interface ProgramCardRecord {
   id: string;
+  stable_id: string | null;
   institution_name: string;
   department_name: string | null;
   program_name: string;
+  notice_type: string | null;
+  application_stage: string | null;
+  published_at: string | null;
+  deadline: string | null;
+  availability_status: string | null;
+  eligibility_summary: string | null;
+  source_url: string | null;
+  verification_status: string | null;
+  last_verified_at: string | null;
   degree_type: string | null;
   year: number | null;
   primary_stage: string | null;
@@ -56,9 +66,19 @@ const CACHE_TTL_MS = 30_000;
 const QUERY_TIMEOUT_MS = 8_000;
 const PROGRAM_CARD_READ_SELECT = `
   id,
+  stable_id,
   institution_name,
   department_name,
   program_name,
+  notice_type,
+  application_stage,
+  published_at,
+  deadline,
+  availability_status,
+  eligibility_summary,
+  source_url,
+  verification_status,
+  last_verified_at,
   degree_type,
   year,
   primary_stage,

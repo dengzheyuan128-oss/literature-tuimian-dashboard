@@ -29,33 +29,72 @@ export interface StagingRow {
 }
 
 const COLUMN_ALIASES: Record<string, string[]> = {
-  school_name: ['学校'],
-  department_name: ['学院'],
-  published_at_raw: ['发布时间'],
-  stage: ['招生阶段'],
-  application_start_raw: ['报名开始时间'],
-  application_end_raw: ['报名结束时间'],
-  program_name_raw: ['招生专业'],
-  requirement_text: ['申请要求', '本科专业要求'],
-  notice_url: ['通知官网链接'],
-  application_method: ['报名方式'],
-  ranking_requirement_text: ['成绩排名要求'],
-  materials_text: ['申请材料要求'],
+  school_name: ['学校', '学校名称', '院校', '院校名称'],
+  department_name: ['学院', '院系', '院系名称', '培养单位', '招生院系'],
+  published_at_raw: ['发布时间', '发布日期', '发布年份'],
+  stage: ['招生阶段', '项目类型', '招生类型', '申请类型'],
+  application_start_raw: ['报名开始时间', '开始时间', '申请开始时间', '开始日期'],
+  application_end_raw: ['报名结束时间', '截止时间', '申请截止时间', '截止日期'],
+  program_name_raw: ['招生专业', '专业', '专业名称', '招生专业名称'],
+  requirement_text: ['申请要求', '本科专业要求', '专业要求', '申请条件', '报名要求'],
+  notice_url: ['通知官网链接', '官网链接', '通知链接', '公告链接', '原文链接'],
+  application_method: ['报名方式', '考核方式', '考核形式', '复试方式', '选拔方式'],
+  ranking_requirement_text: ['成绩排名要求', '成绩排名', '排名要求', '成绩要求（排名）'],
+  materials_text: ['申请材料要求', '申请材料', '提交材料', '材料要求'],
   application_form: ['申请表'],
-  resume_requirement: ['简历'],
-  personal_statement_requirement: ['个人陈述'],
-  paper_or_portfolio_requirement: ['是否提交论文/作品'],
+  resume_requirement: ['简历', '个人简历'],
+  personal_statement_requirement: ['个人陈述', '自我陈述'],
+  paper_or_portfolio_requirement: ['是否提交论文/作品', '论文/作品', '代表作要求'],
 };
 
-const HEADER_TARGETS = ['学校', '学院', '招生阶段', '通知官网链接'];
+const HEADER_TARGET_GROUPS = [
+  COLUMN_ALIASES.school_name,
+  COLUMN_ALIASES.department_name,
+  COLUMN_ALIASES.stage,
+  COLUMN_ALIASES.notice_url,
+];
+
+const EMPTY_LIKE_VALUES = new Set([
+  '',
+  '/',
+  '-',
+  '--',
+  '无',
+  '暂无',
+  '暂未公布',
+  '暂未发布',
+  '未提及',
+  '未注明',
+  '待定',
+  '待补充',
+  '待更新',
+  '待通知',
+  '待确认',
+  '另行通知',
+]);
+
+const NON_RANKING_PATTERNS = [
+  /推免资格/,
+  /相关专业/,
+  /本科/,
+  /报名/,
+  /申请/,
+  /材料/,
+  /英语/,
+  /四六级/,
+  /cet/i,
+  /toefl/i,
+  /ielts/i,
+];
 
 export function detectHeaderRow(rows: string[][]): number {
   let bestIndex = -1;
   let bestScore = -1;
 
   rows.forEach((row, index) => {
-    const score = HEADER_TARGETS.reduce((count, header) => {
-      return count + (row.some((cell) => normalizeCell(cell) === header) ? 1 : 0);
+    const normalizedRow = row.map(normalizeCell);
+    const score = HEADER_TARGET_GROUPS.reduce((count, aliases) => {
+      return count + (normalizedRow.some((cell) => aliases.includes(cell)) ? 1 : 0);
     }, 0);
 
     if (score > bestScore) {
@@ -103,7 +142,7 @@ export function normalizeRow(
     requirement_text: getValue(row, columnMap.requirement_text),
     notice_url: getValue(row, columnMap.notice_url),
     application_method: getValue(row, columnMap.application_method),
-    ranking_requirement_text: getValue(row, columnMap.ranking_requirement_text),
+    ranking_requirement_text: normalizeRankingRequirement(getValue(row, columnMap.ranking_requirement_text)),
     materials_text: getValue(row, columnMap.materials_text),
     flags_json: {
       has_application_form: toFlag(getValue(row, columnMap.application_form)),
@@ -130,15 +169,36 @@ function getValue(row: string[], index?: number): string {
     return '';
   }
 
-  return normalizeCell(row[index]);
+  return normalizeFreeText(row[index]);
 }
 
 function normalizeCell(value: unknown): string {
   return String(value ?? '').trim();
 }
 
+function normalizeFreeText(value: unknown): string {
+  const normalized = normalizeCell(value);
+  return EMPTY_LIKE_VALUES.has(normalized) ? '' : normalized;
+}
+
+function normalizeRankingRequirement(value: string): string {
+  if (!value) return '';
+
+  const compact = value.replace(/\s+/g, '');
+  const looksLikeRanking =
+    /前\d+%/.test(compact) ||
+    /前\d+名/.test(compact) ||
+    /排名/.test(compact) ||
+    /top\s*\d+%/i.test(value) ||
+    /top\s*\d+/i.test(value);
+
+  if (looksLikeRanking) {
+    return value;
+  }
+
+  return NON_RANKING_PATTERNS.some((pattern) => pattern.test(value)) ? '' : value;
+}
+
 function toFlag(value: string): boolean {
-  if (!value) return false;
-  if (['未提及', '否', '无', '没有', '/'].includes(value)) return false;
-  return true;
+  return Boolean(value);
 }

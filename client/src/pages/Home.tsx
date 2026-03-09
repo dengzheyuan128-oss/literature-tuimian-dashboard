@@ -4,6 +4,7 @@ import type { PublicProgramCard } from "@/types/publicProgramCard";
 import { mapPublicProgramCardToUniversity, usePublicProgramCards } from "@/lib/publicProgramCards";
 import { favoritesStorage, searchHistoryStorage } from "@/lib/storage";
 import { cleanUserInput } from "@/lib/security";
+import { getDeadlinePresentation, getNextActionLabel } from "@/lib/publicCardPresentation";
 import { useCompare } from "@/contexts/CompareContext";
 import { useReminders } from "@/contexts/ReminderContext";
 import {
@@ -67,6 +68,19 @@ const STATUS_CONFIG: Record<DataStatus, { label: string; className: string }> = 
 };
 
 const PAGE_SIZE = 24;
+
+function getDeadlineBadgeClassName(tone: "urgent" | "warning" | "normal" | "muted") {
+  switch (tone) {
+    case "urgent":
+      return "bg-red-100 text-red-700 border-red-200";
+    case "warning":
+      return "bg-amber-100 text-amber-700 border-amber-200";
+    case "normal":
+      return "bg-emerald-100 text-emerald-700 border-emerald-200";
+    default:
+      return "bg-muted text-muted-foreground border-border";
+  }
+}
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -435,6 +449,9 @@ export default function Home() {
                             <CardTitle className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">
                               {cleanUserInput(uni.institutionName)}
                             </CardTitle>
+                            <p className="text-sm font-sans text-foreground/80 line-clamp-2">
+                              {cleanUserInput(uni.programName)}
+                            </p>
                             <CardDescription className="font-sans text-xs flex flex-wrap gap-1 mt-2">
                               {uni.institutionTags.map((tag) => (
                                 <Badge key={`${uni.id}-${tag}`} className={`${getTierBadgeClassName(tag)} text-[10px] px-1.5 py-0.5`}>
@@ -444,6 +461,11 @@ export default function Home() {
                               <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground border-0 text-[10px] px-1.5 py-0.5">
                                 {cleanUserInput(uni.degreeType)}
                               </Badge>
+                              {uni.noticeType && (
+                                <Badge variant="outline" className="text-[10px] px-1.5 py-0.5">
+                                  {cleanUserInput(uni.noticeType)}
+                                </Badge>
+                              )}
                               <Badge className={`border-0 text-[10px] px-1.5 py-0.5 ${STATUS_CONFIG[uni.dataStatus].className}`}>
                                 {STATUS_CONFIG[uni.dataStatus].label}
                               </Badge>
@@ -486,20 +508,71 @@ export default function Home() {
                         </div>
                       </CardHeader>
                       <CardContent className="pb-3">
-                        <div className="space-y-3">
-                          <div className="flex items-start gap-2 text-sm text-muted-foreground">
-                            <GraduationCap className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
-                              <span className="line-clamp-2 font-sans">{cleanUserInput(uni.programName)}</span>
+                        <div className="space-y-3 font-sans">
+                          <div className="flex items-center justify-between gap-3 rounded-lg border border-border/40 bg-muted/30 px-3 py-2">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <Calendar className="w-4 h-4 shrink-0 text-primary/70" />
+                              <span className="text-sm text-foreground truncate">
+                                {cleanUserInput(uni.deadline) || '截止时间待确认'}
+                              </span>
+                            </div>
+                            <Badge
+                              variant="outline"
+                              className={getDeadlineBadgeClassName(getDeadlinePresentation(uni.deadline).tone)}
+                            >
+                              {getDeadlinePresentation(uni.deadline).label}
+                            </Badge>
                           </div>
                           <div className="flex items-start gap-2 text-sm text-muted-foreground">
-                            <Calendar className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
-                            <span className="line-clamp-1 font-sans">{cleanUserInput(uni.deadline)}</span>
+                            <Link2 className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
+                            <span className="line-clamp-1">
+                              {uni.url ? '官方来源可查看' : '官方来源待补充'}
+                            </span>
+                          </div>
+                          <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                            <GraduationCap className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
+                            <span className="line-clamp-2">
+                              {cleanUserInput(uni.examForm) || cleanUserInput(uni.englishRequirement) || '先查看原文确认考核与材料要求'}
+                            </span>
+                          </div>
+                          <div className="rounded-lg bg-primary/5 px-3 py-2 text-sm text-primary">
+                            下一步：{getNextActionLabel(uni)}
                           </div>
                         </div>
                       </CardContent>
                       <CardFooter className="pt-0 pb-4">
-                        <div className="w-full pt-3 border-t border-border/30 flex justify-between items-center text-xs text-muted-foreground font-sans">
-                          <span>{cleanUserInput(uni.degreeType)}</span>
+                        <div className="w-full pt-3 border-t border-border/30 flex justify-between items-center gap-3 text-xs text-muted-foreground font-sans">
+                          <div className="flex items-center gap-2 min-w-0">
+                            <span>{cleanUserInput(uni.degreeType)}</span>
+                            <span>·</span>
+                            <span>{uni.url ? '可查看原文' : '待补链接'}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            {uni.url && (
+                              <a
+                                href={cleanUserInput(uni.url)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="inline-flex items-center gap-1 text-primary hover:underline"
+                              >
+                                查看原文
+                                <ExternalLink className="w-3.5 h-3.5" />
+                              </a>
+                            )}
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 px-2 text-xs"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleSetReminder(uni);
+                              }}
+                            >
+                              <Bell className="w-3.5 h-3.5 mr-1" />
+                              提醒我
+                            </Button>
+                          </div>
                           <span className="group-hover:text-primary transition-colors">查看详情</span>
                         </div>
                       </CardFooter>
