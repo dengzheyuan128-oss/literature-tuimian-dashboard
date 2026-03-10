@@ -59,12 +59,30 @@ const LEGACY_PROGRAM_CARD_SELECT = `
   latest_notice_application_method
 `;
 
-type QueryArgs = {
+export type QueryArgs = {
   id?: string;
   search?: string;
   limit: number;
   offset: number;
 };
+
+export function getQueryCountStrategy(_args: Pick<QueryArgs, 'id' | 'search' | 'limit' | 'offset'>) {
+  return undefined;
+}
+
+export function shouldFetchInstitutionCount(_args: Pick<QueryArgs, 'id' | 'search' | 'limit' | 'offset'>) {
+  return false;
+}
+
+export function resolveTotalCount(
+  args: Pick<QueryArgs, 'id' | 'limit' | 'offset'>,
+  recordsLength: number,
+  count?: number | null,
+) {
+  if (typeof count === 'number') return count;
+  if (args.id) return recordsLength;
+  return undefined;
+}
 
 export default async function handler(req: any, res: any) {
   if (req.method !== 'GET') {
@@ -100,7 +118,9 @@ export default async function handler(req: any, res: any) {
       limit: clampInteger(req.query.limit, 24, 1, 100),
       offset: clampInteger(req.query.offset, 0, 0, 100000),
     };
-    const institutionCount = queryArgs.id ? undefined : await queryInstitutionCount(supabase);
+    const institutionCount = shouldFetchInstitutionCount(queryArgs)
+      ? await queryInstitutionCount(supabase)
+      : undefined;
 
     const readTableResult = await queryReadTable(supabase, queryArgs);
     if (readTableResult.data) {
@@ -139,7 +159,7 @@ export default async function handler(req: any, res: any) {
 async function queryReadTable(supabase: ReturnType<typeof createClient>, args: QueryArgs) {
   let query = supabase
     .from('public_program_card_reads')
-    .select(PROGRAM_CARD_READ_SELECT, { count: 'exact' })
+    .select(PROGRAM_CARD_READ_SELECT, getQueryCountStrategy(args))
     .order('updated_at', { ascending: false });
 
   query = applyFilters(query, args);
@@ -159,7 +179,7 @@ async function queryReadTable(supabase: ReturnType<typeof createClient>, args: Q
 async function queryLegacyView(supabase: ReturnType<typeof createClient>, args: QueryArgs) {
   let query = supabase
     .from('public_program_cards')
-    .select(LEGACY_PROGRAM_CARD_SELECT, { count: 'exact' })
+    .select(LEGACY_PROGRAM_CARD_SELECT, getQueryCountStrategy(args))
     .order('latest_notice_published_at_raw', { ascending: false, nullsFirst: false });
 
   query = applyFilters(query, args);
@@ -213,7 +233,7 @@ function respondSuccess(
     error: null,
     lastUpdated: new Date().toISOString(),
     supabaseHost,
-    totalCount: args.id ? records.length : count ?? records.length,
+    totalCount: resolveTotalCount(args, records.length, count),
     institutionCount,
   });
 }
