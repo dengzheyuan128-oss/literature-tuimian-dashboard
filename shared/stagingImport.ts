@@ -262,6 +262,7 @@ function buildNotice(
   const year = inferYear(row);
   const stageRaw = row.stage.trim();
   const stageNormalized = normalizeStage(stageRaw);
+  const applicationMethod = inferApplicationMethod(row);
   const noticeKey = hasUrl
     ? `${departmentEntityKey}::${noticeUrl}::${row.source_file}`
     : `${departmentEntityKey}::no-url::${row.source_file}::${row.source_sheet}::${row.source_row}`;
@@ -279,7 +280,7 @@ function buildNotice(
     published_at_raw: row.published_at_raw.trim(),
     stage_raw: stageRaw,
     stage_normalized: stageNormalized,
-    application_method_raw: row.application_method.trim(),
+    application_method_raw: applicationMethod,
     requirement_text: row.requirement_text.trim(),
     application_start_raw: row.application_start_raw.trim(),
     application_end_raw: row.application_end_raw.trim(),
@@ -292,7 +293,7 @@ function buildNotice(
     program_card_key: departmentEntityKey,
     title: buildNoticeTitle(row, schoolName, departmentName),
     stage: stageRaw,
-    application_method: row.application_method.trim(),
+    application_method: applicationMethod,
     english_requirement_text: inferEnglishRequirement(row),
     source_channel: row.source_file.endsWith('.xlsx') ? 'excel-import' : 'manual',
   };
@@ -320,9 +321,74 @@ function inferYear(row: StagingRow): number | null {
 }
 
 function inferEnglishRequirement(row: StagingRow): string {
-  const text = `${row.requirement_text}\n${row.ranking_requirement_text}\n${row.materials_text}`;
-  const markers = ['英语', '六级', '四级', 'IELTS', 'TOEFL', '雅思', '托福', 'GMAT'];
-  return markers.some((marker) => text.includes(marker)) ? text : '';
+  const text = [row.requirement_text, row.ranking_requirement_text, row.materials_text].filter(Boolean).join('\n');
+  return extractEnglishRequirement(text);
+}
+
+function inferApplicationMethod(row: StagingRow): string {
+  const explicitValue = row.application_method.trim();
+  if (explicitValue) return explicitValue;
+
+  const text = [row.application_method, row.requirement_text, row.materials_text].filter(Boolean).join('\n');
+  if (!text) return '';
+
+  const patterns = [
+    /材料审核\s*[+＋]\s*综合面试/,
+    /材料审核\s*[+＋]\s*面试/,
+    /材料审核[^，。；\n]*综合面试/,
+    /笔试\s*[+＋]\s*面试/,
+    /面试\s*[+＋]\s*笔试/,
+    /线上面试/,
+    /线下面试/,
+    /综合面试/,
+    /材料审核/,
+    /笔试/,
+    /面试/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match?.[0]) {
+      return normalizeExtractedSnippet(match[0]);
+    }
+  }
+
+  return '';
+}
+
+function extractEnglishRequirement(text: string): string {
+  if (!text) return '';
+  if (!/英语|CET|IELTS|TOEFL|GRE|GMAT|雅思|托福/i.test(text)) return '';
+
+  const patterns = [
+    /大学英语[四六]级[（(]?[A-Z0-9\-]+[)）]?\d+分及以上/,
+    /大学英语[四六]级[^，。；\n]*\d+分及以上/,
+    /CET-?[46][^，。；\n]*\d+分及以上/i,
+    /英语[四六]级[^，。；\n]*\d+分及以上/,
+    /IELTS[^，。；\n]*/i,
+    /TOEFL[^，。；\n]*/i,
+    /GRE[^，。；\n]*/i,
+    /GMAT[^，。；\n]*/i,
+    /雅思[^，。；\n]*/,
+    /托福[^，。；\n]*/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match?.[0]) {
+      return normalizeExtractedSnippet(match[0]);
+    }
+  }
+
+  return '';
+}
+
+function normalizeExtractedSnippet(value: string): string {
+  return value
+    .replace(/\s+/g, ' ')
+    .replace(/[。；;，,]+$/g, '')
+    .replace(/^\s*(申请者须|须|需|应|考核形式为|考核方式为|报名方式为)/, '')
+    .trim();
 }
 
 function normalizeStage(stageRaw: string): StageNormalized {

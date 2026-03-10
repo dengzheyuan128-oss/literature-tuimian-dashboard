@@ -245,4 +245,68 @@ describe('stagingImport', () => {
       }),
     ]);
   });
+  it('extracts a concise english requirement summary instead of returning the full source text', () => {
+    const rows: StagingRow[] = [
+      {
+        source_file: '2026.xlsx',
+        source_sheet: 'Sheet1',
+        source_row: 4,
+        school_name: '测试大学',
+        department_name: '外国语学院',
+        program_name_raw: '',
+        published_at_raw: '2025年6月1日',
+        stage: '预推免',
+        application_start_raw: '',
+        application_end_raw: '',
+        requirement_text: '申请者须通过大学英语六级（CET-6）425分及以上，并具备良好学术训练。',
+        notice_url: 'https://example.com/english',
+        application_method: '系统报名',
+        ranking_requirement_text: '',
+        materials_text: '提交成绩单、个人陈述。',
+        flags_json: {
+          has_application_form: false,
+          has_resume_requirement: false,
+          has_personal_statement_requirement: true,
+          has_paper_or_portfolio_requirement: false,
+        },
+      },
+    ];
+
+    const plan = buildImportPlan(rows);
+
+    expect(plan.notices[0]?.english_requirement_text).toBe('大学英语六级（CET-6）425分及以上');
+  });
+
+  it('falls back to infer application method from source text when the explicit field is empty', () => {
+    const rows: StagingRow[] = [
+      {
+        source_file: '2026.xlsx',
+        source_sheet: 'Sheet1',
+        source_row: 7,
+        school_name: '测试大学',
+        department_name: '历史学院',
+        program_name_raw: '',
+        published_at_raw: '2025年7月1日',
+        stage: '夏令营',
+        application_start_raw: '',
+        application_end_raw: '',
+        requirement_text: '考核形式为材料审核+综合面试，择优录取。',
+        notice_url: 'https://example.com/method',
+        application_method: '',
+        ranking_requirement_text: '',
+        materials_text: '报名后参加综合面试。',
+        flags_json: {
+          has_application_form: false,
+          has_resume_requirement: false,
+          has_personal_statement_requirement: false,
+          has_paper_or_portfolio_requirement: false,
+        },
+      },
+    ];
+
+    const plan = buildImportPlan(rows);
+
+    expect(plan.notices[0]?.application_method).toBe('材料审核+综合面试');
+    expect(plan.notices[0]?.application_method_raw).toBe('材料审核+综合面试');
+  });
 });
