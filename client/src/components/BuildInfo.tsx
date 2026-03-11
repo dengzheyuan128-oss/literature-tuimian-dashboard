@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 
 import { usePublicProgramCards } from '@/lib/publicProgramCards';
+import { buildEntriesLabel } from '@/lib/statsDisplay';
 
 declare const __BUILD_COMMIT__: string;
 declare const __BUILD_TIME__: string;
@@ -10,7 +11,8 @@ export function BuildInfo() {
     usePublicProgramCards({ limit: 1 });
   const buildCommit = typeof __BUILD_COMMIT__ !== 'undefined' ? __BUILD_COMMIT__ : 'unknown';
   const buildTime = typeof __BUILD_TIME__ !== 'undefined' ? __BUILD_TIME__ : 'unknown';
-  const entriesCount = totalCount ?? cards.length;
+  void cards;
+  const entriesLabel = buildEntriesLabel(totalCount);
   const [position, setPosition] = useState({ x: 16, y: 16 });
   const dragOffset = useRef({ x: 0, y: 0 });
 
@@ -64,9 +66,11 @@ export function BuildInfo() {
         <div className="flex items-center gap-2">
           <span className="font-mono bg-secondary px-2 py-1 rounded">Build: {buildCommit}</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span>Entries: {entriesCount}</span>
-        </div>
+        {entriesLabel ? (
+          <div className="flex items-center gap-2">
+            <span>{entriesLabel}</span>
+          </div>
+        ) : null}
         {institutionCount ? (
           <div className="flex items-center gap-2">
             <span>Institutions: {institutionCount}</span>

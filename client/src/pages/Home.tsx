@@ -5,6 +5,7 @@ import { mapPublicProgramCardToUniversity, usePublicProgramCards } from "@/lib/p
 import { favoritesStorage, searchHistoryStorage } from "@/lib/storage";
 import { cleanUserInput } from "@/lib/security";
 import { getDeadlinePresentation, getNextActionLabel } from "@/lib/publicCardPresentation";
+import { buildResultsSummary } from "@/lib/statsDisplay";
 import { useCompare } from "@/contexts/CompareContext";
 import { useReminders } from "@/contexts/ReminderContext";
 import {
@@ -101,8 +102,13 @@ export default function Home() {
   const [selectedCard, setSelectedCard] = useState<PublicProgramCard | null>(null);
   const [favorites, setFavorites] = useState<number[]>([]);
   const selectedUniversity = selectedCard ? mapPublicProgramCardToUniversity(selectedCard) : null;
-  const totalEntries = totalCount ?? cards.length;
-  const totalPages = Math.max(1, Math.ceil(totalEntries / PAGE_SIZE));
+  const totalEntries = totalCount;
+  const totalPages = Math.max(1, Math.ceil((totalEntries ?? page * PAGE_SIZE) / PAGE_SIZE));
+  const resultsSummary = buildResultsSummary({
+    currentCount: filteredUniversities.length,
+    totalCount,
+    institutionCount,
+  });
 
   useEffect(() => {
     setPage(1);
@@ -365,8 +371,7 @@ export default function Home() {
                 <BookOpen className="w-6 h-6 text-primary" />
                 <span>院校名录</span>
                 <span className="text-sm font-normal text-muted-foreground ml-2 font-sans">
-                  当前页 {filteredUniversities.length} 条，共 {totalEntries} 个条目
-                  {typeof institutionCount === "number" && ` · ${institutionCount} 所高校`}
+                  {resultsSummary}
                 </span>
               </h2>
               <div className="flex items-center gap-2">
