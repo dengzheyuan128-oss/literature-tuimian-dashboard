@@ -104,11 +104,6 @@ export default function Home() {
   const selectedUniversity = selectedCard ? mapPublicProgramCardToUniversity(selectedCard) : null;
   const totalEntries = totalCount;
   const totalPages = Math.max(1, Math.ceil((totalEntries ?? page * PAGE_SIZE) / PAGE_SIZE));
-  const resultsSummary = buildResultsSummary({
-    currentCount: filteredUniversities.length,
-    totalCount,
-    institutionCount,
-  });
 
   useEffect(() => {
     setPage(1);
@@ -144,6 +139,12 @@ export default function Home() {
       return matchesSearch && matchesLevel;
     });
   }, [searchTerm, selectedLevel, cards]);
+
+  const resultsSummary = buildResultsSummary({
+    currentCount: filteredUniversities.length,
+    totalCount,
+    institutionCount,
+  });
 
   // 使用简化的5种分类
   const levels = SIMPLIFIED_TIERS;
