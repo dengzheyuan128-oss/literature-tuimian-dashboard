@@ -1,0 +1,20 @@
+export const HOME_HERO_CONTENT = {
+  badge: '\u6b63\u5f0f\u7248\u4f18\u5148 \u00b7 \u5148\u7b5b\u9009\u518d\u5224\u65ad',
+  title: '\u5148\u627e\u9879\u76ee\uff0c\u518d\u51b3\u5b9a\u8981\u4e0d\u8981\u7533',
+  description:
+    '\u5148\u6309\u9662\u6821\u5c42\u7ea7\u548c\u5173\u952e\u8bcd\u7b5b\u9009\uff0c\u4f18\u5148\u67e5\u770b\u539f\u6587\u94fe\u63a5\uff0c\u518d\u5224\u65ad\u622a\u6b62\u65f6\u95f4\u3001\u8003\u6838\u65b9\u5f0f\u548c\u7533\u8bf7\u8981\u6c42\u3002',
+  primaryCta: {
+    label: '\u5f00\u59cb\u7b5b\u9009\u9879\u76ee',
+    href: '/matcher',
+  },
+  secondaryCtas: [
+    {
+      label: '\u9662\u6821\u5bf9\u6bd4',
+      href: '/compare',
+    },
+    {
+      label: '\u7533\u8bf7\u63d0\u9192',
+      href: '/reminders',
+    },
+  ],
+} as const;

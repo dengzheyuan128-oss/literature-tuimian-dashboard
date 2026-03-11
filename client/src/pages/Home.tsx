@@ -6,6 +6,7 @@ import { favoritesStorage, searchHistoryStorage } from "@/lib/storage";
 import { cleanUserInput } from "@/lib/security";
 import { getDeadlinePresentation, getNextActionLabel } from "@/lib/publicCardPresentation";
 import { buildResultsSummary } from "@/lib/statsDisplay";
+import { HOME_HERO_CONTENT } from "@/lib/homeHeroContent";
 import { useCompare } from "@/contexts/CompareContext";
 import { useReminders } from "@/contexts/ReminderContext";
 import {
@@ -23,7 +24,7 @@ import SearchCommand from "@/components/SearchCommand";
 import {
   Search, BookOpen, GraduationCap, Calendar, ExternalLink,
   Filter, ChevronRight, Sparkles, AlertCircle, Heart, HeartOff,
-  BarChart2, Bell, Star, Link2, Inbox
+  BarChart2, Bell, Link2, Inbox
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
@@ -31,45 +32,42 @@ import FeedbackDialog from "@/components/FeedbackDialog";
 import UserMenu from "@/components/UserMenu";
 import { useAuth } from "@/contexts/AuthContext";
 import { isAdmin } from "@/lib/adminUtils";
-
-// 通用占位值，用于提示用户优先查看原文
+// Generic placeholders prompt users to verify details in the original notice.
 const GENERIC_VALUES = {
-  specialty: ['汉语言文学、语言学等', '中国语言文学', '待确认', '待补充'],
-  examForm: ['材料审核、复试', '面试、笔试', '待确认', '待补充', '综合面试'],
-  englishRequirement: ['CET-6或同等', 'CET-4或同等', '待确认', '待补充', '无硬性要求'],
+  specialty: ['\u6c49\u8bed\u8a00\u6587\u5b66\u3001\u8bed\u8a00\u5b66\u7b49', '\u4e2d\u56fd\u8bed\u8a00\u6587\u5b66', '\u5f85\u786e\u8ba4', '\u5f85\u8865\u5145'],
+  examForm: ['\u6750\u6599\u5ba1\u6838\u3001\u590d\u8bd5', '\u9762\u8bd5\u3001\u7b14\u8bd5', '\u5f85\u786e\u8ba4', '\u5f85\u8865\u5145', '\u7efc\u5408\u9762\u8bd5'],
+  englishRequirement: ['CET-6\u6216\u540c\u7b49', 'CET-4\u6216\u540c\u7b49', '\u5f85\u786e\u8ba4', '\u5f85\u8865\u5145', '\u65e0\u786c\u6027\u8981\u6c42'],
 };
 
-// 判断字段是否为通用占位值
 function isGenericValue(field: keyof typeof GENERIC_VALUES, value: string): boolean {
   return GENERIC_VALUES[field]?.includes(value) ?? false;
 }
 
-// 未核实时，通用占位值统一引导回原文
 function displayValue(value: string, field: keyof typeof GENERIC_VALUES, dataVerified: boolean): string {
   if (!dataVerified && isGenericValue(field, value)) {
-    return '请查看通知原文';
+    return '\u8bf7\u67e5\u770b\u901a\u77e5\u539f\u6587';
   }
   return value;
 }
 
-// 数据状态标签配置
 const STATUS_CONFIG: Record<DataStatus, { label: string; description: string; className: string }> = {
   COMPLETE: {
-    label: '信息较全',
-    description: '关键字段已基本齐全',
+    label: '\u4fe1\u606f\u8f83\u5168',
+    description: '\u5173\u952e\u5b57\u6bb5\u5df2\u57fa\u672c\u9f50\u5168',
     className: 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300'
   },
   PARTIAL: {
-    label: '仍需核对',
-    description: '已有主要信息，部分字段待确认',
+    label: '\u4ecd\u9700\u6838\u5bf9',
+    description: '\u5df2\u6709\u4e3b\u8981\u4fe1\u606f\uff0c\u90e8\u5206\u5b57\u6bb5\u5f85\u786e\u8ba4',
     className: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300'
   },
   PENDING_MANUAL: {
-    label: '待补字段',
-    description: '原文存在，但关键展示字段还未补齐',
+    label: '\u5f85\u8865\u5b57\u6bb5',
+    description: '\u539f\u6587\u5b58\u5728\uff0c\u4f46\u5173\u952e\u5c55\u793a\u5b57\u6bb5\u8fd8\u672a\u8865\u9f50',
     className: 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300'
   },
 };
+
 
 const PAGE_SIZE = 24;
 
@@ -131,7 +129,7 @@ export default function Home() {
         uni.programName.toLowerCase().includes(cleanTerm) ||
         uni.institutionTags.some((tag) => tag.toLowerCase().includes(cleanTerm));
 
-      // 使用院校多标签进行筛选
+      // 使用院校多标签进行筛�?
       const matchesLevel = selectedLevel
         ? uni.institutionTags.includes(selectedLevel)
         : true;
@@ -146,7 +144,7 @@ export default function Home() {
     institutionCount,
   });
 
-  // 使用简化的5种分类
+  // 使用简化的5种分�?
   const levels = SIMPLIFIED_TIERS;
 
   // 处理搜索（添加历史记录）
@@ -175,7 +173,7 @@ export default function Home() {
     }
   };
 
-  // 添加到对比
+  // 添加到对�?
   const handleAddToCompare = (university: PublicProgramCard, e: React.MouseEvent) => {
     e.stopPropagation();
     addToCompare(mapPublicProgramCardToUniversity(university));
@@ -184,8 +182,7 @@ export default function Home() {
   // 设置提醒
   const handleSetReminder = (university: PublicProgramCard) => {
     try {
-      // 解析截止日期
-      const deadlineMatch = university.deadline.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+      const deadlineMatch = university.deadline.match(/(\d{4})\u5e74(\d{1,2})\u6708(\d{1,2})\u65e5/);
       if (!deadlineMatch) {
         alert("无法解析截止日期格式");
         return;
@@ -198,7 +195,7 @@ export default function Home() {
         universityId: String(university.stableId),
         universityName: university.institutionName,
         deadline: university.deadline,
-        reminderDate: 7, // 默认提前7天
+        reminderDate: 7, // 默认提前7�?
         active: true,
       });
     } catch (error) {
@@ -209,11 +206,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-serif selection:bg-primary/20">
-      {/* 侧边导航栏 - 模拟书签 */}
+      {/* 侧边导航�?- 模拟书签 */}
       <aside className="fixed left-0 top-0 h-full w-16 md:w-20 bg-sidebar border-r border-sidebar-border z-50 hidden lg:flex flex-col items-center py-8 shadow-sm">
         <div className="mb-8">
           <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-md">
-            <span className="font-bold text-lg">钝</span>
+            <span className="font-bold text-lg">\u63a8</span>
           </div>
         </div>
         <div className="flex-1 flex flex-col items-center gap-8">
@@ -272,18 +269,15 @@ export default function Home() {
               className="text-center md:text-left"
             >
               <div className="inline-block mb-4 px-3 py-1 border border-primary/30 rounded-full text-primary text-xs tracking-widest bg-primary/5">
-                2025年最新收录 · 985/211高校
+                {HOME_HERO_CONTENT.badge}
               </div>
               <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-foreground leading-tight">
-                钝学<span className="text-primary">推免</span>指南
+                {HOME_HERO_CONTENT.title}
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed font-sans font-light">
-                汇集全国顶尖高校文学院/中文系推免硕士考核通知，
-                <br className="hidden md:block" />
-                助您在学术之路上，寻得理想归处。
+                {HOME_HERO_CONTENT.description}
               </p>
 
-              {/* 功能快捷入口 */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -291,39 +285,32 @@ export default function Home() {
                 className="flex flex-wrap gap-4 mb-8"
               >
                 <Button
-                  onClick={() => setLocation("/matcher")}
+                  onClick={() => setLocation(HOME_HERO_CONTENT.primaryCta.href)}
                   className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground hover:shadow-lg transition-all font-sans px-6 py-2 rounded-lg flex items-center gap-2"
                 >
                   <Sparkles className="w-4 h-4" />
-                  院校匹配评估
+                  {HOME_HERO_CONTENT.primaryCta.label}
                 </Button>
                 <Button
-                  onClick={() => setLocation("/compare")}
+                  onClick={() => setLocation(HOME_HERO_CONTENT.secondaryCtas[0].href)}
                   variant="outline"
                   className="font-sans px-6 py-2 rounded-lg flex items-center gap-2"
                 >
                   <BarChart2 className="w-4 h-4" />
-                  院校对比
+                  {HOME_HERO_CONTENT.secondaryCtas[0].label}
                 </Button>
                 <Button
-                  onClick={() => setLocation("/reminders")}
+                  onClick={() => setLocation(HOME_HERO_CONTENT.secondaryCtas[1].href)}
                   variant="outline"
                   className="font-sans px-6 py-2 rounded-lg flex items-center gap-2"
                 >
                   <Bell className="w-4 h-4" />
-                  申请提醒
-                </Button>
-                <Button
-                  onClick={() => setLocation("/analytics")}
-                  variant="outline"
-                  className="font-sans px-6 py-2 rounded-lg flex items-center gap-2"
-                >
-                  <Star className="w-4 h-4" />
-                  数据分析
+                  {HOME_HERO_CONTENT.secondaryCtas[1].label}
                 </Button>
               </motion.div>
+              {/* Legacy hero content removed in favor of the workbench hero. */}
 
-              {/* 搜索栏 - 升级为命令面板 */}
+              {/* 搜索�?- 升级为命令面�?*/}
               <div className="flex flex-col md:flex-row gap-4 max-w-2xl">
                 <div className="flex-1">
                   <SearchCommand
@@ -379,12 +366,12 @@ export default function Home() {
                 <FeedbackDialog />
                 <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground font-sans">
                   <Filter className="w-4 h-4" />
-                  <span>按拼音排序</span>
+                  <span>\u6309\u62fc\u97f3\u6392\u5e8f</span>
                 </div>
               </div>
             </div>
 
-            {/* 覆盖率统计面板 */}
+            {/* 覆盖率统计面�?*/}
             <div className="mb-8 p-4 bg-muted/30 rounded-lg border border-border/30">
               <div className="flex flex-wrap gap-4 items-center justify-between">
                 <div className="flex gap-6 text-sm font-sans">
@@ -406,8 +393,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="mt-3 text-xs text-muted-foreground font-sans">
-                “待补字段”不等于项目无效，通常只是截止时间、来源链接或要求摘要还没完全结构化；请优先查看原文确认。
-              </div>
+                “待补字段”不等于项目无效，通常只是截止时间、来源链接或要求摘要还没完全结构化；请优先查看原文确认�?              </div>
             </div>
 
             {loading && source === 'supabase-loading' && (
@@ -442,8 +428,7 @@ export default function Home() {
                 <div className="mb-4 inline-flex items-center justify-center w-16 h-16 rounded-full bg-destructive/10 text-destructive">
                   <Inbox className="w-8 h-8" />
                 </div>
-                <p className="text-lg text-foreground">Supabase 数据加载失败</p>
-                <p className="mt-2 max-w-2xl mx-auto text-sm font-sans break-words">{error || "请检查数据库查询或部署环境变量。"}</p>
+                <p className="mt-2 max-w-2xl mx-auto text-sm font-sans break-words">{error || "\u8bf7\u68c0\u67e5\u6570\u636e\u5e93\u67e5\u8be2\u6216\u90e8\u7f72\u73af\u5883\u53d8\u91cf\u3002"}</p>
               </div>
             )}
 
@@ -500,7 +485,7 @@ export default function Home() {
                               )}
                               {uni.websiteStatus === 'maintenance' && (
                                 <Badge variant="outline" className="border-orange-500 text-orange-600 text-[10px] px-1.5 py-0.5">
-                                  网站维护中
+                                  网站维护�?
                                 </Badge>
                               )}
                             </CardDescription>
@@ -518,15 +503,15 @@ export default function Home() {
                               ) : (
                                 <HeartOff className="w-5 h-5" />
                               )}
-                            </Button>
                             <Button
                               variant="ghost"
                               size="icon"
                               className={`w-8 h-8 transition-colors ${isInCompare(uni.stableId) ? 'bg-primary/10 text-primary' : 'hover:bg-primary/10'}`}
                               onClick={(e) => handleAddToCompare(uni, e)}
-                              title="添加到对比"
+                              title="\u6dfb\u52a0\u5230\u5bf9\u6bd4"
                             >
                               <BarChart2 className="w-5 h-5" />
+                            </Button>
                             </Button>
                           </div>
                         </div>
@@ -537,7 +522,7 @@ export default function Home() {
                             <div className="flex items-center gap-2 min-w-0">
                               <Calendar className="w-4 h-4 shrink-0 text-primary/70" />
                               <span className="text-sm text-foreground truncate">
-                                {cleanUserInput(uni.deadline) || '截止时间待确认'}
+                                {cleanUserInput(uni.deadline) || '\u622a\u6b62\u65f6\u95f4\u5f85\u786e\u8ba4'}
                               </span>
                             </div>
                             <Badge
@@ -550,13 +535,13 @@ export default function Home() {
                           <div className="flex items-start gap-2 text-sm text-muted-foreground">
                             <Link2 className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
                             <span className="line-clamp-1">
-                              {uni.url ? '官方来源可查看' : '官方来源待补充'}
+                              {uni.url ? '\u5b98\u65b9\u6765\u6e90\u53ef\u67e5\u770b' : '\u5b98\u65b9\u6765\u6e90\u5f85\u8865\u5145'}
                             </span>
                           </div>
                           <div className="flex items-start gap-2 text-sm text-muted-foreground">
                             <GraduationCap className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
                             <span className="line-clamp-2">
-                              {cleanUserInput(uni.examForm) || cleanUserInput(uni.englishRequirement) || '先查看原文确认考核与材料要求'}
+                              {cleanUserInput(uni.examForm) || cleanUserInput(uni.englishRequirement) || '\u5148\u67e5\u770b\u539f\u6587\u786e\u8ba4\u8003\u6838\u4e0e\u6750\u6599\u8981\u6c42'}
                             </span>
                           </div>
                           <div className="rounded-lg bg-primary/5 px-3 py-2 text-sm text-primary">
@@ -569,7 +554,7 @@ export default function Home() {
                           <div className="flex items-center gap-2 min-w-0">
                             <span>{cleanUserInput(uni.degreeType)}</span>
                             <span>·</span>
-                            <span>{uni.url ? '可查看原文' : '待补链接'}</span>
+                            <span>{uni.url ? '\u53ef\u67e5\u770b\u539f\u6587' : '\u5f85\u8865\u94fe\u63a5'}</span>
                           </div>
                           <div className="flex items-center gap-2">
                             {uni.url && (
@@ -594,7 +579,7 @@ export default function Home() {
                               }}
                             >
                               <Bell className="w-3.5 h-3.5 mr-1" />
-                              提醒我
+                              提醒�?
                             </Button>
                           </div>
                           <span className="group-hover:text-primary transition-colors">查看详情</span>
@@ -616,7 +601,7 @@ export default function Home() {
                   onClick={() => {setSearchTerm(""); setSelectedLevel(null);}}
                   className="mt-2 text-primary"
                 >
-                  清除筛选条件
+                  清除筛选条�?
                 </Button>
               </div>
             )}
@@ -624,12 +609,10 @@ export default function Home() {
             {!loading && source !== 'supabase-error' && filteredUniversities.length > 0 && (
               <div className="mt-8 flex flex-col gap-4 border-t border-border/30 pt-6 md:flex-row md:items-center md:justify-between">
                 <div className="text-sm text-muted-foreground font-sans">
-                  第 {page} / {totalPages} 页，每页 {PAGE_SIZE} 条
-                </div>
+                  �?{page} / {totalPages} 页，每页 {PAGE_SIZE} �?                </div>
                 <div className="flex flex-wrap items-center gap-2">
                   <label className="text-sm text-muted-foreground font-sans" htmlFor="page-jump">
-                    跳转到
-                  </label>
+                    跳转�?                  </label>
                   <Input
                     id="page-jump"
                     type="number"
@@ -650,15 +633,14 @@ export default function Home() {
                     onClick={() => setPage((current) => Math.max(1, current - 1))}
                     disabled={page === 1}
                   >
-                    上一页
+                    上一�?
                   </Button>
                   <Button
                     variant="outline"
                     onClick={() => setPage((current) => current + 1)}
                     disabled={!hasMore || (totalPages !== null && page >= totalPages)}
                   >
-                    下一页
-                  </Button>
+                    下一�?                  </Button>
                 </div>
               </div>
             )}
@@ -701,7 +683,7 @@ export default function Home() {
                     </Badge>
                     {!selectedUniversity.dataVerified && (
                       <Badge className="bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300 border-0">
-                        待核实
+                        待核�?
                       </Badge>
                     )}
                     {selectedUniversity.noticeScope === 'general' && (
@@ -711,7 +693,7 @@ export default function Home() {
                     )}
                     {selectedUniversity.websiteStatus === 'maintenance' && (
                       <Badge className="bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300 border-0">
-                        网站维护中
+                        网站维护�?
                       </Badge>
                     )}
                   </div>
@@ -720,46 +702,46 @@ export default function Home() {
                   onClick={() => setSelectedCard(null)}
                   className="text-muted-foreground hover:text-foreground transition-colors ml-4"
                 >
-                  ✕
+                  �?
                 </button>
               </div>
 
               <ScrollArea className="flex-1 overflow-y-auto">
                 <div className="p-6 space-y-6">
-                  {/* 待核实数据提示 */}
+                  {/* Verification notice */}
                   {!selectedUniversity.dataVerified && (
                     <div className="flex items-start gap-3 p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg">
                       <AlertCircle className="w-5 h-5 text-orange-600 dark:text-orange-400 shrink-0 mt-0.5" />
                       <div className="text-sm text-orange-800 dark:text-orange-200">
-                        <p className="font-medium mb-1">数据待核实</p>
+                        <p className="font-medium mb-1">\u6570\u636e\u5f85\u6838\u5b9e</p>
                         <p className="text-orange-600 dark:text-orange-300">
-                          以下部分信息为参考数据，可能与通知原文有差异。建议点击下方链接查看官方通知获取准确信息。
+                          \u4ee5\u4e0b\u90e8\u5206\u4fe1\u606f\u4e3a\u53c2\u8003\u6570\u636e\uff0c\u53ef\u80fd\u4e0e\u901a\u77e5\u539f\u6587\u6709\u5dee\u5f02\u3002\u5efa\u8bae\u70b9\u51fb\u4e0b\u65b9\u94fe\u63a5\u67e5\u770b\u5b98\u65b9\u901a\u77e5\u83b7\u53d6\u51c6\u786e\u4fe1\u606f\u3002
                         </p>
                       </div>
                     </div>
                   )}
 
-                  {/* 不分专业通知提示 */}
+                  {/* General notice hint */}
                   {selectedUniversity.noticeScope === 'general' && (
                     <div className="flex items-start gap-3 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
                       <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
                       <div className="text-sm text-amber-800 dark:text-amber-200">
-                        <p className="font-medium mb-1">不分专业通知</p>
+                        <p className="font-medium mb-1">\u4e0d\u5206\u4e13\u4e1a\u901a\u77e5</p>
                         <p className="text-amber-600 dark:text-amber-300">
-                          {selectedUniversity.noticeNote || '该院校研招网发布的是不分专业的综合通知，具体中文专业招生信息请查阅官方通知原文确认。'}
+                          {selectedUniversity.noticeNote || '\u8be5\u9662\u6821\u7814\u62db\u7f51\u53d1\u5e03\u7684\u662f\u4e0d\u5206\u4e13\u4e1a\u7684\u7efc\u5408\u901a\u77e5\uff0c\u5177\u4f53\u4e2d\u6587\u4e13\u4e1a\u62db\u751f\u4fe1\u606f\u8bf7\u67e5\u9605\u5b98\u65b9\u901a\u77e5\u539f\u6587\u786e\u8ba4\u3002'}
                         </p>
                       </div>
                     </div>
                   )}
 
-                  {/* 网站维护中提示 */}
+                  {/* 网站维护中提�?*/}
                   {selectedUniversity.websiteStatus === 'maintenance' && (
                     <div className="flex items-start gap-3 p-4 bg-gray-50 dark:bg-gray-900/20 border border-gray-200 dark:border-gray-800 rounded-lg">
                       <AlertCircle className="w-5 h-5 text-gray-600 dark:text-gray-400 shrink-0 mt-0.5" />
                       <div className="text-sm text-gray-800 dark:text-gray-200">
-                        <p className="font-medium mb-1">网站维护中</p>
+                        <p className="font-medium mb-1">\u7f51\u7ad9\u7ef4\u62a4\u4e2d</p>
                         <p className="text-gray-600 dark:text-gray-300">
-                          {selectedUniversity.websiteNote || '该院校官网目前正在维护，暂时无法访问。请稍后再试或关注其他渠道获取信息。'}
+                          {selectedUniversity.websiteNote || '\u8be5\u9662\u6821\u5b98\u7f51\u76ee\u524d\u6b63\u5728\u7ef4\u62a4\uff0c\u6682\u65f6\u65e0\u6cd5\u8bbf\u95ee\u3002\u8bf7\u7a0d\u540e\u518d\u8bd5\u6216\u5173\u6ce8\u5176\u4ed6\u6e20\u9053\u83b7\u53d6\u4fe1\u606f\u3002'}
                         </p>
                       </div>
                     </div>
@@ -777,8 +759,8 @@ export default function Home() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <h3 className="font-semibold text-sm text-muted-foreground mb-2">学制</h3>
-                      <p className="text-base">{cleanUserInput(selectedUniversity.duration || '待补充')}</p>
+                      <h3 className="font-semibold text-sm text-muted-foreground mb-2">\u5b66\u5236</h3>
+                      <p className="text-base">{cleanUserInput(selectedUniversity.duration || '\u5f85\u8865\u5145')}</p>
                     </div>
                     <div>
                       <h3 className="font-semibold text-sm text-muted-foreground mb-2">考核形式</h3>
@@ -808,7 +790,7 @@ export default function Home() {
 
                   {/* 操作按钮 */}
                   <div className="flex flex-wrap gap-3 pt-4 border-t border-border/40">
-                    {/* 查看通知详情（提取的内容） */}
+                    {/* 查看通知详情（提取的内容�?*/}
                     <Button
                       onClick={() => setLocation(`/notice/${selectedUniversity.sourceCardId ?? selectedUniversity.id}`)}
                       className="font-sans"
@@ -848,7 +830,7 @@ export default function Home() {
                       {selectedCard && favorites.includes(selectedCard.stableId) ? (
                         <>
                           <Heart className="w-4 h-4 mr-2 fill-current text-red-500" />
-                          已收藏
+                          已收�?
                         </>
                       ) : (
                         <>
@@ -878,3 +860,4 @@ export default function Home() {
     </div>
   );
 }
+
