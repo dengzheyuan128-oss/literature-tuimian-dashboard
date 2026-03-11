@@ -103,14 +103,14 @@ export default function Home() {
   const [favorites, setFavorites] = useState<number[]>([]);
   const selectedUniversity = selectedCard ? mapPublicProgramCardToUniversity(selectedCard) : null;
   const totalEntries = totalCount;
-  const totalPages = Math.max(1, Math.ceil((totalEntries ?? page * PAGE_SIZE) / PAGE_SIZE));
+  const totalPages = typeof totalEntries === "number" ? Math.max(1, Math.ceil(totalEntries / PAGE_SIZE)) : null;
 
   useEffect(() => {
     setPage(1);
   }, [selectedLevel]);
 
   useEffect(() => {
-    if (page > totalPages) {
+    if (totalPages !== null && page > totalPages) {
       setPage(totalPages);
     }
   }, [page, totalPages]);
@@ -634,14 +634,14 @@ export default function Home() {
                     id="page-jump"
                     type="number"
                     min={1}
-                    max={totalPages}
+                    max={totalPages ?? undefined}
                     value={page}
                     onChange={(event) => {
                       const nextPage = Number(event.target.value);
                       if (Number.isNaN(nextPage)) {
                         return;
                       }
-                      setPage(Math.min(totalPages, Math.max(1, nextPage)));
+                      setPage(totalPages !== null ? Math.min(totalPages, Math.max(1, nextPage)) : Math.max(1, nextPage));
                     }}
                     className="h-9 w-24 font-sans"
                   />
@@ -655,7 +655,7 @@ export default function Home() {
                   <Button
                     variant="outline"
                     onClick={() => setPage((current) => current + 1)}
-                    disabled={!hasMore || page >= totalPages}
+                    disabled={!hasMore || (totalPages !== null && page >= totalPages)}
                   >
                     下一页
                   </Button>
