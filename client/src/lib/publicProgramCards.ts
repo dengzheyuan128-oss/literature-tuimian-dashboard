@@ -1,11 +1,16 @@
 import { useMemo } from 'react';
 
 import type { University } from '@/types/university';
-import type { PublicProgramCard, PublicProgramCardDataset } from '@/types/publicProgramCard';
+import type {
+  AvailabilityStatus,
+  PublicProgramCard,
+  PublicProgramCardDataset,
+  VerificationStatus,
+} from '@/types/publicProgramCard';
 
 import type { ProgramCardFilters } from '@/lib/programCards';
 import { getInstitutionTags, getPrimaryInstitutionTier } from '@/lib/institutionTags';
-import { getProgramCardById, useProgramCards } from '@/lib/programCards';
+import { getProgramCardById, getProgramCards, useProgramCards } from '@/lib/programCards';
 
 export { ProgramCardFilters };
 
@@ -31,14 +36,28 @@ export function usePublicProgramCards(filters: ProgramCardFilters = {}) {
   }, [dataset]);
 }
 
+export async function getPublicProgramCards(filters: ProgramCardFilters = {}) {
+  const dataset = await getProgramCards(filters);
+  return dataset.universities.map(mapUniversityToPublicProgramCard);
+}
+
 export function mapUniversityToPublicProgramCard(university: University): PublicProgramCard {
   const institutionTags = university.institutionTags ?? getInstitutionTags(university.name, university);
+  const stableId = String(university.sourceCardId ?? university.id);
+  const legacyId = university.id;
+  const sourceUrl = university.url ?? '';
+  const verificationStatus = deriveVerificationStatus(university.dataVerified, university.dataStatus);
+  const availabilityStatus = deriveAvailabilityStatus(university.dataStatus, sourceUrl);
 
   return {
-    id: String(university.sourceCardId ?? university.id),
-    stableId: university.id,
+    id: stableId,
+    stableId,
+    legacyId,
+    sourceCardId: university.sourceCardId ? String(university.sourceCardId) : undefined,
     institutionName: university.name,
     programName: university.specialty,
+    specialtySummary: university.specialtySummary,
+    eligibilitySummary: university.specialtySummary ?? university.specialty,
     tier: getPrimaryInstitutionTier(institutionTags, university.tier),
     institutionTags,
     location: university.location,
@@ -48,9 +67,16 @@ export function mapUniversityToPublicProgramCard(university: University): Public
     degreeType: university.degreeType,
     year: university.duration ? Number(university.duration) || undefined : undefined,
     noticeType: university.noticeType,
+    applicationStage: university.noticeType ?? null,
+    publishedAt: null,
     applicationPeriod: university.applicationPeriod,
     deadline: university.deadline,
-    url: university.url,
+    sourceUrl,
+    url: sourceUrl,
+    availabilityStatus,
+    verificationStatus,
+    lastVerifiedAt: university.dataVerified ? null : null,
+    updatedAt: null,
     examForm: university.examForm,
     englishRequirement: university.englishRequirement,
     dataStatus: university.dataStatus,
@@ -61,9 +87,10 @@ export function mapUniversityToPublicProgramCard(university: University): Public
 }
 
 export function mapPublicProgramCardToUniversity(card: PublicProgramCard): University {
+  const id = card.legacyId ?? normalizeLegacyId(card.stableId);
   return {
-    id: card.stableId,
-    sourceCardId: card.id,
+    id,
+    sourceCardId: card.sourceCardId ?? card.id,
     name: card.institutionName,
     tier: card.tier,
     institutionTags: card.institutionTags,
@@ -72,13 +99,14 @@ export function mapPublicProgramCardToUniversity(card: PublicProgramCard): Unive
     is211: card.is211,
     disciplineGrade: card.disciplineGrade,
     specialty: card.programName,
+    specialtySummary: card.specialtySummary ?? card.eligibilitySummary ?? undefined,
     degreeType: card.degreeType,
     duration: card.year ? `${card.year}` : undefined,
     examForm: card.examForm,
     englishRequirement: card.englishRequirement,
     applicationPeriod: card.applicationPeriod,
     deadline: card.deadline,
-    url: card.url,
+    url: card.sourceUrl || card.url || '',
     dataStatus: card.dataStatus,
     dataVerified: card.dataVerified,
     noticeType: card.noticeType,
@@ -91,4 +119,39 @@ export function mapPublicProgramCardToUniversity(card: PublicProgramCard): Unive
 export async function getPublicProgramCardById(id: string | number): Promise<PublicProgramCard | null> {
   const university = await getProgramCardById(id);
   return university ? mapUniversityToPublicProgramCard(university) : null;
+}
+
+function normalizeLegacyId(stableId: string): number {
+  const numeric = Number(stableId);
+  if (Number.isFinite(numeric) && numeric > 0) {
+    return Math.trunc(numeric);
+  }
+
+  let hash = 0;
+  for (let index = 0; index < stableId.length; index += 1) {
+    hash = (hash * 31 + stableId.charCodeAt(index)) % 1_000_000_000;
+  }
+
+  return hash > 0 ? hash : 1;
+}
+
+function deriveVerificationStatus(
+  dataVerified: boolean | undefined,
+  dataStatus: University['dataStatus'],
+): VerificationStatus {
+  if (dataVerified) return 'verified';
+  if (dataStatus === 'PENDING_MANUAL') return 'needs_review';
+  if (dataStatus === 'PARTIAL') return 'needs_review';
+  return 'unknown';
+}
+
+function deriveAvailabilityStatus(
+  dataStatus: University['dataStatus'],
+  sourceUrl: string,
+): AvailabilityStatus {
+  if (!sourceUrl) return 'unknown';
+  if (dataStatus === 'COMPLETE') return 'current';
+  if (dataStatus === 'PARTIAL') return 'needs_review';
+  if (dataStatus === 'PENDING_MANUAL') return 'needs_review';
+  return 'unknown';
 }

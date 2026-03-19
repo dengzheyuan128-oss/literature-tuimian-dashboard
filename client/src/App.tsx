@@ -1,92 +1,111 @@
+import { Route, Switch } from "wouter";
+
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import BaiduAnalytics from "./components/BaiduAnalytics";
+import { BuildInfo } from "./components/BuildInfo";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { ThemeProvider } from "./contexts/ThemeContext";
+import FeedbackButton from "./components/FeedbackButton";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 import { CompareProvider } from "./contexts/CompareContext";
 import { ReminderProvider } from "./contexts/ReminderContext";
-import ProtectedRoute from "./components/ProtectedRoute";
-import BaiduAnalytics from "./components/BaiduAnalytics";
-import Landing from "./pages/Landing";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Profile from "./pages/Profile";
-import Matcher from "./pages/Matcher";
-import MatchResult from "./pages/MatchResult";
-import Compare from "./pages/Compare";
-import Reminders from "./pages/Reminders";
-import Analytics from "./pages/Analytics";
-import { BuildInfo } from "./components/BuildInfo";
-import FeedbackButton from "./components/FeedbackButton";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import AdminExtract from "./pages/AdminExtract";
 import AdminNoticeReview from "./pages/AdminNoticeReview";
+import Analytics from "./pages/Analytics";
+import Compare from "./pages/Compare";
+import DataSourcesDisclaimer from "./pages/DataSourcesDisclaimer";
+import FeedbackContact from "./pages/FeedbackContact";
+import Home from "./pages/Home";
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import Matcher from "./pages/Matcher";
+import MatchResult from "./pages/MatchResult";
+import NotFound from "./pages/NotFound";
 import NoticeDetail from "./pages/NoticeDetail";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Profile from "./pages/Profile";
+import Reminders from "./pages/Reminders";
 import SubmitNotice from "./pages/SubmitNotice";
-
+import TermsOfService from "./pages/TermsOfService";
 
 function Router() {
   return (
     <Switch>
-      {/* 公开页面 */}
-      <Route path={"/"} component={Landing} />
-      <Route path={"/login"} component={Login} />
+      <Route path="/" component={Landing} />
+      <Route path="/login" component={Login} />
+      <Route path="/privacy" component={PrivacyPolicy} />
+      <Route path="/terms" component={TermsOfService} />
+      <Route path="/data-sources" component={DataSourcesDisclaimer} />
+      <Route path="/feedback" component={FeedbackContact} />
 
-      {/* 受保护的页面 - 需要登录 */}
-      <Route path={"/dashboard"}>
-        <ProtectedRoute><Home /></ProtectedRoute>
+      <Route path="/dashboard">
+        <ProtectedRoute>
+          <Home />
+        </ProtectedRoute>
       </Route>
-      <Route path={"/profile"}>
-        <ProtectedRoute><Profile /></ProtectedRoute>
+      <Route path="/profile">
+        <ProtectedRoute>
+          <Profile />
+        </ProtectedRoute>
       </Route>
-      <Route path={"/matcher"}>
-        <ProtectedRoute><Matcher /></ProtectedRoute>
+      <Route path="/matcher">
+        <ProtectedRoute>
+          <Matcher />
+        </ProtectedRoute>
       </Route>
-      <Route path={"/match-result"}>
-        <ProtectedRoute><MatchResult /></ProtectedRoute>
+      <Route path="/match-result">
+        <ProtectedRoute>
+          <MatchResult />
+        </ProtectedRoute>
       </Route>
-      <Route path={"/compare"}>
-        <ProtectedRoute><Compare /></ProtectedRoute>
+      <Route path="/compare">
+        <ProtectedRoute>
+          <Compare />
+        </ProtectedRoute>
       </Route>
-      <Route path={"/reminders"}>
-        <ProtectedRoute><Reminders /></ProtectedRoute>
+      <Route path="/reminders">
+        <ProtectedRoute>
+          <Reminders />
+        </ProtectedRoute>
       </Route>
-      <Route path={"/analytics"}>
-        <ProtectedRoute><Analytics /></ProtectedRoute>
+      <Route path="/analytics">
+        <ProtectedRoute>
+          <Analytics />
+        </ProtectedRoute>
       </Route>
-      <Route path={"/admin/extract"}>
-        <ProtectedRoute><AdminExtract /></ProtectedRoute>
+      <Route path="/admin/extract">
+        <ProtectedRoute>
+          <AdminExtract />
+        </ProtectedRoute>
       </Route>
-      <Route path={"/admin/review"}>
-        <ProtectedRoute><AdminNoticeReview /></ProtectedRoute>
+      <Route path="/admin/review">
+        <ProtectedRoute>
+          <AdminNoticeReview />
+        </ProtectedRoute>
       </Route>
-      <Route path={"/submit-notice"}>
-        <ProtectedRoute><SubmitNotice /></ProtectedRoute>
+      <Route path="/submit-notice">
+        <ProtectedRoute>
+          <SubmitNotice />
+        </ProtectedRoute>
       </Route>
-      <Route path={"/notice/:id"}>
-        <ProtectedRoute><NoticeDetail /></ProtectedRoute>
+      <Route path="/notice/:id">
+        <ProtectedRoute>
+          <NoticeDetail />
+        </ProtectedRoute>
       </Route>
 
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
+      <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="light">
         <AuthProvider>
           <CompareProvider>
             <ReminderProvider>

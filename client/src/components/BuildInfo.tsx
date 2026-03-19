@@ -6,12 +6,34 @@ import { buildEntriesLabel } from '@/lib/statsDisplay';
 declare const __BUILD_COMMIT__: string;
 declare const __BUILD_TIME__: string;
 
+const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1", "::1"]);
+
+function shouldShowDebugPanel() {
+  if (!import.meta.env.DEV) {
+    return false;
+  }
+
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  if (import.meta.env.VITE_SHOW_BUILD_INFO === "true") {
+    return true;
+  }
+
+  return LOCAL_HOSTNAMES.has(window.location.hostname);
+}
+
 export function BuildInfo() {
-  const { cards, lastUpdated, source, configured, error, supabaseHost, totalCount, institutionCount } =
-    usePublicProgramCards({ limit: 1 });
+  if (!shouldShowDebugPanel()) {
+    return null;
+  }
+
+  const { cards, lastUpdated, totalCount, institutionCount } = usePublicProgramCards({ limit: 1 });
   const buildCommit = typeof __BUILD_COMMIT__ !== 'undefined' ? __BUILD_COMMIT__ : 'unknown';
   const buildTime = typeof __BUILD_TIME__ !== 'undefined' ? __BUILD_TIME__ : 'unknown';
   void cards;
+
   const entriesLabel = buildEntriesLabel(totalCount);
   const [position, setPosition] = useState({ x: 16, y: 16 });
   const dragOffset = useRef({ x: 0, y: 0 });
@@ -79,22 +101,6 @@ export function BuildInfo() {
         <div className="flex items-center gap-2">
           <span>Data Updated: {lastUpdated}</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-muted-foreground/70">Source: {source}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-muted-foreground/70">Supabase: {configured ? 'configured' : 'missing-env'}</span>
-        </div>
-        {supabaseHost ? (
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground/70">Host: {supabaseHost}</span>
-          </div>
-        ) : null}
-        {error ? (
-          <div className="flex items-center gap-2">
-            <span className="max-w-[240px] break-words text-[11px] text-destructive">Error: {error}</span>
-          </div>
-        ) : null}
         <div className="flex items-center gap-2">
           <span className="text-xs text-muted-foreground/70">Built: {formatTime(buildTime)}</span>
         </div>

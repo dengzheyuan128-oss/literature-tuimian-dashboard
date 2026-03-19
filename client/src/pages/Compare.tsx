@@ -20,17 +20,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { getSimplifiedTier, getTierBadgeClassName } from "@/lib/tierUtils";
 import { cleanUserInput } from "@/lib/security";
 
-// 对比项配置
 const COMPARE_FIELDS = [
   { key: "tier", label: "院校层次", icon: GraduationCap },
-  { key: "specialty", label: "专业方向", icon: BookOpen },
+  { key: "programName", label: "专业方向", icon: BookOpen },
   { key: "degreeType", label: "学位类型", icon: FileText },
-  { key: "duration", label: "学制", icon: Clock },
+  { key: "year", label: "学制", icon: Clock },
   { key: "applicationPeriod", label: "申请时间", icon: Calendar },
-  { key: "deadline", label: "截止日期", icon: Calendar },
+  { key: "deadline", label: "截止时间", icon: Calendar },
   { key: "examForm", label: "考核形式", icon: FileText },
   { key: "englishRequirement", label: "英语要求", icon: Languages },
 ] as const;
+
+const EMPTY_VALUE_LABELS = new Set(["未注明", "待补充", "待确认"]);
 
 export default function Compare() {
   const [, setLocation] = useLocation();
@@ -40,32 +41,21 @@ export default function Compare() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* 顶部导航 */}
-      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b">
-        <div className="container max-w-7xl mx-auto px-4 py-4">
+      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur-sm">
+        <div className="container mx-auto max-w-7xl px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setLocation("/dashboard")}
-              >
-                <ArrowLeft className="w-5 h-5" />
+              <Button variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
+                <ArrowLeft className="h-5 w-5" />
               </Button>
               <div>
                 <h1 className="text-2xl font-bold">院校对比</h1>
-                <p className="text-sm text-muted-foreground">
-                  已选择 {compareList.length}/4 所院校
-                </p>
+                <p className="text-sm text-muted-foreground">已选择 {compareList.length}/4 所院校</p>
               </div>
             </div>
             {!isEmpty && (
-              <Button
-                variant="outline"
-                onClick={clearCompare}
-                className="text-destructive hover:text-destructive"
-              >
-                <Trash2 className="w-4 h-4 mr-2" />
+              <Button variant="outline" onClick={clearCompare} className="text-destructive hover:text-destructive">
+                <Trash2 className="mr-2 h-4 w-4" />
                 清空列表
               </Button>
             )}
@@ -73,7 +63,7 @@ export default function Compare() {
         </div>
       </header>
 
-      <main className="container max-w-7xl mx-auto px-4 py-8">
+      <main className="container mx-auto max-w-7xl px-4 py-8">
         <AnimatePresence mode="wait">
           {isEmpty ? (
             <motion.div
@@ -83,153 +73,107 @@ export default function Compare() {
               exit={{ opacity: 0, y: -20 }}
               className="flex flex-col items-center justify-center py-20"
             >
-              <div className="w-24 h-24 rounded-full bg-muted/50 flex items-center justify-center mb-6">
-                <GraduationCap className="w-12 h-12 text-muted-foreground/50" />
+              <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-muted/50">
+                <GraduationCap className="h-12 w-12 text-muted-foreground/50" />
               </div>
-              <h2 className="text-xl font-semibold mb-2">对比列表为空</h2>
-              <p className="text-muted-foreground mb-6 text-center max-w-md">
-                请在首页选择院校添加到对比列表，最多可同时对比4所院校
+              <h2 className="mb-2 text-xl font-semibold">对比列表为空</h2>
+              <p className="mb-6 max-w-md text-center text-muted-foreground">
+                请先在首页选择项目加入对比列表，最多可同时对比 4 所院校。
               </p>
               <Button onClick={() => setLocation("/dashboard")}>
-                <Plus className="w-4 h-4 mr-2" />
+                <Plus className="mr-2 h-4 w-4" />
                 添加院校
               </Button>
             </motion.div>
           ) : (
-            <motion.div
-              key="table"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-            >
+            <motion.div key="table" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
               <ScrollArea className="w-full">
                 <div className="min-w-[800px]">
-                  {/* 表头 - 院校名称 */}
-                  <div className="grid grid-cols-[200px_repeat(4,1fr)] gap-4 mb-6">
-                    <div className="p-4 rounded-lg bg-muted/30">
-                      <span className="font-semibold text-muted-foreground">
-                        对比项
-                      </span>
+                  <div className="mb-6 grid grid-cols-[200px_repeat(4,1fr)] gap-4">
+                    <div className="rounded-lg bg-muted/30 p-4">
+                      <span className="font-semibold text-muted-foreground">对比项</span>
                     </div>
                     {compareList.map((uni) => (
-                      <Card
-                        key={uni.id}
-                        className="relative overflow-hidden group"
-                      >
+                      <Card key={uni.stableId} className="group relative overflow-hidden">
                         <CardHeader className="pb-2">
                           <div className="flex items-start justify-between">
-                            <div className="flex-1 min-w-0">
-                              <CardTitle className="text-lg truncate">
-                                {cleanUserInput(uni.name)}
-                              </CardTitle>
-                              <Badge
-                                className={`${getTierBadgeClassName(uni.tier)} mt-2`}
-                              >
+                            <div className="min-w-0 flex-1">
+                              <CardTitle className="truncate text-lg">{cleanUserInput(uni.institutionName)}</CardTitle>
+                              <Badge className={`${getTierBadgeClassName(uni.tier)} mt-2`}>
                                 {getSimplifiedTier(uni.tier)}
                               </Badge>
                             </div>
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                              onClick={() => removeFromCompare(uni.id)}
+                              className="shrink-0 opacity-0 transition-opacity group-hover:opacity-100"
+                              onClick={() => removeFromCompare(uni.stableId)}
                             >
-                              <Trash2 className="w-4 h-4 text-destructive" />
+                              <Trash2 className="h-4 w-4 text-destructive" />
                             </Button>
                           </div>
                         </CardHeader>
                         <CardContent className="pt-0">
-                          {uni.url && (
+                          {(uni.sourceUrl || uni.url) && (
                             <a
-                              href={cleanUserInput(uni.url)}
+                              href={cleanUserInput(uni.sourceUrl || uni.url || "")}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
                             >
-                              <ExternalLink className="w-3 h-3" />
+                              <ExternalLink className="h-3 w-3" />
                               查看通知
                             </a>
                           )}
                         </CardContent>
                       </Card>
                     ))}
-                    {/* 空位占位符 */}
-                    {Array.from({ length: 4 - compareList.length }).map(
-                      (_, i) => (
-                        <Card
-                          key={`empty-${i}`}
-                          className="border-dashed bg-muted/10 cursor-pointer hover:bg-muted/20 transition-colors"
-                          onClick={() => setLocation("/")}
-                        >
-                          <CardContent className="h-full flex flex-col items-center justify-center py-8 text-muted-foreground">
-                            <Plus className="w-8 h-8 mb-2" />
-                            <span className="text-sm">添加院校</span>
-                          </CardContent>
-                        </Card>
-                      )
-                    )}
+                    {Array.from({ length: 4 - compareList.length }).map((_, index) => (
+                      <Card
+                        key={`empty-${index}`}
+                        className="cursor-pointer border-dashed bg-muted/10 transition-colors hover:bg-muted/20"
+                        onClick={() => setLocation("/")}
+                      >
+                        <CardContent className="flex h-full flex-col items-center justify-center py-8 text-muted-foreground">
+                          <Plus className="mb-2 h-8 w-8" />
+                          <span className="text-sm">添加院校</span>
+                        </CardContent>
+                      </Card>
+                    ))}
                   </div>
 
-                  {/* 对比内容 */}
                   <div className="space-y-2">
                     {COMPARE_FIELDS.map((field) => (
-                      <div
-                        key={field.key}
-                        className="grid grid-cols-[200px_repeat(4,1fr)] gap-4"
-                      >
-                        {/* 字段标签 */}
-                        <div className="p-4 rounded-lg bg-muted/30 flex items-center gap-2">
-                          <field.icon className="w-4 h-4 text-primary" />
-                          <span className="font-medium text-sm">
-                            {field.label}
-                          </span>
+                      <div key={field.key} className="grid grid-cols-[200px_repeat(4,1fr)] gap-4">
+                        <div className="flex items-center gap-2 rounded-lg bg-muted/30 p-4">
+                          <field.icon className="h-4 w-4 text-primary" />
+                          <span className="text-sm font-medium">{field.label}</span>
                         </div>
-                        {/* 各院校数据 */}
                         {compareList.map((uni) => {
                           let value: string;
                           if (field.key === "tier") {
                             value = getSimplifiedTier(uni.tier);
+                          } else if (field.key === "year") {
+                            value = uni.year ? `${uni.year}年` : "未注明";
                           } else {
-                            value =
-                              uni[field.key as keyof typeof uni]?.toString() ||
-                              "未注明";
+                            value = uni[field.key as keyof typeof uni]?.toString() || "未注明";
                           }
+
                           return (
-                            <div
-                              key={uni.id}
-                              className="p-4 rounded-lg bg-card border text-sm"
-                            >
+                            <div key={uni.stableId} className="rounded-lg border bg-card p-4 text-sm">
                               {field.key === "tier" ? (
-                                <Badge
-                                  className={getTierBadgeClassName(uni.tier)}
-                                >
-                                  {value}
-                                </Badge>
+                                <Badge className={getTierBadgeClassName(uni.tier)}>{value}</Badge>
                               ) : (
-                                <span
-                                  className={
-                                    value === "未注明" ||
-                                    value === "待补充" ||
-                                    value === "待确认"
-                                      ? "text-muted-foreground italic"
-                                      : ""
-                                  }
-                                >
+                                <span className={EMPTY_VALUE_LABELS.has(value) ? "italic text-muted-foreground" : ""}>
                                   {cleanUserInput(value)}
                                 </span>
                               )}
                             </div>
                           );
                         })}
-                        {/* 空位 */}
-                        {Array.from({ length: 4 - compareList.length }).map(
-                          (_, i) => (
-                            <div
-                              key={`empty-${i}`}
-                              className="p-4 rounded-lg bg-muted/10 border border-dashed"
-                            />
-                          )
-                        )}
+                        {Array.from({ length: 4 - compareList.length }).map((_, index) => (
+                          <div key={`empty-${index}`} className="rounded-lg border border-dashed bg-muted/10 p-4" />
+                        ))}
                       </div>
                     ))}
                   </div>
@@ -237,11 +181,10 @@ export default function Compare() {
                 <ScrollBar orientation="horizontal" />
               </ScrollArea>
 
-              {/* 底部提示 */}
-              <div className="mt-8 p-4 bg-muted/30 rounded-lg text-sm text-muted-foreground">
+              <div className="mt-8 rounded-lg bg-muted/30 p-4 text-sm text-muted-foreground">
                 <p className="flex items-center gap-2">
                   <span className="text-primary">提示：</span>
-                  数据仅供参考，请以各院校官方通知为准。部分信息显示"未注明"表示官方通知中未明确说明。
+                  数据仅供参考，请以院校官方通知为准。标记为“未注明”的字段表示原始通知中未明确说明。
                 </p>
               </div>
             </motion.div>

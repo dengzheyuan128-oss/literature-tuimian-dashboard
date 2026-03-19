@@ -1,13 +1,19 @@
 import type { DataStatus, NoticeType, NoticeScope, WebsiteStatus } from '@/types/university';
 import type { SimplifiedTier } from '@/lib/tierUtils';
 
+export type AvailabilityStatus = 'current' | 'needs_review' | 'expired' | 'unknown';
+export type VerificationStatus = 'verified' | 'needs_review' | 'unknown';
+
 export interface PublicProgramCard {
   id: string;
-  stableId: number;
+  stableId: string;
+  legacyId: number;
+  sourceCardId?: string;
   institutionName: string;
   departmentName?: string;
   programName: string;
   specialtySummary?: string;
+  eligibilitySummary?: string | null;
   tier: string;
   institutionTags: SimplifiedTier[];
   location?: string;
@@ -17,9 +23,16 @@ export interface PublicProgramCard {
   degreeType: string;
   year?: number;
   noticeType?: NoticeType;
+  applicationStage?: string | null;
+  publishedAt?: string | null;
   applicationPeriod: string;
   deadline: string;
-  url: string;
+  sourceUrl: string;
+  url?: string;
+  availabilityStatus: AvailabilityStatus;
+  verificationStatus: VerificationStatus;
+  lastVerifiedAt?: string | null;
+  updatedAt?: string | null;
   examForm: string;
   englishRequirement: string;
   dataStatus: DataStatus;

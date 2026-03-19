@@ -33,7 +33,8 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
 
   const results = useMemo(() => {
     if (!search.trim()) {
-      return cards.filter((card) => card.tier === '985').slice(0, 6);
+      const prioritized = cards.filter((card) => card.availabilityStatus === 'current');
+      return (prioritized.length ? prioritized : cards).slice(0, 6);
     }
 
     const cleanSearch = cleanUserInput(search.trim().toLowerCase());
@@ -41,10 +42,11 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
     return cards.filter((uni) => {
       const nameMatch = uni.institutionName.toLowerCase().includes(cleanSearch);
       const specialtyMatch = uni.programName.toLowerCase().includes(cleanSearch);
+      const summaryMatch = uni.eligibilitySummary?.toLowerCase().includes(cleanSearch) ?? false;
       const tierMatch = uni.tier.toLowerCase().includes(cleanSearch);
       const institutionTagMatch = uni.institutionTags.some((tag) => tag.toLowerCase().includes(cleanSearch));
 
-      return nameMatch || specialtyMatch || tierMatch || institutionTagMatch;
+      return nameMatch || specialtyMatch || summaryMatch || tierMatch || institutionTagMatch;
     });
   }, [search, cards]);
 
@@ -144,6 +146,7 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
               {!loading && source !== 'supabase-error' && results.map((uni) => {
                 const deadlineMeta = getDeadlinePresentation(uni.deadline);
                 const nextAction = getNextActionLabel(uni);
+                const sourceUrl = uni.sourceUrl || uni.url || '';
 
                 return (
                   <Command.Item
@@ -187,9 +190,9 @@ export default function SearchCommand({ onSelect }: SearchCommandProps) {
                       <p className="text-xs text-primary line-clamp-1">下一步：{nextAction}</p>
                     </div>
 
-                    {uni.url && (
+                    {sourceUrl && (
                       <a
-                        href={cleanUserInput(uni.url)}
+                        href={cleanUserInput(sourceUrl)}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}

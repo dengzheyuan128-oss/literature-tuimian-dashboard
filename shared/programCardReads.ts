@@ -73,23 +73,34 @@ export function buildProgramCardReadRows(input: {
     const latestNoticeKey = input.latestNoticeByCardKey.get(card.key);
     const latestNotice = latestNoticeKey ? noticesByKey.get(latestNoticeKey) : null;
     const institutionMetadata = input.institutionMetadataById.get(cardId);
+    const programName = firstMeaningfulText(card.program_name, card.specialty_summary, department?.name) ?? '待补充';
+    const noticeType =
+      latestNotice?.stage_normalized ??
+      card.stage_normalized ??
+      normalizeNoticeType(latestNotice?.stage ?? card.primary_stage ?? null);
+    const applicationStage = firstMeaningfulText(card.primary_stage, latestNotice?.stage_normalized) ?? null;
+    const publishedAt = firstMeaningfulText(latestNotice?.published_at_raw) ?? null;
+    const deadline = firstMeaningfulText(latestNotice?.application_end_raw) ?? null;
+    const sourceUrl = firstMeaningfulText(latestNotice?.notice_url) ?? null;
+    const eligibilitySummary = firstMeaningfulText(
+      card.specialty_summary,
+      latestNotice?.ranking_requirement_text,
+      latestNotice?.english_requirement_text,
+    ) ?? null;
 
     rows.push({
       id: cardId,
       stable_id: card.department_key,
       institution_name: institution.name,
       department_name: department?.name ?? null,
-      program_name: card.program_name,
-      notice_type:
-        latestNotice?.stage_normalized ??
-        card.stage_normalized ??
-        normalizeNoticeType(latestNotice?.stage ?? card.primary_stage ?? null),
-      application_stage: card.primary_stage ?? null,
-      published_at: latestNotice?.published_at_raw ?? null,
-      deadline: latestNotice?.application_end_raw ?? null,
+      program_name: programName,
+      notice_type: noticeType,
+      application_stage: applicationStage,
+      published_at: publishedAt,
+      deadline,
       availability_status: null,
-      eligibility_summary: card.specialty_summary ?? null,
-      source_url: latestNotice?.notice_url ?? null,
+      eligibility_summary: eligibilitySummary,
+      source_url: sourceUrl,
       verification_status: null,
       last_verified_at: null,
       degree_type: card.degree_type ?? null,
@@ -114,6 +125,10 @@ export function buildProgramCardReadRows(input: {
   }
 
   return rows;
+}
+
+function firstMeaningfulText(...values: Array<string | null | undefined>) {
+  return values.find((value) => typeof value === 'string' && value.trim().length > 0)?.trim();
 }
 
 export function buildLatestNoticeByCardKey(

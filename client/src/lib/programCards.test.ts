@@ -7,9 +7,19 @@ describe('programCards', () => {
   it('maps a database card record into the existing university-shaped card model', () => {
     const input = {
       id: 'card-1',
+      stable_id: 'dept::history',
       institution_name: 'SYSU',
       department_name: 'History',
       program_name: 'Chinese History',
+      notice_type: 'pre_admission',
+      application_stage: 'Pre-Admission',
+      published_at: '2024-09-01',
+      deadline: '2024-09-10',
+      availability_status: null,
+      eligibility_summary: 'Related majors accepted',
+      source_url: 'https://example.com/a',
+      verification_status: null,
+      last_verified_at: null,
       degree_type: 'Academic',
       year: 2024,
       primary_stage: 'Pre-Admission',
@@ -27,6 +37,7 @@ describe('programCards', () => {
       latest_notice_ranking_requirement_text: 'Top 30%',
       latest_notice_english_requirement_text: 'CET6 500+',
       latest_notice_application_method: 'System',
+      updated_at: '2024-09-12T00:00:00.000Z',
     } as const;
 
     const result = mapProgramCardRecordToUniversity(input, 1);
@@ -42,10 +53,10 @@ describe('programCards', () => {
       deadline: '2024-09-10',
       url: 'https://example.com/a',
       dataStatus: 'COMPLETE',
-      dataVerified: true,
       location: 'Guangdong',
       is985: true,
       is211: true,
+      dataVerified: false,
     });
 
     expect(result.id).toBe(mapProgramCardRecordToUniversity(input, 999).id);

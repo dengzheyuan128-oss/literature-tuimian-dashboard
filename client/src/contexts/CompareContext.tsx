@@ -1,72 +1,76 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { toast } from "sonner";
 
-import { useProgramCards } from "@/lib/programCards";
-import type { University } from "@/types/university";
+import { usePublicProgramCards } from "@/lib/publicProgramCards";
+import type { PublicProgramCard } from "@/types/publicProgramCard";
 
 interface CompareContextType {
-  compareList: University[];
-  addToCompare: (university: University) => void;
-  removeFromCompare: (id: number) => void;
-  isInCompare: (id: number) => boolean;
+  compareList: PublicProgramCard[];
+  addToCompare: (card: PublicProgramCard) => void;
+  removeFromCompare: (stableId: string) => void;
+  isInCompare: (stableId: string) => boolean;
   clearCompare: () => void;
 }
 
-const STORAGE_KEY = "university-compare-list";
+const STORAGE_KEY = "public-program-compare-list";
 const MAX_COMPARE_ITEMS = 4;
 
 const CompareContext = createContext<CompareContextType | undefined>(undefined);
 
 export function CompareProvider({ children }: { children: ReactNode }) {
-  const { universities } = useProgramCards();
-  const [compareIds, setCompareIds] = useState<number[]>(() => {
+  const { cards } = usePublicProgramCards({ enabled: true, limit: 200 });
+  const [compareIds, setCompareIds] = useState<string[]>(() => {
     if (typeof window === "undefined") return [];
 
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      return stored ? (JSON.parse(stored) as number[]) : [];
+      return stored ? (JSON.parse(stored) as string[]) : [];
     } catch {
       return [];
     }
   });
 
-  const compareList = compareIds
-    .map((id) => universities.find((u) => u.id === id))
-    .filter((u): u is University => u !== undefined);
+  const compareList = useMemo(
+    () =>
+      compareIds
+        .map((stableId) => cards.find((card) => card.stableId === stableId || card.id === stableId))
+        .filter((card): card is PublicProgramCard => card !== undefined),
+    [cards, compareIds],
+  );
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(compareIds));
   }, [compareIds]);
 
-  const addToCompare = (university: University) => {
+  const addToCompare = (card: PublicProgramCard) => {
     setCompareIds((prev) => {
-      if (prev.includes(university.id)) {
-        toast.info("该院校已在对比列表中");
+      if (prev.includes(card.stableId)) {
+        toast.info("该项目已在对比列表中");
         return prev;
       }
 
       if (prev.length >= MAX_COMPARE_ITEMS) {
-        toast.warning(`对比列表最多添加 ${MAX_COMPARE_ITEMS} 所院校`);
+        toast.warning(`对比列表最多添加 ${MAX_COMPARE_ITEMS} 个项目`);
         return prev;
       }
 
-      toast.success(`已添加 ${university.name} 到对比列表`);
-      return [...prev, university.id];
+      toast.success(`已添加 ${card.institutionName} 到对比列表`);
+      return [...prev, card.stableId];
     });
   };
 
-  const removeFromCompare = (id: number) => {
+  const removeFromCompare = (stableId: string) => {
     setCompareIds((prev) => {
-      const university = universities.find((u) => u.id === id);
-      if (university) {
-        toast.info(`已从对比列表移除 ${university.name}`);
+      const card = cards.find((item) => item.stableId === stableId || item.id === stableId);
+      if (card) {
+        toast.info(`已从对比列表移除 ${card.institutionName}`);
       }
-      return prev.filter((item) => item !== id);
+      return prev.filter((item) => item !== stableId);
     });
   };
 
-  const isInCompare = (id: number) => compareIds.includes(id);
+  const isInCompare = (stableId: string) => compareIds.includes(stableId);
 
   const clearCompare = () => {
     setCompareIds([]);
@@ -74,9 +78,7 @@ export function CompareProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <CompareContext.Provider
-      value={{ compareList, addToCompare, removeFromCompare, isInCompare, clearCompare }}
-    >
+    <CompareContext.Provider value={{ compareList, addToCompare, removeFromCompare, isInCompare, clearCompare }}>
       {children}
     </CompareContext.Provider>
   );

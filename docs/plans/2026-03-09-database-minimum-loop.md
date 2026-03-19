@@ -236,6 +236,34 @@ V1 target fields for the public read model:
 - `last_verified_at`
 - `updated_at`
 
+### V1 Delivery Tiers
+
+Freeze the first production-oriented implementation into three delivery tiers.
+
+#### V1 must land
+
+- `stable_id`
+- `institution_name`
+- `program_name`
+- `notice_type`
+- `deadline`
+- `eligibility_summary`
+- `source_url`
+- `updated_at`
+
+#### V1 can land with conservative rules
+
+- `application_stage`
+- `published_at`
+
+#### V1 may stay nullable, but the field must exist
+
+- `availability_status`
+- `verification_status`
+- `last_verified_at`
+
+This keeps the first release focused on decision support instead of waiting for every trust/status rule to be fully modeled.
+
 Second-priority fields after the loop is stable:
 
 - `institution_tags`
@@ -258,6 +286,25 @@ Which `public_program_cards` fields can already be produced from the current fou
 | `id` | `department_cards` / DB read layer | `department_cards.key` or DB card id | Partial | Local model has stable department card key; DB still needs final public id strategy. |
 | `stable_id` | `department_entities` | `department_entities.key` | Yes | Natural key already exists as `school_name_normalized::department_name_normalized`. |
 | `institution_name` | `department_cards` | `school_name` | Yes | Already present in local four-layer model. |
+
+---
+
+## 10. Immediate Execution Bridge
+
+Do not treat this document as a pure architecture note.
+The immediate next step is to turn the field mapping into implementation work.
+
+Execution order:
+
+1. freeze the V1 field contract and precedence rules
+2. tighten read-model generation so it reliably produces the V1 contract
+3. make the public frontend read only the public current-card contract
+4. surface missing `deadline`, `source_url`, and `program_name` as repairable data issues
+5. defer richer recommendation and analytics work until after the V1 loop is stable
+
+The operative rule is:
+
+> first make `public_program_cards` stable to produce, then improve completeness.
 | `department_name` | `department_cards` | `department_name` | Yes | Already present in local four-layer model. |
 | `program_name` | `department_cards` / optional notice field | currently falls back to department name | Partial | Current local model uses department name as placeholder; needs a stronger program naming rule later. |
 | `notice_type` | `normalized_notices` | `stage_normalized` or `stage_raw` | Partial | Current stage normalization exists; naming should be stabilized for public semantics. |

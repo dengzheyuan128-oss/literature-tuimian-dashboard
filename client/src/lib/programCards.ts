@@ -38,6 +38,7 @@ export interface ProgramCardRecord {
   latest_notice_ranking_requirement_text: string | null;
   latest_notice_english_requirement_text: string | null;
   latest_notice_application_method: string | null;
+  updated_at: string | null;
 }
 
 export interface ProgramCardFilters {
@@ -128,6 +129,7 @@ export function mapProgramCardRecordToUniversity(record: ProgramCardRecord, inde
   const examForm = firstPresent(record.latest_notice_application_method) || PLACEHOLDER_TEXT;
   const url = firstPresent(record.source_url, record.latest_notice_url) || '';
   const degreeType = firstPresent(record.degree_type) || PLACEHOLDER_TEXT;
+  const isVerified = isVerifiedRecord(record);
   const dataStatus = inferDataStatus({
     specialty,
     deadline,
@@ -139,7 +141,7 @@ export function mapProgramCardRecordToUniversity(record: ProgramCardRecord, inde
   });
 
   return {
-    id: createStableUniversityId(record.id, index),
+    id: createStableUniversityId(record.stable_id ?? record.id, index),
     sourceCardId: record.id,
     name: record.institution_name,
     tier,
@@ -156,8 +158,8 @@ export function mapProgramCardRecordToUniversity(record: ProgramCardRecord, inde
     deadline,
     url,
     dataStatus,
-    dataVerified: true,
-    noticeType: normalizeNoticeType(record.primary_stage),
+    dataVerified: isVerified,
+    noticeType: normalizeNoticeType(record.notice_type ?? record.application_stage ?? record.primary_stage),
     sourceChannel: 'supabase',
     duration: record.year ? `${record.year}` : undefined,
   };
@@ -180,7 +182,9 @@ export function buildCoverageStats(universities: University[]) {
 
 export async function getProgramCards(filters: ProgramCardFilters = {}): Promise<ProgramCardDataset> {
   if (!supabase || !isSupabaseConfigured) {
-    return buildArchivedDataset('Supabase env missing');
+    return shouldAllowArchivedFallback()
+      ? buildArchivedDataset('Supabase env missing')
+      : buildSupabaseErrorDataset('Supabase env missing');
   }
 
   const normalizedFilters = normalizeFilters(filters);
@@ -225,6 +229,8 @@ async function fetchProgramCards(
     return buildArchivedDataset('Supabase client unavailable');
   }
 
+  const readModelUnavailableMessage = 'Public read model unavailable';
+
   try {
     const readTableDataset = await withTimeout(
       queryProgramCardReads(filters),
@@ -248,6 +254,8 @@ async function fetchProgramCards(
     } catch {
       return buildSupabaseErrorDataset(message);
     }
+
+    return buildSupabaseErrorDataset(message || readModelUnavailableMessage);
   }
 
   try {
@@ -265,82 +273,7 @@ async function fetchProgramCards(
     );
   }
 
-  try {
-    let query = client
-      .from('program_cards')
-      .select(`
-        id,
-        program_name,
-        degree_type,
-        year,
-        primary_stage,
-        specialty_summary,
-        institutions:institution_id (
-          name,
-          location:province,
-          is_985,
-          is_211,
-          discipline_grade
-        ),
-        departments:department_id (
-          name
-        ),
-        notices:notices!notices_program_card_id_fkey (
-          notice_url,
-          title,
-          application_start_raw,
-          application_end_raw,
-          published_at_raw,
-          materials_text,
-          ranking_requirement_text,
-          english_requirement_text,
-          application_method
-        )
-      `)
-      .eq('card_status', 'published')
-      .order('updated_at', { ascending: false });
-
-    query = query
-      .order('published_at_raw', { ascending: false, foreignTable: 'notices' })
-      .limit(1, { foreignTable: 'notices' });
-
-    query = query.limit(filters.offset + filters.limit + 1);
-
-    const { data, error } = await withTimeout<any>(
-      query.then((result) => result),
-      QUERY_TIMEOUT_MS,
-      'program_cards relational query timed out',
-    );
-    if (error || !data) {
-      return buildArchivedDataset(error?.message ?? 'Supabase query returned no data');
-    }
-
-    const normalized = data
-      .map((row: any) => mapSupabaseRowToProgramCardRecord(row))
-      .filter((row: ProgramCardRecord | null): row is ProgramCardRecord => Boolean(row));
-
-    const searched = applySearch(normalized, filters.search);
-    const pageRows = searched.slice(filters.offset, filters.offset + filters.limit + 1);
-    const hasMore = pageRows.length > filters.limit;
-    const universities = pageRows
-      .slice(0, filters.limit)
-      .map((row: ProgramCardRecord, index) => mapProgramCardRecordToUniversity(row, filters.offset + index + 1));
-
-    return {
-      universities,
-      coverageStats: buildCoverageStats(universities),
-      lastUpdated: new Date().toISOString(),
-      source: 'supabase',
-      configured: true,
-      error: null,
-      supabaseHost: getSupabaseHost(),
-      hasMore,
-    };
-  } catch (error) {
-    return buildSupabaseErrorDataset(
-      error instanceof Error ? error.message : 'Unknown Supabase query error',
-    );
-  }
+  return buildSupabaseErrorDataset(readModelUnavailableMessage);
 }
 
 export async function getProgramCardById(id: string | number): Promise<University | null> {
@@ -363,6 +296,12 @@ export async function getProgramCardById(id: string | number): Promise<Universit
     if (viewRecord) {
       return mapProgramCardRecordToUniversity(viewRecord, 1);
     }
+
+    return null;
+  }
+
+  if (!shouldAllowArchivedFallback()) {
+    return null;
   }
 
   return (archivedUniversities as University[]).find((u) => String(u.sourceCardId ?? u.id) === target) ?? null;
@@ -378,15 +317,16 @@ export async function getFilterFacets() {
 }
 
 export function useProgramCards(filters: ProgramCardFilters = {}) {
+  const allowArchivedFallback = shouldAllowArchivedFallback();
   const [dataset, setDataset] = useState<ProgramCardDataset>({
-    universities: isSupabaseConfigured ? [] : archivedUniversities,
-    coverageStats: isSupabaseConfigured
+    universities: isSupabaseConfigured || !allowArchivedFallback ? [] : archivedUniversities,
+    coverageStats: isSupabaseConfigured || !allowArchivedFallback
       ? buildCoverageStats([])
       : getCoverageStats(),
-    lastUpdated: isSupabaseConfigured ? 'loading' : ARCHIVED_LAST_UPDATED,
-    source: isSupabaseConfigured ? 'supabase-loading' : 'archived-json',
+    lastUpdated: isSupabaseConfigured || !allowArchivedFallback ? 'loading' : ARCHIVED_LAST_UPDATED,
+    source: isSupabaseConfigured || !allowArchivedFallback ? 'supabase-loading' : 'archived-json',
     configured: isSupabaseConfigured,
-    error: null,
+    error: !isSupabaseConfigured && !allowArchivedFallback ? 'Supabase env missing' : null,
     supabaseHost: getSupabaseHost(),
     hasMore: false,
   });
@@ -685,38 +625,6 @@ function buildProxyDataset(
   };
 }
 
-function mapSupabaseRowToProgramCardRecord(row: any): ProgramCardRecord | null {
-  const institution = Array.isArray(row.institutions) ? row.institutions[0] : row.institutions;
-  if (!institution?.name) return null;
-
-  const department = Array.isArray(row.departments) ? row.departments[0] : row.departments;
-  const notice = Array.isArray(row.notices) ? row.notices[0] : row.notices;
-
-  return {
-    id: row.id,
-    institution_name: institution.name,
-    department_name: department?.name ?? null,
-    program_name: row.program_name,
-    degree_type: row.degree_type,
-    year: row.year,
-    primary_stage: row.primary_stage,
-    specialty_summary: row.specialty_summary,
-    institution_location: institution.location ?? null,
-    institution_is_985: institution.is_985 ?? null,
-    institution_is_211: institution.is_211 ?? null,
-    institution_discipline_grade: institution.discipline_grade ?? null,
-    latest_notice_url: notice?.notice_url ?? null,
-    latest_notice_title: notice?.title ?? null,
-    latest_notice_application_start_raw: notice?.application_start_raw ?? null,
-    latest_notice_application_end_raw: notice?.application_end_raw ?? null,
-    latest_notice_published_at_raw: notice?.published_at_raw ?? null,
-    latest_notice_materials_text: notice?.materials_text ?? null,
-    latest_notice_ranking_requirement_text: notice?.ranking_requirement_text ?? null,
-    latest_notice_english_requirement_text: notice?.english_requirement_text ?? null,
-    latest_notice_application_method: notice?.application_method ?? null,
-  };
-}
-
 function applySearch(records: ProgramCardRecord[], search?: string): ProgramCardRecord[] {
   const term = search?.trim().toLowerCase();
   if (!term) return records;
@@ -846,6 +754,17 @@ function firstPresent(...values: Array<string | null | undefined>) {
   return values.find((value) => typeof value === 'string' && value.trim().length > 0)?.trim();
 }
 
+function isVerifiedRecord(record: ProgramCardRecord) {
+  if (record.verification_status) {
+    const normalized = record.verification_status.trim().toLowerCase();
+    if (['verified', 'official', 'trusted', 'reviewed'].includes(normalized)) {
+      return true;
+    }
+  }
+
+  return Boolean(record.last_verified_at);
+}
+
 function isFilledValue(value: string | undefined) {
   if (!value) return false;
   const normalized = value.trim();
@@ -873,4 +792,17 @@ function getSupabaseHost(): string | null {
   } catch {
     return null;
   }
+}
+
+function shouldAllowArchivedFallback() {
+  if (!import.meta.env.DEV) {
+    return false;
+  }
+
+  if (typeof window === 'undefined') {
+    return true;
+  }
+
+  const hostname = window.location.hostname;
+  return hostname === 'localhost' || hostname === '127.0.0.1';
 }

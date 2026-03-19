@@ -22,6 +22,7 @@ export interface University {
   is211?: boolean;
   disciplineGrade?: string;
   specialty: string;
+  specialtySummary?: string;
   degreeType: string;
   duration?: string;
   examForm: string;

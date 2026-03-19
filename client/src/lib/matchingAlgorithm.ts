@@ -1,57 +1,6 @@
-import { UserProfile, MatchResult, MatchReport } from "@/types/userProfile";
-import { getProgramCards } from "@/lib/programCards";
-import { University } from "@/types/university";
-
-// 院校层级定义（基于学术实力标准）
-const UNIVERSITY_TIERS = {
-  "第一梯队": {
-    // 全国核心型：北大、北师大、复旦、南大、川大、人大
-    minGPA: 3.5,
-    minRankingPercentile: 10,
-    minCET6: 500,
-    researchWeight: 0.4,
-    description: "你不申请，会后悔的那种"
-  },
-  "第二梯队": {
-    // 强势研究型：华东师大、浙大、山大、武大、中山、吉大、南开、清华
-    minGPA: 3.3,
-    minRankingPercentile: 20,
-    minCET6: 480,
-    researchWeight: 0.35,
-    description: "非常值得冲，但需要方向匹配"
-  },
-  "第三梯队": {
-    // 稳健学术型：南师大、陕师大、东北师大、华中师大、苏大、兰大等
-    minGPA: 3.0,
-    minRankingPercentile: 30,
-    minCET6: 450,
-    researchWeight: 0.3,
-    description: "性价比高、风险可控"
-  },
-  "第四梯队": {
-    // 校内优势型：厦大、湖南师大、华南师大、西南大学等
-    minGPA: 2.8,
-    minRankingPercentile: 50,
-    minCET6: 425,
-    researchWeight: 0.25,
-    description: "要看清内部结构再决定"
-  },
-  "第五梯队": {
-    // 学校光环型：上交、华科、同济、天大、东大等理工科985
-    minGPA: 2.7,
-    minRankingPercentile: 60,
-    minCET6: 400,
-    researchWeight: 0.2,
-    description: "别被985/211标签骗了"
-  },
-};
-
-// 本科院校层次权重
-const UNDERGRADUATE_TIER_WEIGHTS = {
-  "985": 1.3,
-  "211": 1.15,
-  "普通": 1.0,
-};
+import type { MatchReport, MatchResult, UserProfile } from "@/types/userProfile";
+import { getPublicProgramCards } from "@/lib/publicProgramCards";
+import type { PublicProgramCard } from "@/types/publicProgramCard";
 
 interface ScoreBreakdown {
   undergraduateLevel: number;
@@ -61,47 +10,132 @@ interface ScoreBreakdown {
   practiceExperience: number;
 }
 
+interface TargetThreshold {
+  minGPA: number;
+  maxRankingPercentile: number;
+  minEnglishScore: number;
+  prestigeWeight: number;
+  label: string;
+}
+
+const TOP_UNDERGRADUATE_SCHOOLS = new Set([
+  "北京大学",
+  "清华大学",
+  "复旦大学",
+  "上海交通大学",
+  "浙江大学",
+  "南京大学",
+  "武汉大学",
+  "中山大学",
+  "四川大学",
+  "华中科技大学",
+  "北京师范大学",
+]);
+
+const STRONG_UNDERGRADUATE_SCHOOLS = new Set([
+  "华东师范大学",
+  "南京师范大学",
+  "湖南师范大学",
+  "华中师范大学",
+  "华南师范大学",
+  "山东大学",
+  "南开大学",
+  "同济大学",
+  "中国人民大学",
+  "兰州大学",
+]);
+
+const TARGET_THRESHOLDS: Record<string, TargetThreshold> = {
+  "985": {
+    minGPA: 3.5,
+    maxRankingPercentile: 15,
+    minEnglishScore: 24,
+    prestigeWeight: 1.06,
+    label: "顶尖项目",
+  },
+  "211": {
+    minGPA: 3.3,
+    maxRankingPercentile: 25,
+    minEnglishScore: 20,
+    prestigeWeight: 1.02,
+    label: "强势项目",
+  },
+  "双一流": {
+    minGPA: 3.2,
+    maxRankingPercentile: 30,
+    minEnglishScore: 18,
+    prestigeWeight: 1,
+    label: "重点项目",
+  },
+  "省属重点师范": {
+    minGPA: 3.0,
+    maxRankingPercentile: 40,
+    minEnglishScore: 16,
+    prestigeWeight: 0.97,
+    label: "稳健项目",
+  },
+  default: {
+    minGPA: 2.8,
+    maxRankingPercentile: 50,
+    minEnglishScore: 14,
+    prestigeWeight: 0.94,
+    label: "保底项目",
+  },
+};
+
+function clamp(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function resolveTargetThreshold(card: PublicProgramCard): TargetThreshold {
+  return TARGET_THRESHOLDS[card.tier] ?? TARGET_THRESHOLDS.default;
+}
+
+function hasStrongResearch(profile: UserProfile) {
+  return profile.paperCount > 0 || profile.projectCount > 0 || profile.competitionCount > 0;
+}
+
+function normalizeLegacyId(stableId: string): number {
+  const numeric = Number(stableId);
+  if (Number.isFinite(numeric) && numeric > 0) {
+    return Math.trunc(numeric);
+  }
+
+  let hash = 0;
+  for (let index = 0; index < stableId.length; index += 1) {
+    hash = (hash * 31 + stableId.charCodeAt(index)) % 1_000_000_000;
+  }
+
+  return hash > 0 ? hash : 1;
+}
+
+function buildMatchResult(
+  card: PublicProgramCard,
+  matchScore: number,
+  category: MatchResult["category"],
+  reasons: string[],
+): MatchResult {
+  return {
+    universityId: card.legacyId ?? normalizeLegacyId(card.stableId),
+    universityName: card.institutionName,
+    tier: card.tier,
+    matchScore,
+    category,
+    reasons,
+  };
+}
+
 export const matchingAlgorithm = {
-  // 计算本科院校层次分数
   calculateUndergraduateTierScore: (university: string): number => {
-    // 顶尖985院校（100分）
-    const top985 = [
-      "北京大学", "清华大学", "复旦大学", "上海交通大学", "浙江大学",
-      "南京大学", "武汉大学", "中山大学", "四川大学", "华中科技大学",
-      "西安交通大学", "中国科学技术大学", "哈尔滨工业大学", "吉林大学",
-      "厦门大学", "天津大学", "东南大学", "中国人民大学", "北京师范大学"
-    ];
-    
-    // 其他985及顶尖211院校（85-90分）
-    const other985And211 = [
-      "华东师范大学", "南京师范大学", "湖南师范大学", "华中师范大学",
-      "华南师范大学", "东北师范大学", "陕西师范大学", "西南大学",
-      "山东大学", "兰州大学", "南开大学", "同济大学", "中国海洋大学",
-      "重庆大学", "中南大学", "湖南大学", "大连理工大学", "东北大学",
-      "北京外国语大学", "上海外国语大学", "中央民族大学", "中国传媒大学",
-      "中央财经大学", "对外经济贸易大学", "中国政法大学"
-    ];
-    
-    // 其他211院校（75-80分）
-    const other211 = [
-      "安徽大学", "云南大学", "郑州大学", "暨南大学", "上海大学",
-      "苏州大学", "西北大学", "辽宁大学", "内蒙古大学", "延边大学",
-      "海南大学", "贵州大学", "广西大学", "新疆大学", "宁夏大学",
-      "西藏大学", "石河子大学", "福州大学", "南昌大学", "江南大学",
-      "合肥工业大学", "太原理工大学"
-    ];
-    
-    if (top985.includes(university)) return 100;
-    if (other985And211.includes(university)) return 85;
-    if (other211.includes(university)) return 75;
-    return 70; // 普通高校
+    if (TOP_UNDERGRADUATE_SCHOOLS.has(university)) return 100;
+    if (STRONG_UNDERGRADUATE_SCHOOLS.has(university)) return 88;
+    if (university.includes("大学") || university.includes("师范")) return 78;
+    return 70;
   },
 
-  // 计算GPA和排名分数
   calculateGPAAndRankingScore: (gpa: number, rankingPercentile: number): number => {
     let score = 0;
 
-    // GPA分数（满分40分）
     if (gpa >= 3.8) score += 40;
     else if (gpa >= 3.6) score += 38;
     else if (gpa >= 3.4) score += 36;
@@ -112,7 +146,6 @@ export const matchingAlgorithm = {
     else if (gpa >= 2.4) score += 20;
     else score += 15;
 
-    // 排名百分比分数（满分35分）
     if (rankingPercentile <= 10) score += 35;
     else if (rankingPercentile <= 20) score += 33;
     else if (rankingPercentile <= 30) score += 31;
@@ -123,16 +156,10 @@ export const matchingAlgorithm = {
     else if (rankingPercentile <= 80) score += 15;
     else score += 10;
 
-    return Math.min(score, 75); // 总分不超过75
+    return Math.min(score, 75);
   },
 
-  // 计算英语水平分数
-  calculateEnglishScore: (
-    hasCET6: boolean,
-    cet6Score: number,
-    hasIELTS: boolean,
-    ieltsScore: number
-  ): number => {
+  calculateEnglishScore: (hasCET6: boolean, cet6Score: number, hasIELTS: boolean, ieltsScore: number): number => {
     let score = 0;
 
     if (hasCET6) {
@@ -154,108 +181,71 @@ export const matchingAlgorithm = {
     return score;
   },
 
-  // 计算科研竞赛分数
   calculateResearchAndCompetitionScore: (
     paperCount: number,
     paperLevel: string,
     projectCount: number,
     projectLevel: string,
     competitionCount: number,
-    competitionLevel: string
+    competitionLevel: string,
   ): number => {
     let score = 0;
 
-    // 论文分数（满分20分）
     if (paperCount > 0) {
-      const paperLevelWeight =
-        paperLevel === "核心期刊"
-          ? 3
-          : paperLevel === "普通期刊"
-            ? 2
-            : paperLevel === "会议论文"
-              ? 1.5
-              : 1;
-      score += Math.min(paperCount * paperLevelWeight, 20);
+      const paperWeight = paperLevel === "核心期刊" ? 3 : paperLevel === "普通期刊" ? 2 : paperLevel === "会议论文" ? 1.5 : 1;
+      score += Math.min(paperCount * paperWeight, 20);
     }
 
-    // 项目分数（满分20分）
     if (projectCount > 0) {
-      const projectLevelWeight =
-        projectLevel === "国家级"
-          ? 4
-          : projectLevel === "省级"
-            ? 2.5
-            : projectLevel === "校级"
-              ? 1.5
-              : 1;
-      score += Math.min(projectCount * projectLevelWeight, 20);
+      const projectWeight = projectLevel === "国家级" ? 4 : projectLevel === "省级" ? 2.5 : projectLevel === "校级" ? 1.5 : 1;
+      score += Math.min(projectCount * projectWeight, 20);
     }
 
-    // 竞赛分数（满分15分）
     if (competitionCount > 0) {
-      const competitionLevelWeight =
-        competitionLevel === "国家级"
-          ? 3
-          : competitionLevel === "省级"
-            ? 2
-            : competitionLevel === "校级"
-              ? 1
-              : 0.5;
-      score += Math.min(competitionCount * competitionLevelWeight, 15);
+      const competitionWeight =
+        competitionLevel === "国家级" ? 3 : competitionLevel === "省级" ? 2 : competitionLevel === "校级" ? 1 : 0.5;
+      score += Math.min(competitionCount * competitionWeight, 15);
     }
 
     return Math.min(score, 55);
   },
 
-  // 计算实践经历分数
   calculatePracticeScore: (
     hasStudentLeadership: boolean,
     hasNationalCompetition: boolean,
     hasProvinceCompetition: boolean,
-    hasSchoolCompetition: boolean
+    hasSchoolCompetition: boolean,
   ): number => {
     let score = 0;
-
     if (hasStudentLeadership) score += 5;
     if (hasNationalCompetition) score += 10;
     if (hasProvinceCompetition) score += 5;
     if (hasSchoolCompetition) score += 3;
-
     return Math.min(score, 20);
   },
 
-  // 计算总体分数和分项分数
   calculateScores: (profile: UserProfile): ScoreBreakdown => {
-    const undergraduateLevel = matchingAlgorithm.calculateUndergraduateTierScore(
-      profile.undergraduateUniversity
-    );
-
-    const gpaAndRanking = matchingAlgorithm.calculateGPAAndRankingScore(
-      profile.gpa,
-      profile.rankingPercentile
-    );
-
+    const undergraduateLevel = matchingAlgorithm.calculateUndergraduateTierScore(profile.undergraduateUniversity);
+    const gpaAndRanking = matchingAlgorithm.calculateGPAAndRankingScore(profile.gpa, profile.rankingPercentile);
     const englishLevel = matchingAlgorithm.calculateEnglishScore(
       profile.hasCET6,
       profile.cet6Score,
       profile.hasIELTS,
-      profile.ieltsScore
+      profile.ieltsScore,
     );
-
     const researchAndCompetition = matchingAlgorithm.calculateResearchAndCompetitionScore(
       profile.paperCount,
       profile.paperLevel,
       profile.projectCount,
       profile.projectLevel,
       profile.competitionCount,
-      profile.competitionLevel
+      profile.competitionLevel,
     );
-
     const practiceExperience = matchingAlgorithm.calculatePracticeScore(
       profile.hasStudentLeadership,
       profile.hasNationalCompetition,
       profile.hasProvinceCompetition,
-      profile.hasSchoolCompetition
+      profile.hasSchoolCompetition,
     );
 
     return {
@@ -267,111 +257,74 @@ export const matchingAlgorithm = {
     };
   },
 
-  // 计算总分（满分100分）
   calculateOverallScore: (breakdown: ScoreBreakdown): number => {
-    // 权重分配：本科院校层次 > 绩点排名 > 英语四六级 > 科研竞赛 > 实践经历
-    const weights = {
-      undergraduateLevel: 0.25,
-      gpaAndRanking: 0.3,
-      englishLevel: 0.2,
-      researchAndCompetition: 0.15,
-      practiceExperience: 0.1,
-    };
-
-    const normalizedScores = {
-      undergraduateLevel: (breakdown.undergraduateLevel / 100) * 100,
-      gpaAndRanking: (breakdown.gpaAndRanking / 75) * 100,
-      englishLevel: (breakdown.englishLevel / 30) * 100,
-      researchAndCompetition: (breakdown.researchAndCompetition / 55) * 100,
-      practiceExperience: (breakdown.practiceExperience / 20) * 100,
-    };
-
     const overallScore =
-      normalizedScores.undergraduateLevel * weights.undergraduateLevel +
-      normalizedScores.gpaAndRanking * weights.gpaAndRanking +
-      normalizedScores.englishLevel * weights.englishLevel +
-      normalizedScores.researchAndCompetition * weights.researchAndCompetition +
-      normalizedScores.practiceExperience * weights.practiceExperience;
+      (breakdown.undergraduateLevel / 100) * 25 +
+      (breakdown.gpaAndRanking / 75) * 30 +
+      (breakdown.englishLevel / 30) * 20 +
+      (breakdown.researchAndCompetition / 55) * 15 +
+      (breakdown.practiceExperience / 20) * 10;
 
-    return Math.round(overallScore);
+    return Math.round(clamp(overallScore, 0, 100));
   },
 
-  // 计算与单所院校的匹配度
-  calculateUniversityMatchScore: (profile: UserProfile, university: University): number => {
+  calculateProgramMatchScore: (profile: UserProfile, card: PublicProgramCard): number => {
     const breakdown = matchingAlgorithm.calculateScores(profile);
     const baseScore = matchingAlgorithm.calculateOverallScore(breakdown);
+    const threshold = resolveTargetThreshold(card);
 
-    // 根据院校梯队调整分数
-    const tierConfig = UNIVERSITY_TIERS[university.tier as keyof typeof UNIVERSITY_TIERS];
-    if (!tierConfig) return baseScore;
+    let adjustedScore = baseScore * threshold.prestigeWeight;
 
-    let adjustedScore = baseScore;
-
-    // 如果用户条件不符合院校基本要求，降分
-    if (profile.gpa < tierConfig.minGPA) {
-      adjustedScore -= (tierConfig.minGPA - profile.gpa) * 10;
+    if (profile.gpa < threshold.minGPA) {
+      adjustedScore -= (threshold.minGPA - profile.gpa) * 10;
     }
 
-    if (profile.rankingPercentile > tierConfig.minRankingPercentile) {
-      adjustedScore -= (profile.rankingPercentile - tierConfig.minRankingPercentile) * 0.5;
+    if (profile.rankingPercentile > threshold.maxRankingPercentile) {
+      adjustedScore -= (profile.rankingPercentile - threshold.maxRankingPercentile) * 0.7;
     }
 
-    if (profile.hasCET6 && profile.cet6Score < tierConfig.minCET6) {
-      adjustedScore -= (tierConfig.minCET6 - profile.cet6Score) * 0.05;
+    if (breakdown.englishLevel < threshold.minEnglishScore) {
+      adjustedScore -= (threshold.minEnglishScore - breakdown.englishLevel) * 1.2;
     }
 
-    return Math.max(adjustedScore, 0);
+    if (card.verificationStatus === "needs_review") {
+      adjustedScore -= 4;
+    }
+
+    if (card.availabilityStatus === "expired") {
+      adjustedScore -= 15;
+    }
+
+    if (card.noticeScope === "general") {
+      adjustedScore -= 3;
+    }
+
+    return Math.round(clamp(adjustedScore, 0, 100));
   },
 
-  // 生成匹配报告
   generateMatchReport: async (profile: UserProfile): Promise<MatchReport> => {
     const breakdown = matchingAlgorithm.calculateScores(profile);
     const overallScore = matchingAlgorithm.calculateOverallScore(breakdown);
+    const cards = await getPublicProgramCards();
 
-    const { universities } = await getProgramCards();
+    const matchScores = cards
+      .map((card) => ({
+        card,
+        matchScore: matchingAlgorithm.calculateProgramMatchScore(profile, card),
+      }))
+      .sort((a, b) => b.matchScore - a.matchScore);
 
-    // 计算所有院校的匹配度
-    const matchScores = universities.map((uni) => ({
-      ...uni,
-      matchScore: matchingAlgorithm.calculateUniversityMatchScore(profile, uni),
-    }));
-
-    // 按匹配度排序
-    matchScores.sort((a, b) => b.matchScore - a.matchScore);
-
-    // 根据匹配度分类（冲、稳、保）
     const rush: MatchResult[] = [];
     const stable: MatchResult[] = [];
     const conservative: MatchResult[] = [];
 
-    matchScores.forEach((uni) => {
-      if (rush.length < 5 && uni.matchScore >= 75) {
-        rush.push({
-          universityId: uni.id,
-          universityName: uni.name,
-          tier: uni.tier,
-          matchScore: uni.matchScore,
-          category: "冲",
-          reasons: generateMatchReasons(profile, uni, uni.matchScore),
-        });
-      } else if (stable.length < 5 && uni.matchScore >= 60 && uni.matchScore < 75) {
-        stable.push({
-          universityId: uni.id,
-          universityName: uni.name,
-          tier: uni.tier,
-          matchScore: uni.matchScore,
-          category: "稳",
-          reasons: generateMatchReasons(profile, uni, uni.matchScore),
-        });
-      } else if (conservative.length < 5 && uni.matchScore < 60) {
-        conservative.push({
-          universityId: uni.id,
-          universityName: uni.name,
-          tier: uni.tier,
-          matchScore: uni.matchScore,
-          category: "保",
-          reasons: generateMatchReasons(profile, uni, uni.matchScore),
-        });
+    matchScores.forEach(({ card, matchScore }) => {
+      if (rush.length < 5 && matchScore >= 75) {
+        rush.push(buildMatchResult(card, matchScore, "冲", generateMatchReasons(profile, card, matchScore)));
+      } else if (stable.length < 5 && matchScore >= 60) {
+        stable.push(buildMatchResult(card, matchScore, "稳", generateMatchReasons(profile, card, matchScore)));
+      } else if (conservative.length < 5) {
+        conservative.push(buildMatchResult(card, matchScore, "保", generateMatchReasons(profile, card, matchScore)));
       }
     });
 
@@ -389,33 +342,42 @@ export const matchingAlgorithm = {
   },
 };
 
-// 生成匹配理由
-function generateMatchReasons(profile: UserProfile, university: University, score: number): string[] {
+function generateMatchReasons(profile: UserProfile, card: PublicProgramCard, score: number): string[] {
   const reasons: string[] = [];
+  const threshold = resolveTargetThreshold(card);
 
   if (score >= 75) {
-    reasons.push("您的综合条件与该校要求匹配度高");
+    reasons.push(`你的背景对${threshold.label}仍有竞争力。`);
   } else if (score >= 60) {
-    reasons.push("您的综合条件与该校要求基本匹配");
+    reasons.push("你的条件与该项目基本匹配，适合重点关注。");
   } else {
-    reasons.push("您的综合条件与该校要求有一定差距");
+    reasons.push("这更适合作为保底或补充选择。");
   }
 
-  if (profile.gpa >= 3.5) {
-    reasons.push("GPA成绩优秀");
+  if (profile.gpa >= threshold.minGPA) {
+    reasons.push("GPA 基本达到该层次项目要求。");
+  } else {
+    reasons.push("GPA 仍是主要短板，需要结合其他优势补强。");
   }
 
-  if (profile.rankingPercentile <= 30) {
-    reasons.push("排名靠前");
+  if (profile.rankingPercentile <= threshold.maxRankingPercentile) {
+    reasons.push("你的排名区间具备申请竞争力。");
   }
 
-  if (profile.hasCET6 && profile.cet6Score >= 500) {
-    reasons.push("英语水平达到要求");
+  if (
+    matchingAlgorithm.calculateEnglishScore(profile.hasCET6, profile.cet6Score, profile.hasIELTS, profile.ieltsScore) >=
+    threshold.minEnglishScore
+  ) {
+    reasons.push("英语成绩对申请有帮助。");
   }
 
-  if (profile.paperCount > 0 || profile.projectCount > 0) {
-    reasons.push("具有科研成果");
+  if (hasStrongResearch(profile)) {
+    reasons.push("科研或竞赛经历能提高通过率。");
   }
 
-  return reasons.slice(0, 3); // 最多显示3个理由
+  if (card.verificationStatus === "needs_review") {
+    reasons.push("这条信息仍建议回到原始通知进一步核对。");
+  }
+
+  return reasons.slice(0, 3);
 }
