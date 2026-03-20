@@ -67,7 +67,7 @@ export type QueryArgs = {
 };
 
 export function getQueryCountStrategy(_args: Pick<QueryArgs, 'id' | 'search' | 'limit' | 'offset'>) {
-  return undefined;
+  return { count: 'exact' as const };
 }
 
 export function shouldFetchInstitutionCount(_args: Pick<QueryArgs, 'id' | 'search' | 'limit' | 'offset'>) {

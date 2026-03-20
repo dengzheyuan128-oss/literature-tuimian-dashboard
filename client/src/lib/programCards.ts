@@ -387,7 +387,7 @@ async function queryProgramCardsView(
   try {
     let query = client
       .from('public_program_cards')
-      .select(PROGRAM_CARD_READ_SELECT)
+      .select(PROGRAM_CARD_READ_SELECT, { count: 'exact' })
       .order('latest_notice_published_at_raw', { ascending: false, nullsFirst: false })
       .range(filters.offset, filters.offset + filters.limit);
 
@@ -403,7 +403,7 @@ async function queryProgramCardsView(
       ].join(','));
     }
 
-    const { data, error } = await query;
+    const { data, error, count } = await query;
     if (error) {
       return null;
     }
@@ -423,6 +423,7 @@ async function queryProgramCardsView(
       error: null,
       supabaseHost: getSupabaseHost(),
       hasMore,
+      totalCount: count ?? undefined,
     };
   } catch {
     return null;
@@ -440,7 +441,7 @@ async function queryProgramCardReads(
   try {
     let query = client
       .from('public_program_card_reads')
-      .select(PROGRAM_CARD_READ_SELECT)
+      .select(PROGRAM_CARD_READ_SELECT, { count: 'exact' })
       .order('updated_at', { ascending: false })
       .range(filters.offset, filters.offset + filters.limit);
 
@@ -456,12 +457,17 @@ async function queryProgramCardReads(
       ].join(','));
     }
 
-    const { data, error } = await query;
+    const { data, error, count } = await query;
     if (error) {
       return null;
     }
 
-    return buildSupabaseDatasetFromRecords((data ?? []) as ProgramCardRecord[], filters.offset, filters.limit);
+    return buildSupabaseDatasetFromRecords(
+      (data ?? []) as ProgramCardRecord[],
+      filters.offset,
+      filters.limit,
+      count ?? undefined,
+    );
   } catch {
     return null;
   }
@@ -574,7 +580,12 @@ async function fetchProgramCardByIdViaApi(id: string): Promise<ProgramCardRecord
   }
 }
 
-function buildSupabaseDatasetFromRecords(records: ProgramCardRecord[], offset: number, limit: number): ProgramCardDataset {
+function buildSupabaseDatasetFromRecords(
+  records: ProgramCardRecord[],
+  offset: number,
+  limit: number,
+  totalCount?: number,
+): ProgramCardDataset {
   const normalized = records.filter((row): row is ProgramCardRecord => Boolean(row?.institution_name));
   const hasMore = normalized.length > limit;
   const universities = normalized
@@ -590,7 +601,7 @@ function buildSupabaseDatasetFromRecords(records: ProgramCardRecord[], offset: n
     error: null,
     supabaseHost: getSupabaseHost(),
     hasMore,
-    totalCount: normalized.length,
+    totalCount,
   };
 }
 
